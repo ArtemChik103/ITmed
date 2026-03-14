@@ -22,3 +22,4 @@ class AnalysisResult(BaseModel):
     metrics: dict[str, float] = Field(default_factory=dict, description="Дополнительные метрики")
     processing_time_ms: int = Field(..., ge=0, description="Время обработки в мс")
     message: str = Field(..., description="Сообщение от сервиса")
+    metadata: dict = Field(default_factory=dict, description="Метаданные DICOM")

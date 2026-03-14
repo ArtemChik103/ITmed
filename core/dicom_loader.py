@@ -25,8 +25,17 @@ def load_dicom(file_path: str) -> Tuple[np.ndarray, dict]:
     # --- 1. Pixel Spacing ---
     if hasattr(ds, "PixelSpacing"):
         pixel_spacing: list[float] = [float(ds.PixelSpacing[0]), float(ds.PixelSpacing[1])]
+    elif hasattr(ds, "ImagerPixelSpacing"):
+        pixel_spacing: list[float] = [float(ds.ImagerPixelSpacing[0]), float(ds.ImagerPixelSpacing[1])]
+        logger.info("PixelSpacing не найден, используется ImagerPixelSpacing: %s", pixel_spacing)
+    elif hasattr(ds, "NominalScannedPixelSpacing"):
+        pixel_spacing: list[float] = [float(ds.NominalScannedPixelSpacing[0]), float(ds.NominalScannedPixelSpacing[1])]
+        logger.info("PixelSpacing не найден, используется NominalScannedPixelSpacing: %s", pixel_spacing)
+    elif hasattr(ds, "PixelAspectRatio"):
+        pixel_spacing: list[float] = [float(ds.PixelAspectRatio[0]), float(ds.PixelAspectRatio[1])]
+        logger.info("PixelSpacing не найден, используется PixelAspectRatio: %s", pixel_spacing)
     else:
-        logger.warning("PixelSpacing не найден в файле '%s'. Используется default [1.0, 1.0].", file_path)
+        logger.warning("Атрибуты размера пикселя (PixelSpacing, ImagerPixelSpacing и др.) не найдены в файле '%s'. Используется default [1.0, 1.0].", file_path)
         pixel_spacing = [1.0, 1.0]
 
     # --- 2. Pixel array -> float32 ---

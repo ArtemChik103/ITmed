@@ -4,10 +4,14 @@ Phase 1: health check + mock analyze endpoint.
 """
 import logging
 import time
+import tempfile
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+
+from core.dicom_loader import load_dicom
 
 from api.schemas import AnalysisResult, HealthResponse
 
@@ -67,6 +71,19 @@ async def analyze(file: UploadFile = File(...)) -> AnalysisResult:
     contents = await file.read()
     logger.info("Получен файл '%s', размер: %d байт", filename, len(contents))
 
+    metadata = {}
+    # Phase 1: Извлекаем метаданные для проверки работоспособности
+    with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
+        tmp.write(contents)
+        tmp_path = tmp.name
+
+    try:
+        _, metadata = load_dicom(tmp_path)
+    except Exception as e:
+        logger.error("Ошибка при чтении DICOM: %s", e)
+    finally:
+        os.remove(tmp_path)
+
     # Имитация обработки
     time.sleep(0.5)
 
@@ -78,4 +95,5 @@ async def analyze(file: UploadFile = File(...)) -> AnalysisResult:
         metrics={"sensitivity": 0.0, "specificity": 0.0, "auc": 0.0},
         processing_time_ms=elapsed_ms,
         message=f"[MOCK] Файл '{filename}' обработан. ML-модель будет подключена в Phase 2.",
+        metadata=metadata,
     )
