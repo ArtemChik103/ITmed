@@ -1,5 +1,7 @@
-torch==2.2.0
-torchvision==0.17.0
+# CPU-only torch — ~830 MB wheel вместо ~2.5 GB CUDA версии
+# Устанавливается через отдельный index (см. Dockerfile)
+torch==2.2.0+cpu
+torchvision==0.17.0+cpu
 monai==1.3.0
 fastapi==0.109.0
 uvicorn==0.27.0
