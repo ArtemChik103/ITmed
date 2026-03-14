@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./data:/app/data
+    networks:
+      - med-net
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    build: .
+    ports:
+      - "8501:8501"
+    command: streamlit run frontend/app.py --server.port=8501 --server.address=0.0.0.0
+    depends_on:
+      - api
+    environment:
+      - API_URL=http://api:8000
+      - PYTHONUNBUFFERED=1
+    networks:
+      - med-net
+
+networks:
+  med-net:
+    driver: bridge
