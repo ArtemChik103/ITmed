@@ -10,38 +10,43 @@ build/
 *.egg
 .eggs/
 
-# Envs
+# Environments
 .env
 .env.*
 venv/
 env/
 .venv/
 
-# IDE
+# IDE and OS
 .vscode/
 .idea/
 *.swp
 *.swo
+.DS_Store
+Thumbs.db
+
+# Logs and coverage
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
 
 # Docker
 .docker/
 
-# Data (DICOM files can be large — don't commit)
-data/*.dcm
-data/*.dicom
-
-# ML weights & models (versioned separately)
+# Local data and generated artifacts
+data/training/
+data/test/
+data/raw/
+data/processed/
 weights/
-models/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Test coverage
-.coverage
-htmlcov/
-.pytest_cache/
+models/checkpoints/
+*.pth
+*.pt
+*.onnx
+submissions/*
+!submissions/.gitkeep
+!submissions/screenshots/
+submissions/screenshots/*
+!submissions/screenshots/.gitkeep
+demo_video.mp4

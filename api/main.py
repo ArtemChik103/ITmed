@@ -1,38 +1,47 @@
-"""
-api/main.py — FastAPI application entry point.
-Phase 1: health check + mock analyze endpoint.
-"""
+"""FastAPI application entry point."""
+from __future__ import annotations
+
 import logging
-import time
-import tempfile
 import os
+import tempfile
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+from api.schemas import AnalysisResult, HealthResponse, PluginListResponse
 from core.dicom_loader import load_dicom
-
-from api.schemas import AnalysisResult, HealthResponse
+from core.dicom_validator import DICOMValidator
+from core.plugin_manager import PluginManager
+from plugins.hip_dysplasia import HipDysplasiaPlugin
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-ALLOWED_CONTENT_TYPES = {"application/octet-stream", "application/dicom", ""}
 ALLOWED_EXTENSIONS = {".dcm", ".dicom"}
+ALLOWED_MODES = {"doctor", "education"}
+APP_VERSION = "1.0.0"
+
+
+def build_plugin_manager() -> PluginManager:
+    manager = PluginManager()
+    manager.register(HipDysplasiaPlugin())
+    return manager
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("🏥 ИТ+Мед 2026 API starting up...")
+    logger.info("ИТ+Мед 2026 API starting up...")
+    app.state.plugin_manager = build_plugin_manager()
+    app.state.dicom_validator = DICOMValidator()
     yield
     logger.info("API shutting down.")
 
 
 app = FastAPI(
     title="ИТ+Мед 2026 API",
-    description="AI System for Medical Imaging — Phase 1",
-    version="1.0.0",
+    description="AI System for Medical Imaging",
+    version=APP_VERSION,
     lifespan=lifespan,
 )
 
@@ -46,17 +55,27 @@ app.add_middleware(
 
 @app.get("/health", response_model=HealthResponse, tags=["System"])
 async def health() -> HealthResponse:
-    """Проверка работоспособности сервиса."""
-    return HealthResponse(status="ok", version="1.0.0")
+    """Return service health status."""
+    return HealthResponse(status="ok", version=APP_VERSION)
+
+
+@app.get("/api/v1/plugins", response_model=PluginListResponse, tags=["Plugins"])
+async def list_plugins() -> PluginListResponse:
+    """Return registered plugin metadata."""
+    manager: PluginManager = app.state.plugin_manager
+    return PluginListResponse(plugins=manager.list_metadata())
 
 
 @app.post("/api/v1/analyze", response_model=AnalysisResult, tags=["Analysis"])
-async def analyze(file: UploadFile = File(...)) -> AnalysisResult:
-    """
-    Анализ медицинского снимка (DICOM).
+async def analyze_image(
+    file: UploadFile = File(...),
+    plugin_type: str = Query("hip_dysplasia", pattern=r"^[a-z0-9_]+$"),
+    mode: str = Query("doctor", pattern=r"^(doctor|education)$"),
+) -> AnalysisResult:
+    """Analyze a medical image using the selected plugin."""
+    if mode not in ALLOWED_MODES:
+        raise HTTPException(status_code=422, detail=f"Неподдерживаемый режим '{mode}'.")
 
-    Phase 1: возвращает mock-данные. В Phase 2 будет подключена ML-модель.
-    """
     filename = file.filename or ""
     ext = "." + filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
     if ext not in ALLOWED_EXTENSIONS:
@@ -65,35 +84,46 @@ async def analyze(file: UploadFile = File(...)) -> AnalysisResult:
             detail=f"Неподдерживаемый формат файла '{ext}'. Ожидается .dcm или .dicom",
         )
 
-    start = time.time()
-
-    # Читаем файл (Phase 2 → передаём в DICOM Loader + ML Plugin)
     contents = await file.read()
     logger.info("Получен файл '%s', размер: %d байт", filename, len(contents))
 
-    metadata = {}
-    # Phase 1: Извлекаем метаданные для проверки работоспособности
     with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
         tmp.write(contents)
         tmp_path = tmp.name
 
     try:
-        _, metadata = load_dicom(tmp_path)
-    except Exception as e:
-        logger.error("Ошибка при чтении DICOM: %s", e)
+        image, metadata = load_dicom(tmp_path)
+    except Exception as exc:
+        logger.exception("Ошибка при чтении DICOM '%s'", filename)
+        raise HTTPException(
+            status_code=422,
+            detail=f"Не удалось прочитать DICOM файл '{filename}': {exc}",
+        ) from exc
     finally:
-        os.remove(tmp_path)
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
 
-    # Имитация обработки
-    time.sleep(0.5)
+    validator: DICOMValidator = app.state.dicom_validator
+    validation_report = validator.validate(image, metadata)
+    if not validation_report.valid:
+        first_error = validation_report.errors[0]
+        raise HTTPException(
+            status_code=422,
+            detail=f"Невалидный DICOM файл '{filename}': {first_error.message}",
+        )
 
-    elapsed_ms = int((time.time() - start) * 1000)
+    manager: PluginManager = app.state.plugin_manager
+    try:
+        result = manager.analyze(
+            plugin_type,
+            image,
+            metadata,
+            mode=mode,
+            validation_warnings=validation_report.warning_messages(),
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
-    return AnalysisResult(
-        disease_detected=False,
-        confidence=0.85,
-        metrics={"sensitivity": 0.0, "specificity": 0.0, "auc": 0.0},
-        processing_time_ms=elapsed_ms,
-        message=f"[MOCK] Файл '{filename}' обработан. ML-модель будет подключена в Phase 2.",
-        metadata=metadata,
-    )
+    return AnalysisResult.model_validate(result.model_dump())

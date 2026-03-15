@@ -1,20 +1,36 @@
-# CPU-only torch — ~830 MB wheel вместо ~2.5 GB CUDA версии
-# Устанавливается через отдельный index (см. Dockerfile)
+# CPU-only PyTorch. Dockerfile installs with the PyTorch CPU index.
 torch==2.2.0+cpu
 torchvision==0.17.0+cpu
 monai==1.3.0
+
 fastapi==0.109.0
 uvicorn==0.27.0
 streamlit==1.31.0
+plotly==5.19.0
 pydantic==2.6.0
 pydantic-settings==2.1.0
+
 pydicom==2.4.4
 SimpleITK==2.3.1
 opencv-python-headless==4.9.0.80
+scikit-image==0.22.0
+nibabel==5.2.0
+
+albumentations==1.3.1
 numpy==1.26.3
 pandas==2.2.0
+scipy==1.12.0
+scikit-learn==1.4.0
+
+onnx==1.15.0
+onnxruntime==1.17.0
+captum==0.7.0
+
 reportlab==4.0.9
+
 pytest==8.0.0
 pytest-cov==4.1.0
+black==24.1.0
+mypy==1.8.0
 httpx==0.27.0
 python-multipart==0.0.9
