@@ -27,6 +27,7 @@
 Основные финальные артефакты:
 
 - репозиторий: `https://github.com/ArtemChik103/ITmed`
+- HTML со слайдами: [deliverables/presentation.html](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.html)
 - файл классов: [deliverables/predictions.csv](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/predictions.csv)
 - архив результатов: [deliverables/results_test_done.zip](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/results_test_done.zip)
 - PDF со слайдами: [deliverables/presentation.pdf](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.pdf)
@@ -47,7 +48,7 @@
 - [frontend/app.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/app.py): Streamlit frontend.
 - [frontend/utils/pdf_export.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/utils/pdf_export.py): генерация PDF-отчета.
 - [scripts/export_test_done_reports.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/export_test_done_reports.py): единый batch pipeline по `test_done`.
-- [scripts/generate_presentation_pdf.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/generate_presentation_pdf.py): генерация `presentation.pdf`.
+- [scripts/generate_presentation_pdf.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/generate_presentation_pdf.py): генерация `presentation.html` и экспорт `presentation.pdf`.
 
 ## Быстрый запуск
 
@@ -113,15 +114,16 @@ python scripts/verify_id_format.py ^
   --check-sorted
 ```
 
-## PDF со слайдами
+## HTML и PDF со слайдами
 
 ```bash
 python scripts/generate_presentation_pdf.py ^
   --test-root ../test_done ^
+  --html-output deliverables/presentation.html ^
   --output deliverables/presentation.pdf
 ```
 
-PDF сделан коротким под защиту на 5 минут: задача, архитектура, classifier runtime, explainability, ограничение по geometry, pipeline по `test_done` и итоговые deliverables.
+Скрипт сначала собирает standalone HTML-презентацию, а затем экспортирует из нее PDF через headless browser. Это убирает проблемы со шрифтами и дает одинаковый внешний вид в браузере и в PDF.
 
 ## Тесты
 

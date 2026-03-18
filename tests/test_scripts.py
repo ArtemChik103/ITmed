@@ -9,6 +9,7 @@ from scripts.data_quality_check import build_markdown_report, save_report, scan_
 from scripts.add_dcm_extensions import rename_extensionless_dicoms
 from scripts.export_test_done_reports import main as export_test_done_reports_main
 from scripts.generate_submission import main as generate_submission_main
+from scripts.generate_presentation_pdf import main as generate_presentation_main
 from scripts.submission_common import collect_test_objects
 from scripts.verify_id_format import collect_test_ids, verify_submission_format
 from tests.helpers import build_test_dicom
@@ -237,3 +238,32 @@ def test_export_test_done_reports_writes_final_artifacts(tmp_path: Path):
     assert (output_dir / "README_results.txt").exists()
     assert (output_dir / "verification.json").exists()
     assert zip_output.exists()
+
+
+def test_generate_presentation_html_writes_exportable_deck(tmp_path: Path):
+    test_root = tmp_path / "test_done"
+    test_root.mkdir()
+    build_test_dicom(test_root / "AAA111.dcm", pixel_spacing=[0.2, 0.2], study_date="20260101")
+    build_test_dicom(test_root / "BBB222.dcm", pixel_spacing=[0.2, 0.2], study_date="20260101")
+
+    html_output = tmp_path / "deliverables" / "presentation.html"
+    pdf_output = tmp_path / "deliverables" / "presentation.pdf"
+    exit_code = generate_presentation_main(
+        [
+            "--test-root",
+            str(test_root),
+            "--html-output",
+            str(html_output),
+            "--output",
+            str(pdf_output),
+            "--skip-pdf",
+        ]
+    )
+
+    html_text = html_output.read_text(encoding="utf-8")
+
+    assert exit_code == 0
+    assert html_output.exists()
+    assert "Экспорт в PDF" in html_text
+    assert "Classifier-first runtime" in html_text
+    assert not pdf_output.exists()
