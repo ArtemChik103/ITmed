@@ -24,12 +24,43 @@ from frontend.utils.clinical_report_builder import geometry_metric_rows, geometr
 from frontend.utils.medical_text import get_pdf_report_text
 
 def _register_fonts():
-    try:
-        pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
-        pdfmetrics.registerFont(TTFont('Arial-Bold', 'arialbd.ttf'))
-        return 'Arial', 'Arial-Bold'
-    except Exception:
-        return 'Helvetica', 'Helvetica-Bold'
+    import os
+
+    _FONT_SEARCH_PATHS = [
+        # Windows
+        ("arial.ttf", "arialbd.ttf"),
+        # Linux: DejaVu Sans (widely available, supports Cyrillic)
+        (
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        ),
+        # Linux alternative path
+        (
+            "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf",
+            "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf",
+        ),
+        # Linux: Liberation Sans
+        (
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        ),
+        # Linux: FreeSans
+        (
+            "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+            "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+        ),
+    ]
+
+    for regular_path, bold_path in _FONT_SEARCH_PATHS:
+        try:
+            pdfmetrics.registerFont(TTFont('CyrillicFont', regular_path))
+            pdfmetrics.registerFont(TTFont('CyrillicFont-Bold', bold_path))
+            return 'CyrillicFont', 'CyrillicFont-Bold'
+        except Exception:
+            continue
+
+    # Last resort: Helvetica (no Cyrillic support)
+    return 'Helvetica', 'Helvetica-Bold'
 
 def generate_pdf_report(result: dict[str, Any], filename: str) -> bytes:
     font_regular, font_bold = _register_fonts()

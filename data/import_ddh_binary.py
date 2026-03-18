@@ -71,11 +71,15 @@ def build_ddh_binary_manifest(
     eligible["group_name"] = eligible["group_token"].astype(str)
     eligible["source"] = "DDH_binary_external"
     eligible["source_code"] = "ddh_binary_ext"
-    eligible["dataset_name"] = eligible.get("dataset_name", "A dataset of DDH x-ray images").fillna(
-        "A dataset of DDH x-ray images"
-    )
+    if "dataset_name" in eligible.columns:
+        eligible["dataset_name"] = eligible["dataset_name"].fillna("A dataset of DDH x-ray images")
+    else:
+        eligible["dataset_name"] = "A dataset of DDH x-ray images"
     eligible["is_external"] = 1
-    eligible["original_id"] = eligible.get("original_id", eligible["file_stem"]).fillna(eligible["file_stem"])
+    if "original_id" in eligible.columns:
+        eligible["original_id"] = eligible["original_id"].fillna(eligible["file_stem"])
+    else:
+        eligible["original_id"] = eligible["file_stem"]
 
     manifest_columns = [
         "sample_id",

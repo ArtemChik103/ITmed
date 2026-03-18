@@ -126,4 +126,4 @@ async def analyze_image(
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
-    return AnalysisResult.model_validate(result.model_dump())
+    return result
