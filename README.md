@@ -114,20 +114,6 @@ python scripts/verify_id_format.py ^
   --check-sorted
 ```
 
-## HTML и PDF со слайдами
-
-Исходником презентации является обычный HTML-файл:
-
-- [deliverables/presentation.html](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.html)
-
-```bash
-python scripts/generate_presentation_pdf.py ^
-  --input deliverables/presentation.html ^
-  --output deliverables/presentation.pdf
-```
-
-Скрипт не генерирует слайды заново. Он просто берет готовый HTML и печатает его в PDF через headless browser, поэтому HTML остается единственным исходником презентации.
-
 ## Тесты
 
 ```bash
