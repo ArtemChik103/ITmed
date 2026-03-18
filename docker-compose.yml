@@ -1,39 +1,41 @@
 services:
   api:
     build: .
+    image: itmed:latest
     ports:
       - "8000:8000"
     volumes:
-      - ./:/app
-      - ../train:/datasets/train:ro
-      - ../test_done:/datasets/test:ro
+      - ${TRAIN_DATA_HOST:-./data}:/datasets/train:ro
+      - ${TEST_DATA_HOST:-./data}:/datasets/test:ro
     networks:
       - med-net
     environment:
       APP_ROLE: api
       API_URL: http://api:8000
+      CORS_ORIGINS: "http://localhost:8501,http://frontend:8501"
       TRAIN_DATA_DIR: /datasets/train
       TEST_DATA_DIR: /datasets/test
       HIP_DYSPLASIA_MODEL_MANIFEST: /app/models/checkpoints/resnet50_bce_v1/model_manifest.json
       HIP_DYSPLASIA_KEYPOINT_CHECKPOINT: /app/models/checkpoints/resnet50_mtddh_keypoints_v1/best.ckpt
       HIP_DYSPLASIA_KEYPOINT_DEVICE: auto
       PYTHONUNBUFFERED: "1"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
 
   frontend:
-    build: .
+    image: itmed:latest
+    depends_on:
+      api:
+        condition: service_healthy
     ports:
       - "8501:8501"
-    depends_on:
-      - api
-    volumes:
-      - ./:/app
-      - ../train:/datasets/train:ro
-      - ../test_done:/datasets/test:ro
     environment:
       APP_ROLE: frontend
       API_URL: http://api:8000
-      TRAIN_DATA_DIR: /datasets/train
-      TEST_DATA_DIR: /datasets/test
       PYTHONUNBUFFERED: "1"
     networks:
       - med-net

@@ -5,12 +5,36 @@ __pycache__
 .pytest_cache
 .coverage
 htmlcov/
+
+# Virtual environments
 venv/
 env/
 .venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Training data and weights (mounted at runtime)
 data/
 weights/
 models/checkpoints/
+models/pretrained/
+
+# Submissions and docs (not needed at runtime)
 submissions/
-.vscode/
-.idea/
+docs/
+deliverables/
+assets/
+
+# Tests and dev tools (not needed in production)
+tests/
+pytest.ini
+requirements-dev.txt
+requirements-train*.txt
+
+# Misc
+*.md
+.github/
+*.mp4
+analysis/

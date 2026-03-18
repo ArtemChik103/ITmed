@@ -61,7 +61,10 @@ def build_mtddh_manifest(
     eligible["group_name"] = eligible["group_token"].astype(str)
     eligible["source"] = "MTDDH"
     eligible["source_code"] = "mtddh"
-    eligible["dataset_name"] = eligible.get("dataset_name", "MTDDH").fillna("MTDDH")
+    if "dataset_name" in eligible.columns:
+        eligible["dataset_name"] = eligible["dataset_name"].fillna("MTDDH")
+    else:
+        eligible["dataset_name"] = "MTDDH"
     eligible["is_external"] = 1
     eligible["path"] = eligible["path"].map(lambda value: str(Path(value).resolve()))
 
@@ -84,7 +87,7 @@ def build_mtddh_manifest(
         "label_source",
         "original_id",
     ]
-    manifest = eligible[manifest_columns].sort_values(["relative_path", "group_id"]).reset_index(drop=True)
+    manifest = eligible[manifest_columns].sort_values(["group_id", "relative_path"]).reset_index(drop=True)
     output_manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.to_csv(output_manifest, index=False)
 

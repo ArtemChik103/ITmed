@@ -3,10 +3,10 @@
 
 def test_all_imports():
     from api.main import app  # noqa: F401
-    from api.schemas import AnalysisResult, DicomMetadata, HealthResponse, PluginListResponse  # noqa: F401
+    from api.schemas import AnalysisResult, HealthResponse, PluginListResponse  # noqa: F401
     from core.dicom_loader import load_dicom  # noqa: F401
     from core.dicom_validator import DICOMValidator, ValidationIssue, ValidationReport  # noqa: F401
-    from core.plugin_manager import AnalysisResult as CoreAnalysisResult  # noqa: F401
+    from core.plugin_manager import AnalysisResult as CoreAnalysisResult  # noqa: F401  # now same as api.schemas.AnalysisResult
     from core.plugin_manager import IPlugin, PluginManager, PluginMetadata  # noqa: F401
     from core.plugin_registry import PluginRegistry  # noqa: F401
     from core.preprocessor import PreprocessingConfig, XRayPreprocessor  # noqa: F401

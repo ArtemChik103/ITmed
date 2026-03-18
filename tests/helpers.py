@@ -32,6 +32,8 @@ def build_test_dicom(
 ) -> Path:
     array = pixel_array if pixel_array is not None else np.array([[1, 2], [3, 4]], dtype=np.uint16)
 
+    path.parent.mkdir(parents=True, exist_ok=True)
+
     file_meta = FileMetaDataset()
     file_meta.TransferSyntaxUID = ExplicitVRLittleEndian
     file_meta.MediaStorageSOPClassUID = SecondaryCaptureImageStorage

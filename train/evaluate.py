@@ -214,14 +214,14 @@ def _compute_object_level_summary(
                 "mean_threshold": method_threshold,
                 "folds": [
                     {
-                        "fold": int(report_index["fold"]),
+                        "fold": int(fold_report["fold"]),
                         "threshold": float(report["threshold"]),
                         "group_count": int(report["group_count"]),
                         "negative_groups": int(report["negative_groups"]),
                         "positive_groups": int(report["positive_groups"]),
                         "metrics": report["metrics"],
                     }
-                    for report_index, report in zip(
+                    for fold_report, report in zip(
                         [per_fold_reports[int(prediction["fold"])] for prediction in fold_predictions],
                         fold_method_reports,
                         strict=True,

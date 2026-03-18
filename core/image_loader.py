@@ -11,7 +11,7 @@ from PIL import Image
 from core.dicom_loader import load_dicom
 
 RASTER_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp"}
-DICOM_EXTENSIONS = {".dcm"}
+DICOM_EXTENSIONS = {".dcm", ".dicom"}
 SUPPORTED_MEDICAL_IMAGE_EXTENSIONS = DICOM_EXTENSIONS | RASTER_EXTENSIONS
 
 

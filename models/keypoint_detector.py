@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 from torchvision.models import ResNet50_Weights, resnet50
 
+from models.checkpoint_utils import torch_load as _torch_load
 from models.classifier import load_backbone_weights
 
 
@@ -120,10 +121,3 @@ def export_encoder_state_dict(model: KeypointDetector) -> dict[str, torch.Tensor
         for key, value in model.backbone.state_dict().items()
         if not key.startswith("fc.")
     }
-
-
-def _torch_load(path: Path, *, map_location: str | torch.device) -> Any:
-    try:
-        return torch.load(path, map_location=map_location, weights_only=False)
-    except TypeError:
-        return torch.load(path, map_location=map_location)

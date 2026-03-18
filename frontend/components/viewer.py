@@ -7,9 +7,10 @@ from typing import Any
 import numpy as np
 import pydicom
 import streamlit as st
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 from frontend.components.keypoint_overlay import render_keypoint_overlay
+from frontend.utils.font_loader import load_font as _load_font
 from frontend.utils.keypoint_labels import overlay_keypoint_labels
 from frontend.utils.report_formatting import (
     confidence_text,
@@ -21,15 +22,6 @@ from frontend.utils.report_formatting import (
     model_threshold,
     runtime_model_loaded,
 )
-
-
-def _load_font(size: int):
-    for font_name in ("arial.ttf", "segoeui.ttf", "DejaVuSans.ttf"):
-        try:
-            return ImageFont.truetype(font_name, size=size)
-        except OSError:
-            continue
-    return ImageFont.load_default()
 
 
 def _single_frame(array: np.ndarray) -> np.ndarray:
@@ -185,7 +177,7 @@ def render_viewer(
         )
         return
 
-    st.image(build_overlay_image(preview, result, show_keypoints=show_keypoints), use_container_width=True)
+    st.image(build_overlay_image(preview, result, show_keypoints=show_keypoints), use_column_width=True)
     chips = [
         f"Modality: {preview_metadata.get('modality', 'не указана')}",
         f"Размер: {preview_metadata.get('rows', 0)}x{preview_metadata.get('columns', 0)}",

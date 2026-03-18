@@ -26,7 +26,8 @@ class FocalLoss(nn.Module):
         bce_loss = F.binary_cross_entropy_with_logits(logits, targets, reduction="none")
         probabilities = torch.sigmoid(logits)
         pt = torch.where(targets > 0.5, probabilities, 1.0 - probabilities)
-        focal_weight = self.alpha * torch.pow(1.0 - pt, self.gamma)
+        alpha_t = torch.where(targets > 0.5, self.alpha, 1.0 - self.alpha)
+        focal_weight = alpha_t * torch.pow(1.0 - pt, self.gamma)
         loss = focal_weight * bce_loss
 
         if self.reduction == "sum":

@@ -18,6 +18,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from data.import_mtddh_keypoints import RAW_KEYPOINT_NAMES
 from data.keypoint_dataset import MTDDHKeypointDataset
 from models.keypoint_detector import KeypointDetector
 from models.keypoint_losses import MaskedMSELoss, decode_heatmaps
@@ -118,7 +119,7 @@ def _compute_val_metrics(
             bbox = batch["bbox"].to(device, non_blocking=True)
 
             try:
-                with autocast(device_type="cuda", enabled=amp_enabled):
+                with autocast(device_type=device.type, enabled=amp_enabled):
                     predictions = model(inputs)
                     loss = criterion(predictions, targets, visibility)
             except RuntimeError as exc:
@@ -177,7 +178,7 @@ def train_keypoint_experiment(config: KeypointTrainingConfig) -> Path:
     )
 
     model = KeypointDetector(
-        num_keypoints=8,
+        num_keypoints=len(RAW_KEYPOINT_NAMES),
         pretrained=True,
         pretrained_weights_path=config.pretrained_weights_path,
     ).to(device)
@@ -215,7 +216,7 @@ def train_keypoint_experiment(config: KeypointTrainingConfig) -> Path:
             sample_count += int(inputs.shape[0])
 
             try:
-                with autocast(device_type="cuda", enabled=amp_enabled):
+                with autocast(device_type=device.type, enabled=amp_enabled):
                     predictions = model(inputs)
                     loss = criterion(predictions, targets, visibility)
                 scaler.scale(loss).backward()

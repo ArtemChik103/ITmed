@@ -428,7 +428,7 @@ def train_one_epoch(
         sample_count += int(inputs.shape[0])
 
         try:
-            with autocast(device_type="cuda", enabled=amp_enabled):
+            with autocast(device_type=device.type, enabled=amp_enabled):
                 logits = model(inputs)
                 loss = criterion(logits, targets)
                 scaled_loss = loss / gradient_accumulation
@@ -470,7 +470,7 @@ def predict_loader(
         targets = batch["target"].detach().cpu().numpy()
 
         try:
-            with autocast(device_type="cuda", enabled=amp_enabled):
+            with autocast(device_type=device.type, enabled=amp_enabled):
                 logits = model(inputs)
         except RuntimeError as exc:
             if is_out_of_memory_error(exc):
@@ -901,7 +901,7 @@ def main() -> int:
 
     try:
         experiment_dir = run_cross_validation(config)
-    except BaseException as exc:
+    except Exception as exc:
         if is_out_of_memory_error(exc):
             raise_oom_system_exit(exc, input_size=config.input_size, batch_size=config.batch_size)
         raise
