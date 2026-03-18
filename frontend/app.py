@@ -74,6 +74,7 @@ def _inject_styles() -> None:
             --warning: #f59e0b;
             --danger: #ef4444;
             --success-glow: rgba(16, 185, 129, 0.15);
+            --warning-glow: rgba(245, 158, 11, 0.15);
             --danger-glow: rgba(239, 68, 68, 0.15);
 
             /* Typography Settings */

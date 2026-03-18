@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 ALLOWED_EXTENSIONS = {".dcm", ".dicom"}
 ALLOWED_MODES = {"doctor", "education"}
 APP_VERSION = "1.0.0"
+MAX_UPLOAD_BYTES = 200 * 1024 * 1024  # 200 MB
 
 
 def build_plugin_manager() -> PluginManager:
@@ -45,9 +46,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+_CORS_ORIGINS = os.getenv("CORS_ORIGINS", "").split(",")
+_CORS_ORIGINS = [origin.strip() for origin in _CORS_ORIGINS if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_CORS_ORIGINS or ["http://localhost:8501", "http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -85,6 +89,11 @@ async def analyze_image(
         )
 
     contents = await file.read()
+    if len(contents) > MAX_UPLOAD_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Файл слишком большой ({len(contents)} байт). Максимум: {MAX_UPLOAD_BYTES} байт.",
+        )
     logger.info("Получен файл '%s', размер: %d байт", filename, len(contents))
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:

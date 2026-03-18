@@ -164,7 +164,7 @@ def load_dicom(file_path: str) -> tuple[np.ndarray, dict[str, Any]]:
         "photometric_interpretation": _extract_text(ds, "PhotometricInterpretation"),
         "samples_per_pixel": _extract_int(getattr(ds, "SamplesPerPixel", None)),
         "number_of_frames": _extract_int(getattr(ds, "NumberOfFrames", None)),
-        "bits_allocated": getattr(ds, "BitsAllocated", None),
+        "bits_allocated": _extract_int(getattr(ds, "BitsAllocated", None)),
         "image_shape": list(pixel_array.shape),
     }
 

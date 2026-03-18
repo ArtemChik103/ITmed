@@ -118,7 +118,7 @@ def _compute_val_metrics(
             bbox = batch["bbox"].to(device, non_blocking=True)
 
             try:
-                with autocast(device_type="cuda", enabled=amp_enabled):
+                with autocast(device_type=device.type, enabled=amp_enabled):
                     predictions = model(inputs)
                     loss = criterion(predictions, targets, visibility)
             except RuntimeError as exc:
@@ -215,7 +215,7 @@ def train_keypoint_experiment(config: KeypointTrainingConfig) -> Path:
             sample_count += int(inputs.shape[0])
 
             try:
-                with autocast(device_type="cuda", enabled=amp_enabled):
+                with autocast(device_type=device.type, enabled=amp_enabled):
                     predictions = model(inputs)
                     loss = criterion(predictions, targets, visibility)
                 scaler.scale(loss).backward()
