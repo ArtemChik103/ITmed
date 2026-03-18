@@ -48,7 +48,7 @@
 - [frontend/app.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/app.py): Streamlit frontend.
 - [frontend/utils/pdf_export.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/utils/pdf_export.py): генерация PDF-отчета.
 - [scripts/export_test_done_reports.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/export_test_done_reports.py): единый batch pipeline по `test_done`.
-- [scripts/generate_presentation_pdf.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/generate_presentation_pdf.py): генерация `presentation.html` и экспорт `presentation.pdf`.
+- [scripts/generate_presentation_pdf.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/generate_presentation_pdf.py): экспорт существующего `presentation.html` в `presentation.pdf`.
 
 ## Быстрый запуск
 
@@ -116,14 +116,17 @@ python scripts/verify_id_format.py ^
 
 ## HTML и PDF со слайдами
 
+Исходником презентации является обычный HTML-файл:
+
+- [deliverables/presentation.html](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.html)
+
 ```bash
 python scripts/generate_presentation_pdf.py ^
-  --test-root ../test_done ^
-  --html-output deliverables/presentation.html ^
+  --input deliverables/presentation.html ^
   --output deliverables/presentation.pdf
 ```
 
-Скрипт сначала собирает standalone HTML-презентацию, а затем экспортирует из нее PDF через headless browser. Это убирает проблемы со шрифтами и дает одинаковый внешний вид в браузере и в PDF.
+Скрипт не генерирует слайды заново. Он просто берет готовый HTML и печатает его в PDF через headless browser, поэтому HTML остается единственным исходником презентации.
 
 ## Тесты
 

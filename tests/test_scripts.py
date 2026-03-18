@@ -240,30 +240,29 @@ def test_export_test_done_reports_writes_final_artifacts(tmp_path: Path):
     assert zip_output.exists()
 
 
-def test_generate_presentation_html_writes_exportable_deck(tmp_path: Path):
-    test_root = tmp_path / "test_done"
-    test_root.mkdir()
-    build_test_dicom(test_root / "AAA111.dcm", pixel_spacing=[0.2, 0.2], study_date="20260101")
-    build_test_dicom(test_root / "BBB222.dcm", pixel_spacing=[0.2, 0.2], study_date="20260101")
-
-    html_output = tmp_path / "deliverables" / "presentation.html"
-    pdf_output = tmp_path / "deliverables" / "presentation.pdf"
+def test_generate_presentation_pdf_exports_existing_html(tmp_path: Path):
+    html_output = tmp_path / "presentation.html"
+    html_output.write_text(
+        (
+            "<!DOCTYPE html><html><head><meta charset='utf-8'>"
+            "<style>@page { size: 800px 450px; margin: 0; } "
+            "body { margin: 0; font-family: sans-serif; } "
+            ".slide { width: 800px; height: 450px; background: #f8f3eb; "
+            "display: flex; align-items: center; justify-content: center; font-size: 32px; }"
+            "</style></head><body><section class='slide'>Экспорт в PDF</section></body></html>"
+        ),
+        encoding="utf-8",
+    )
+    pdf_output = tmp_path / "presentation.pdf"
     exit_code = generate_presentation_main(
         [
-            "--test-root",
-            str(test_root),
-            "--html-output",
+            "--input",
             str(html_output),
             "--output",
             str(pdf_output),
-            "--skip-pdf",
         ]
     )
 
-    html_text = html_output.read_text(encoding="utf-8")
-
     assert exit_code == 0
-    assert html_output.exists()
-    assert "Экспорт в PDF" in html_text
-    assert "Classifier-first runtime" in html_text
-    assert not pdf_output.exists()
+    assert pdf_output.exists()
+    assert pdf_output.stat().st_size > 1000

@@ -6,34 +6,44 @@
   <title>ИТ+Мед 2026 · Финальная презентация</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Unbounded:wght@400;500;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Prata&display=swap&subset=cyrillic" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4ede3;
-      --surface: rgba(255, 250, 244, 0.88);
-      --surface-strong: rgba(255, 245, 235, 0.98);
-      --ink: #16212f;
-      --muted: #5e6a77;
-      --accent: #b4491d;
-      --accent-deep: #7d2e10;
-      --line: rgba(22, 33, 47, 0.12);
-      --shadow: 0 30px 80px rgba(89, 58, 36, 0.14);
-      --display: "Unbounded", "Trebuchet MS", sans-serif;
+      --bg: #efe5d6;
+      --paper: #faf4ea;
+      --paper-strong: #fffaf3;
+      --ink: #142434;
+      --muted: #647282;
+      --line: rgba(20, 36, 52, 0.14);
+      --accent: #a2451c;
+      --accent-soft: #dcb59f;
+      --accent-deep: #6f2d10;
+      --teal: #1f4b57;
+      --mono: "IBM Plex Mono", "Consolas", monospace;
       --body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --display: "Prata", "Georgia", serif;
+      --shadow: 0 28px 72px rgba(72, 50, 30, 0.14);
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: var(--body);
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(180, 73, 29, 0.12), transparent 36%),
-        radial-gradient(circle at 85% 15%, rgba(22, 33, 47, 0.08), transparent 28%),
-        linear-gradient(180deg, #fbf6ef 0%, #f4ede3 100%);
       min-height: 100vh;
-      overflow-x: hidden;
+      color: var(--ink);
+      font-family: var(--body);
+      background:
+        radial-gradient(circle at top left, rgba(162, 69, 28, 0.12), transparent 32%),
+        radial-gradient(circle at 85% 20%, rgba(31, 75, 87, 0.10), transparent 24%),
+        linear-gradient(180deg, #f6efe5 0%, #efe5d6 100%);
     }
 
     body::before {
@@ -42,37 +52,36 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: linear-gradient(180deg, rgba(0,0,0,0.28), transparent 85%);
-      opacity: 0.3;
+        linear-gradient(rgba(20, 36, 52, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 36, 52, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.24), transparent 88%);
+      opacity: 0.7;
     }
 
     .toolbar {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 18px;
+      right: 18px;
       z-index: 20;
       display: flex;
       gap: 10px;
-      align-items: center;
       padding: 10px 12px;
-      border: 1px solid rgba(22, 33, 47, 0.08);
+      border: 1px solid rgba(20, 36, 52, 0.10);
       border-radius: 999px;
-      background: rgba(255, 249, 241, 0.86);
+      background: rgba(250, 244, 234, 0.88);
       backdrop-filter: blur(12px);
-      box-shadow: 0 20px 35px rgba(89, 58, 36, 0.12);
+      box-shadow: 0 18px 40px rgba(72, 50, 30, 0.10);
     }
 
     .toolbar button,
     .toolbar a {
       border: 0;
       border-radius: 999px;
-      padding: 10px 14px;
-      font: 600 13px/1 var(--body);
+      padding: 11px 16px;
+      background: rgba(20, 36, 52, 0.06);
       color: var(--ink);
-      background: rgba(22, 33, 47, 0.06);
+      font: 600 13px/1 var(--body);
       text-decoration: none;
       cursor: pointer;
       transition: transform .2s ease, background .2s ease, color .2s ease;
@@ -80,176 +89,166 @@
 
     .toolbar button.primary {
       background: var(--accent);
-      color: #fff7f1;
+      color: #fffaf4;
     }
 
     .toolbar button:hover,
     .toolbar a:hover {
       transform: translateY(-1px);
-      background: rgba(22, 33, 47, 0.12);
+      background: rgba(20, 36, 52, 0.12);
     }
 
-    .toolbar button.primary:hover { background: var(--accent-deep); }
+    .toolbar button.primary:hover {
+      background: var(--accent-deep);
+    }
 
     .deck {
       width: min(100%, 1560px);
       margin: 0 auto;
-      padding: 88px 28px 72px;
+      padding: 84px 24px 64px;
       display: grid;
       gap: 28px;
     }
 
     .slide {
       position: relative;
-      min-height: calc(100vh - 120px);
-      padding: 42px 44px;
-      border: 1px solid rgba(22, 33, 47, 0.08);
+      min-height: calc(100vh - 112px);
+      padding: 42px;
+      border: 1px solid rgba(20, 36, 52, 0.08);
       border-radius: 34px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.88)),
-        linear-gradient(135deg, rgba(228, 179, 147, 0.12), transparent 45%);
+        linear-gradient(180deg, rgba(255, 251, 245, 0.92), rgba(250, 244, 234, 0.96)),
+        linear-gradient(135deg, rgba(220, 181, 159, 0.14), transparent 40%);
       box-shadow: var(--shadow);
       overflow: hidden;
-      isolation: isolate;
     }
 
     .slide::after {
       content: "";
       position: absolute;
-      width: 380px;
-      height: 380px;
-      right: -120px;
-      top: -140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(180, 73, 29, 0.12), rgba(180, 73, 29, 0));
-      z-index: -1;
+      inset: 18px;
+      border: 1px solid rgba(20, 36, 52, 0.06);
+      border-radius: 24px;
+      pointer-events: none;
     }
 
-    .slide-meta {
+    .slide-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow,
+    .page-number,
+    .label {
+      font-family: var(--mono);
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
+    }
+
+    .eyebrow {
       color: var(--accent);
     }
 
-    .page-no { color: rgba(22, 33, 47, 0.36); }
+    .page-number {
+      color: rgba(20, 36, 52, 0.34);
+    }
 
     .slide-title {
       margin: 0;
-      max-width: 15ch;
-      font: 800 clamp(42px, 6vw, 86px)/1.04 var(--display);
-      letter-spacing: -0.05em;
-    }
-
-    .slide-subtitle,
-    .hero-lead,
-    .content-block p,
-    .side-note p,
-    .arch-card p,
-    .deliverable-card p,
-    .panel-card p,
-    .step-card p,
-    .footer-note,
-    .closing-note {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(18px, 2vw, 24px);
-      line-height: 1.45;
+      max-width: 12ch;
+      font: 400 clamp(42px, 5.4vw, 84px)/0.98 var(--display);
+      letter-spacing: -0.04em;
     }
 
     .slide-subtitle {
+      margin: 16px 0 0;
       max-width: 44rem;
-      margin-top: 12px;
+      color: var(--muted);
+      font-size: clamp(19px, 2vw, 27px);
+      line-height: 1.45;
     }
 
-    .hero-layout,
-    .split-layout,
-    .process-layout {
+    .cover-grid,
+    .split-grid,
+    .stack-grid,
+    .final-grid {
       display: grid;
-      gap: 28px;
-      margin-top: 30px;
+      gap: 24px;
     }
 
-    .hero-layout {
-      grid-template-columns: 1.3fr .9fr;
-      align-items: end;
+    .cover-grid {
+      grid-template-columns: 1.2fr .8fr;
+      align-items: stretch;
     }
 
-    .hero-copy {
-      display: grid;
-      gap: 20px;
+    .kicker {
+      margin-top: 28px;
+      max-width: 36rem;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.2;
+      letter-spacing: -0.04em;
     }
 
-    .hero-lead {
-      max-width: 42rem;
-      font-size: clamp(21px, 2.4vw, 30px);
-      color: var(--ink);
-    }
-
-    .chip-row {
+    .chip-row,
+    .stat-row {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      margin-top: 26px;
     }
 
     .chip {
-      display: inline-flex;
-      align-items: center;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(22, 33, 47, 0.06);
-      color: var(--ink);
+      background: rgba(20, 36, 52, 0.06);
       font-size: 14px;
       font-weight: 600;
     }
 
-    .hero-aside {
-      display: grid;
-      gap: 18px;
-      align-self: stretch;
-    }
-
-    .radar-card,
-    .side-note,
-    .arch-card,
-    .panel-card,
-    .step-card,
-    .deliverable-card,
-    .metric-card {
+    .panel,
+    .stat-card,
+    .step,
+    .artifact,
+    .mode-card,
+    .quote-card,
+    .ledger {
+      position: relative;
       border: 1px solid var(--line);
       border-radius: 24px;
-      background: var(--surface);
+      background: rgba(255, 251, 245, 0.74);
       padding: 22px;
-      backdrop-filter: blur(10px);
     }
 
-    .radar-card {
-      min-height: 220px;
+    .hero-panel {
       display: grid;
-      align-content: space-between;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
       background:
-        linear-gradient(180deg, rgba(180, 73, 29, 0.12), rgba(255, 255, 255, 0.36)),
-        var(--surface);
+        linear-gradient(180deg, rgba(162, 69, 28, 0.08), rgba(255, 251, 245, 0.88)),
+        rgba(255, 251, 245, 0.86);
     }
 
-    .radar-card strong {
-      font: 700 clamp(28px, 3vw, 40px)/1.12 var(--display);
-      letter-spacing: -0.04em;
+    .hero-panel strong {
+      font-size: clamp(32px, 3.5vw, 52px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
     }
 
-    .radar-label,
-    .note-kicker {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent);
+    .hero-panel p,
+    .panel p,
+    .quote-card p,
+    .artifact p,
+    .mode-card p,
+    .ledger p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.8vw, 24px);
+      line-height: 1.45;
     }
 
     .metrics-grid {
@@ -258,176 +257,263 @@
       gap: 14px;
     }
 
-    .metrics-grid.wide { align-content: start; }
-
-    .metric-card {
-      min-height: 124px;
+    .stat-card {
+      min-height: 132px;
       display: grid;
       align-content: space-between;
-      background: var(--surface-strong);
+      background: var(--paper-strong);
     }
 
-    .metric-value {
-      font: 700 clamp(32px, 3.1vw, 52px)/1 var(--display);
-      letter-spacing: -0.05em;
+    .stat-card strong {
+      font: 600 clamp(40px, 4vw, 64px)/1 var(--display);
+      letter-spacing: -0.06em;
     }
 
-    .metric-label {
+    .label {
       color: var(--muted);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
     }
 
-    .split-layout {
-      grid-template-columns: 1.25fr .75fr;
+    .split-grid {
+      grid-template-columns: 1.1fr .9fr;
       align-items: start;
-    }
-
-    .content-block {
-      display: grid;
-      gap: 26px;
+      margin-top: 28px;
     }
 
     .bullet-list,
-    .panel-list {
+    .step-list,
+    .mini-list {
+      list-style: none;
       margin: 0;
       padding: 0;
-      list-style: none;
       display: grid;
       gap: 14px;
     }
 
-    .bullet-item,
-    .panel-item {
+    .bullet-list li,
+    .mini-list li {
       position: relative;
-      padding-left: 30px;
-      color: var(--ink);
-      font-size: clamp(18px, 2.1vw, 28px);
+      padding-left: 28px;
+      font-size: clamp(19px, 2vw, 28px);
       line-height: 1.35;
     }
 
-    .bullet-item::before,
-    .panel-item::before {
+    .bullet-list li::before,
+    .mini-list li::before {
       content: "";
       position: absolute;
       left: 0;
-      top: 0.62em;
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
+      top: 0.58em;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 6px rgba(180, 73, 29, 0.12);
+      box-shadow: 0 0 0 6px rgba(162, 69, 28, 0.10);
     }
 
-    .arch-grid,
-    .panel-grid,
-    .deliverables-grid {
+    .ledger {
+      min-height: 100%;
+      background:
+        linear-gradient(180deg, rgba(31, 75, 87, 0.08), rgba(255, 251, 245, 0.84)),
+        rgba(255, 251, 245, 0.88);
+    }
+
+    .ledger-grid {
+      margin-top: 20px;
       display: grid;
-      gap: 18px;
-      margin-top: 32px;
+      gap: 12px;
     }
 
-    .arch-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .panel-grid,
-    .deliverables-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ledger-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(20, 36, 52, 0.08);
+      font-size: 17px;
+    }
 
-    .arch-card h3,
-    .panel-card h3,
-    .deliverable-card h3 {
+    .ledger-row span:last-child {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .three-up {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .panel h3,
+    .mode-card h3,
+    .artifact h3,
+    .quote-card h3 {
       margin: 0 0 10px;
-      font: 700 clamp(24px, 2.4vw, 34px)/1.12 var(--display);
+      font-size: clamp(24px, 2.2vw, 34px);
+      line-height: 1.12;
       letter-spacing: -0.04em;
     }
 
-    .footer-note,
-    .closing-note {
-      margin-top: 24px;
-      max-width: 44rem;
+    .modes {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
     }
 
-    .hero-quote {
-      margin: 26px 0 0;
-      padding: 24px 28px;
-      border-left: 8px solid var(--accent);
-      border-radius: 0 24px 24px 0;
-      background: rgba(180, 73, 29, 0.08);
-      color: var(--ink);
-      font: 600 clamp(26px, 3vw, 42px)/1.28 var(--body);
+    .mode-card {
+      min-height: 360px;
+      display: grid;
+      align-content: start;
+      gap: 16px;
     }
 
-    .bullet-list.compact { margin-top: 24px; gap: 12px; }
-
-    .process-layout {
-      grid-template-columns: 1.1fr .9fr;
-      align-items: start;
+    .ribbon {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(20, 36, 52, 0.07);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
-    .steps-grid {
+    .quote-layout {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .quote-card {
+      background:
+        linear-gradient(180deg, rgba(162, 69, 28, 0.10), rgba(255, 251, 245, 0.88)),
+        rgba(255, 251, 245, 0.88);
+    }
+
+    .quote-card blockquote {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.2;
+      letter-spacing: -0.05em;
+    }
+
+    .step-grid,
+    .artifact-grid {
+      margin-top: 30px;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
-      margin-top: 30px;
     }
 
-    .step-card {
-      min-height: 150px;
+    .step {
+      min-height: 156px;
       display: grid;
+      gap: 18px;
       align-content: space-between;
     }
 
     .step-index {
-      font: 800 18px/1 var(--display);
-      letter-spacing: -0.04em;
+      font-family: var(--display);
+      font-size: 40px;
+      letter-spacing: -0.06em;
       color: var(--accent);
     }
 
-    .step-card p {
-      color: var(--ink);
-      font-size: clamp(18px, 1.7vw, 24px);
+    .step p {
+      margin: 0;
+      font-size: clamp(20px, 1.9vw, 26px);
+      line-height: 1.28;
     }
 
-    .deliverable-card {
+    .artifact {
       min-height: 220px;
       display: grid;
       align-content: start;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .slide-final .closing-note {
-      font-size: clamp(22px, 2.6vw, 34px);
-      color: var(--accent-deep);
-      max-width: 36rem;
+    .artifact-grid .artifact:nth-child(2),
+    .artifact-grid .artifact:nth-child(3) {
+      background:
+        linear-gradient(180deg, rgba(31, 75, 87, 0.08), rgba(255, 251, 245, 0.88)),
+        rgba(255, 251, 245, 0.92);
+    }
+
+    .final-grid {
+      grid-template-columns: 1fr .8fr;
+      align-items: start;
+      margin-top: 28px;
+    }
+
+    .closing {
+      min-height: 100%;
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      background:
+        linear-gradient(180deg, rgba(162, 69, 28, 0.10), rgba(255, 251, 245, 0.92)),
+        rgba(255, 251, 245, 0.90);
+    }
+
+    .closing strong {
+      font-size: clamp(32px, 3vw, 46px);
+      line-height: 1.04;
+      letter-spacing: -0.05em;
+    }
+
+    .closing p {
+      margin: 0;
+      font-size: clamp(18px, 1.8vw, 24px);
+      line-height: 1.4;
+      color: var(--muted);
     }
 
     @media (max-width: 1100px) {
-      .hero-layout,
-      .split-layout,
-      .process-layout,
-      .arch-grid,
-      .panel-grid,
-      .deliverables-grid,
-      .steps-grid {
+      .cover-grid,
+      .split-grid,
+      .quote-layout,
+      .final-grid,
+      .three-up,
+      .modes,
+      .step-grid,
+      .artifact-grid {
         grid-template-columns: 1fr;
       }
 
-      .slide { min-height: auto; }
-      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .metrics-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .slide {
+        min-height: auto;
+      }
     }
 
-    @media (max-width: 720px) {
-      .deck { padding: 88px 16px 32px; }
-      .slide { padding: 26px 22px; border-radius: 24px; }
+    @media (max-width: 760px) {
+      .deck {
+        padding: 86px 14px 30px;
+      }
 
-      .toolbar {
-        right: 12px;
-        left: 12px;
-        justify-content: space-between;
-        flex-wrap: wrap;
+      .slide {
+        padding: 24px;
         border-radius: 24px;
       }
 
-      .metrics-grid { grid-template-columns: 1fr; }
+      .toolbar {
+        left: 12px;
+        right: 12px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border-radius: 24px;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @page {
@@ -436,9 +522,21 @@
     }
 
     @media print {
-      html, body { background: #fff; }
-      body::before, .toolbar { display: none !important; }
-      .deck { width: auto; margin: 0; padding: 0; gap: 0; }
+      body {
+        background: #fff;
+      }
+
+      body::before,
+      .toolbar {
+        display: none !important;
+      }
+
+      .deck {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        gap: 0;
+      }
 
       .slide {
         width: 1600px;
@@ -451,11 +549,6 @@
         break-after: page;
       }
     }
-
-    * {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
   </style>
 </head>
 <body>
@@ -467,14 +560,259 @@
   </div>
 
   <main class="deck">
-    <section class="slide slide-hero" id="slide-1"><div class="hero-layout"><div class="hero-copy"><div class="slide-meta"><span class="eyebrow">Финальная защита</span><span class="page-no">01/08</span></div><h2 class="slide-title">ИТ+Мед 2026</h2><p class="slide-subtitle">Classifier-first система анализа DICOM-снимков тазобедренных суставов</p><p class="hero-lead">Сдача собрана как единый воспроизводимый пакет: чистый публичный репозиторий, HTML/PDF-презентация, обязательный `id,class` и текстовый архив результатов.</p><div class="chip-row"><span class="chip">FastAPI</span><span class="chip">Streamlit</span><span class="chip">DICOM</span><span class="chip">Classifier-first</span><span class="chip">Explainability</span></div></div><div class="hero-aside"><div class="radar-card"><span class="radar-label">Фокус защиты</span><strong>Практический pipeline, честные ограничения, чистые артефакты.</strong></div><div class="metrics-grid"><div class="metric-card"><span class="metric-value">19</span><span class="metric-label">Объектов в test_done</span></div><div class="metric-card"><span class="metric-value">15</span><span class="metric-label">Патология</span></div><div class="metric-card"><span class="metric-value">4</span><span class="metric-label">Норма</span></div></div></div></div></section>
-<section class="slide slide-split" id="slide-2"><div class="split-layout"><div class="content-block"><div class="slide-meta"><span class="eyebrow">Задача</span><span class="page-no">02/08</span></div><h2 class="slide-title">Что нужно было сдать</h2><p class="slide-subtitle">Не исследовательскую свалку, а компактный экспертный пакет.</p><ul class="bullet-list"><li class="bullet-item">Публичный репозиторий с понятной точкой входа и без противоречивых материалов.</li><li class="bullet-item">Файл `predictions.csv` в строгом формате `id,class`.</li><li class="bullet-item">Архив `results_test_done.zip` с машиночитаемыми JSON/TXT-отчетами по каждому объекту.</li><li class="bullet-item">Слайды, которые можно показать за 5 минут без перегруза и псевдомедицинских обещаний.</li></ul></div><aside class="side-note"><span class="note-kicker">Ключевое решение</span><p>Архив результатов сделан текстовым, а не набором картинок. Так его легче проверить автоматически, открыть локально и показать экспертам.</p></aside></div></section>
-<section class="slide slide-architecture" id="slide-3"><div class="slide-meta"><span class="eyebrow">Архитектура</span><span class="page-no">03/08</span></div><h2 class="slide-title">Classifier-first runtime</h2><p class="slide-subtitle">Основной verdict дает модель, explainability подключается отдельно.</p><div class="arch-grid"><article class="arch-card"><h3>1. DICOM intake</h3><p>Backend принимает `.dcm`, валидирует структуру и извлекает метаданные без ручной подготовки файла.</p></article><article class="arch-card"><h3>2. Plugin runtime</h3><p>Плагин `hip_dysplasia` считает `confidence`, `threshold`, `class` и флаги загрузки runtime.</p></article><article class="arch-card"><h3>3. Explainability</h3><p>Keypoints включаются только в режиме `education` и не меняют итоговый бинарный verdict.</p></article></div><p class="footer-note">Такой разрез проще защищать: диагноз, confidence и ограничения разделены явно.</p></section>
-<section class="slide slide-two-panel" id="slide-4"><div class="slide-meta"><span class="eyebrow">Интерфейс</span><span class="page-no">04/08</span></div><h2 class="slide-title">Два режима для двух сценариев</h2><p class="slide-subtitle">Один экран для врача, другой для демонстрации и обучения.</p><div class="panel-grid"><article class="panel-card"><h3>Режим врача</h3><ul class="panel-list"><li class="panel-item">краткая сводка по диагнозу</li><li class="panel-item">confidence и threshold</li><li class="panel-item">warnings и runtime status</li><li class="panel-item">без лишней визуальной нагрузки</li></ul></article><article class="panel-card"><h3>Режим обучения</h3><ul class="panel-list"><li class="panel-item">keypoint overlay</li><li class="panel-item">расширенный JSON/PDF-слой</li><li class="panel-item">объяснение статуса geometry</li><li class="panel-item">отдельный explainability-контур</li></ul></article></div></section>
-<section class="slide slide-quote" id="slide-5"><div class="slide-meta"><span class="eyebrow">Ограничение</span><span class="page-no">05/08</span></div><h2 class="slide-title">Почему geometry отключена</h2><p class="slide-subtitle">Мы не подменяем клинический смысл неподтвержденными числами.</p><blockquote class="hero-quote">Количественная geometry автоматически не рассчитывается, потому что семантика raw MTDDH keypoints пока не валидирована для клинического использования.</blockquote><ul class="bullet-list compact"><li class="bullet-item">Keypoints остаются в продукте как anatomy/explainability layer.</li><li class="bullet-item">UI, TXT, JSON и PDF пишут об ограничении честно и одинаково.</li><li class="bullet-item">Это снижает риск ложных clinical claims на защите.</li></ul></section>
-<section class="slide slide-process" id="slide-6"><div class="slide-meta"><span class="eyebrow">Batch pipeline</span><span class="page-no">06/08</span></div><h2 class="slide-title">Один запуск по всему test_done</h2><p class="slide-subtitle">От объекта до готовых deliverables без ручной склейки.</p><div class="process-layout"><div class="steps-grid"><div class="step-card"><span class="step-index">01</span><p>собрать все DICOM внутри объекта</p></div><div class="step-card"><span class="step-index">02</span><p>прогнать локальный runtime</p></div><div class="step-card"><span class="step-index">03</span><p>агрегировать объектный verdict</p></div><div class="step-card"><span class="step-index">04</span><p>сохранить `predictions.csv` и `summary.csv`</p></div><div class="step-card"><span class="step-index">05</span><p>сохранить `reports/{id}.json` и `reports/{id}.txt`</p></div><div class="step-card"><span class="step-index">06</span><p>упаковать `results_test_done.zip`</p></div></div><div class="metrics-grid wide"><div class="metric-card"><span class="metric-value">19</span><span class="metric-label">Runtime loaded</span></div><div class="metric-card"><span class="metric-value">19</span><span class="metric-label">Keypoints ready</span></div><div class="metric-card"><span class="metric-value">0.488</span><span class="metric-label">Средний confidence</span></div><div class="metric-card"><span class="metric-value">0.617</span><span class="metric-label">Максимальный confidence</span></div></div></div></section>
-<section class="slide slide-deliverables" id="slide-7"><div class="slide-meta"><span class="eyebrow">Артефакты</span><span class="page-no">07/08</span></div><h2 class="slide-title">Что получает эксперт</h2><p class="slide-subtitle">Пакет собран так, чтобы его можно было проверить и глазами, и скриптом.</p><div class="deliverables-grid"><article class="deliverable-card"><h3>Репозиторий</h3><p>Чистый `main`, актуальный README, запуск API/frontend и финальные команды.</p></article><article class="deliverable-card"><h3>presentation.html</h3><p>Человеческая версия слайдов: красиво открывается в браузере и умеет печататься в PDF.</p></article><article class="deliverable-card"><h3>presentation.pdf</h3><p>Экспортируется из того же HTML, поэтому визуально совпадает со слайдами.</p></article><article class="deliverable-card"><h3>results_test_done.zip</h3><p>Внутри `predictions.csv`, `summary.csv`, `README_results.txt` и per-object JSON/TXT.</p></article></div></section>
-<section class="slide slide-final" id="slide-8"><div class="slide-meta"><span class="eyebrow">Финал</span><span class="page-no">08/08</span></div><h2 class="slide-title">Что важно на защите</h2><p class="slide-subtitle">Не обещать лишнего и показывать воспроизводимость.</p><ul class="bullet-list"><li class="bullet-item">Classifier runtime выдает бинарный verdict для всех объектов `test_done`.</li><li class="bullet-item">Explainability сохранен, но не влияет на диагностическое решение.</li><li class="bullet-item">Все итоговые артефакты можно пересобрать одной командой из текущего репозитория.</li></ul><p class="closing-note">HTML-first презентация решает проблему качества рендера и дает нормальный PDF без артефактов шрифтов.</p></section>
+    <section class="slide" id="slide-1">
+      <div class="slide-header">
+        <span class="eyebrow">Финальная защита</span>
+        <span class="page-number">01 / 08</span>
+      </div>
+      <div class="cover-grid">
+        <div>
+          <h1 class="slide-title">ИТ+Мед 2026</h1>
+          <p class="slide-subtitle">Classifier-first система анализа DICOM-снимков тазобедренных суставов.</p>
+          <p class="kicker">Показываю не исследовательский архив, а финальный пакет для экспертов: чистый репозиторий, обязательный `id,class`, текстовый архив результатов и презентацию, которую можно открыть в браузере и сразу печатать в PDF.</p>
+          <div class="chip-row">
+            <span class="chip">FastAPI backend</span>
+            <span class="chip">Streamlit frontend</span>
+            <span class="chip">DICOM runtime</span>
+            <span class="chip">Explainability layer</span>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <span class="label">Фокус защиты</span>
+          <strong>Практический pipeline, честные ограничения и проверяемые deliverables.</strong>
+          <div class="metrics-grid">
+            <div class="stat-card">
+              <strong>19</strong>
+              <span class="label">объектов в test_done</span>
+            </div>
+            <div class="stat-card">
+              <strong>15</strong>
+              <span class="label">патология</span>
+            </div>
+            <div class="stat-card">
+              <strong>4</strong>
+              <span class="label">норма</span>
+            </div>
+            <div class="stat-card">
+              <strong>1</strong>
+              <span class="label">единый batch pipeline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-header">
+        <span class="eyebrow">Постановка</span>
+        <span class="page-number">02 / 08</span>
+      </div>
+      <h2 class="slide-title">Что именно нужно было сдать</h2>
+      <p class="slide-subtitle">Смысл этой версии проекта не в исследовательской истории, а в понятном финальном комплекте для проверки.</p>
+      <div class="split-grid">
+        <div class="panel">
+          <ul class="bullet-list">
+            <li>Публичный репозиторий с актуальным кодом и README без противоречий.</li>
+            <li>Файл `predictions.csv` в формате `id,class` без пропусков и дублей.</li>
+            <li>Архив `results_test_done.zip` с `summary.csv` и детальными `json/txt` по каждому объекту.</li>
+            <li>Презентация, которую можно быстро показать за 5 минут и так же быстро распечатать в PDF.</li>
+          </ul>
+        </div>
+        <aside class="ledger">
+          <span class="label">Почему архив текстовый</span>
+          <div class="ledger-grid">
+            <div class="ledger-row">
+              <span>Сборка</span>
+              <span>проще и стабильнее, чем рендер набора jpg</span>
+            </div>
+            <div class="ledger-row">
+              <span>Проверка</span>
+              <span>удобно валидировать автоматически по CSV и JSON</span>
+            </div>
+            <div class="ledger-row">
+              <span>Защита</span>
+              <span>эксперт открывает summary и сразу идет к нужному id</span>
+            </div>
+            <div class="ledger-row">
+              <span>Риск</span>
+              <span>меньше шансов сломаться на шрифтах, картинках и предпросмотре</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-header">
+        <span class="eyebrow">Архитектура</span>
+        <span class="page-number">03 / 08</span>
+      </div>
+      <h2 class="slide-title">Classifier-first runtime</h2>
+      <p class="slide-subtitle">Диагноз дает классификатор. Explainability подключается рядом, но не вмешивается в итоговый бинарный verdict.</p>
+      <div class="three-up">
+        <article class="panel">
+          <span class="ribbon">01 · intake</span>
+          <h3>DICOM вход</h3>
+          <p>Backend принимает `.dcm`, читает pixel data, извлекает метаданные и валидирует снимок до inference.</p>
+        </article>
+        <article class="panel">
+          <span class="ribbon">02 · runtime</span>
+          <h3>Plugin `hip_dysplasia`</h3>
+          <p>Плагин считает `confidence`, `threshold`, бинарный класс и статусы загрузки runtime на уровне результата.</p>
+        </article>
+        <article class="panel">
+          <span class="ribbon">03 · explainability</span>
+          <h3>Keypoints</h3>
+          <p>Keypoint branch включается только как explainability layer в режиме `education` и не меняет диагноз.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-header">
+        <span class="eyebrow">Интерфейс</span>
+        <span class="page-number">04 / 08</span>
+      </div>
+      <h2 class="slide-title">Два режима, два сценария</h2>
+      <p class="slide-subtitle">Интерфейс разделен по задаче пользователя, а не по количеству виджетов.</p>
+      <div class="modes">
+        <article class="mode-card">
+          <span class="ribbon">Режим врача</span>
+          <h3>Короткая клиническая сводка</h3>
+          <ul class="mini-list">
+            <li>бинарный verdict</li>
+            <li>confidence и threshold</li>
+            <li>runtime/fallback status</li>
+            <li>validation warnings и DICOM metadata</li>
+          </ul>
+          <p>Смысл режима: быстрое чтение результата без визуального шума.</p>
+        </article>
+        <article class="mode-card">
+          <span class="ribbon">Режим обучения</span>
+          <h3>Explainability без подмены диагноза</h3>
+          <ul class="mini-list">
+            <li>keypoint overlay</li>
+            <li>расширенный JSON/PDF слой</li>
+            <li>пояснение статуса geometry</li>
+            <li>прозрачная логика ограничения</li>
+          </ul>
+          <p>Смысл режима: показать anatomy layer и объяснить, что именно система умеет и чего не обещает.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-header">
+        <span class="eyebrow">Ограничение</span>
+        <span class="page-number">05 / 08</span>
+      </div>
+      <h2 class="slide-title">Почему geometry отключена</h2>
+      <p class="slide-subtitle">В этой части мы сознательно выбрали честность вместо красивых, но невалидированных чисел.</p>
+      <div class="quote-layout">
+        <article class="quote-card">
+          <span class="ribbon">Ключевая формулировка</span>
+          <blockquote>Количественная geometry автоматически не рассчитывается, потому что семантика raw MTDDH keypoints пока не валидирована для клинического использования.</blockquote>
+        </article>
+        <article class="panel">
+          <span class="ribbon">Что это значит practically</span>
+          <ul class="bullet-list">
+            <li>Keypoints остаются в продукте как anatomy/explainability layer.</li>
+            <li>UI, TXT, JSON и PDF пишут об ограничении одинаково и без заглушек.</li>
+            <li>Мы не расширяем clinical claim за счет недоказанной интерпретации landmarks.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-header">
+        <span class="eyebrow">Pipeline</span>
+        <span class="page-number">06 / 08</span>
+      </div>
+      <h2 class="slide-title">Один batch по всему test_done</h2>
+      <p class="slide-subtitle">Никаких ручных пяти шагов. Один скрипт проходит по объектам и формирует весь экспертный пакет.</p>
+      <div class="step-grid">
+        <article class="step">
+          <span class="step-index">01</span>
+          <p>собрать все DICOM внутри объекта и определить `id`</p>
+        </article>
+        <article class="step">
+          <span class="step-index">02</span>
+          <p>прогнать локальный runtime и получить object-level verdict</p>
+        </article>
+        <article class="step">
+          <span class="step-index">03</span>
+          <p>сохранить `predictions.csv` и расширенный `summary.csv`</p>
+        </article>
+        <article class="step">
+          <span class="step-index">04</span>
+          <p>сохранить `reports/{id}.json` и `reports/{id}.txt`</p>
+        </article>
+        <article class="step">
+          <span class="step-index">05</span>
+          <p>упаковать `results_test_done.zip` и проверить полноту</p>
+        </article>
+        <article class="step">
+          <span class="step-index">06</span>
+          <p>экспортировать HTML-презентацию в финальный PDF</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-header">
+        <span class="eyebrow">Артефакты</span>
+        <span class="page-number">07 / 08</span>
+      </div>
+      <h2 class="slide-title">Что получает эксперт</h2>
+      <p class="slide-subtitle">Финальная структура сделана так, чтобы быстро открыть общий обзор и сразу перейти к конкретному объекту.</p>
+      <div class="artifact-grid">
+        <article class="artifact">
+          <span class="ribbon">01</span>
+          <h3>Репозиторий</h3>
+          <p>Чистый `main`, README, команды запуска, frontend/backend/runtime и скрипты финальной выгрузки.</p>
+        </article>
+        <article class="artifact">
+          <span class="ribbon">02</span>
+          <h3>`predictions.csv`</h3>
+          <p>Строгий файл `id,class` на все 19 объектов test_done, без пропусков и дублей.</p>
+        </article>
+        <article class="artifact">
+          <span class="ribbon">03</span>
+          <h3>`results_test_done.zip`</h3>
+          <p>`summary.csv`, `README_results.txt` и подробные `json/txt`-отчеты по каждому объекту.</p>
+        </article>
+        <article class="artifact">
+          <span class="ribbon">04</span>
+          <h3>`presentation.html` / `presentation.pdf`</h3>
+          <p>Один и тот же контент: сначала открывается как HTML, затем печатается в PDF без ручной верстки второго файла.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-header">
+        <span class="eyebrow">Финал</span>
+        <span class="page-number">08 / 08</span>
+      </div>
+      <h2 class="slide-title">Что важно проговорить на защите</h2>
+      <p class="slide-subtitle">Главный акцент не на количестве файлов, а на воспроизводимости и честной границе применимости решения.</p>
+      <div class="final-grid">
+        <article class="panel">
+          <ul class="bullet-list">
+            <li>Classifier runtime выдает бинарный verdict для всех объектов test_done.</li>
+            <li>Explainability сохранен, но не подменяет клиническое решение.</li>
+            <li>Geometry не выдумывается автоматически и это зафиксировано во всех отчетах.</li>
+            <li>Все deliverables можно пересобрать локально из текущего репозитория.</li>
+          </ul>
+        </article>
+        <article class="closing panel">
+          <span class="label">Итог</span>
+          <strong>Сдача оформлена как аккуратный инженерный пакет, а не как набор временных артефактов.</strong>
+          <p>HTML-файл является исходником презентации. Скрипт нужен только для экспорта этого файла в PDF, чтобы не дублировать верстку и не рисовать второй вариант вручную.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -482,9 +820,9 @@
     let activeIndex = 0;
 
     function scrollToSlide(index) {
-      const clamped = Math.max(0, Math.min(index, slides.length - 1));
-      activeIndex = clamped;
-      slides[clamped].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const next = Math.max(0, Math.min(index, slides.length - 1));
+      activeIndex = next;
+      slides[next].scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -502,11 +840,11 @@
     document.querySelector('[data-action="export"]').addEventListener('click', () => window.print());
 
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === 'ArrowRight') {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === 'PageDown') {
         event.preventDefault();
         scrollToSlide(activeIndex + 1);
       }
-      if (event.key === 'ArrowUp' || event.key === 'PageUp' || event.key === 'ArrowLeft') {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp' || event.key === 'PageUp') {
         event.preventDefault();
         scrollToSlide(activeIndex - 1);
       }
