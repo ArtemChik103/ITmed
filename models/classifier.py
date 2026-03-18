@@ -14,6 +14,8 @@ from torchvision.models import (
     resnet50,
 )
 
+from models.checkpoint_utils import torch_load as _torch_load
+
 ARCHITECTURES: dict[str, dict[str, Any]] = {
     "resnet34": {
         "builder": resnet34,
@@ -157,6 +159,3 @@ def load_classifier_from_checkpoint(
     model.to(device)
     model.eval()
     return model, checkpoint
-
-
-from models.checkpoint_utils import torch_load as _torch_load
