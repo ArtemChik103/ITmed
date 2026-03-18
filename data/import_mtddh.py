@@ -87,7 +87,7 @@ def build_mtddh_manifest(
         "label_source",
         "original_id",
     ]
-    manifest = eligible[manifest_columns].sort_values(["relative_path", "group_id"]).reset_index(drop=True)
+    manifest = eligible[manifest_columns].sort_values(["group_id", "relative_path"]).reset_index(drop=True)
     output_manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.to_csv(output_manifest, index=False)
 

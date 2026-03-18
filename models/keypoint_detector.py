@@ -122,8 +122,4 @@ def export_encoder_state_dict(model: KeypointDetector) -> dict[str, torch.Tensor
     }
 
 
-def _torch_load(path: Path, *, map_location: str | torch.device) -> Any:
-    try:
-        return torch.load(path, map_location=map_location, weights_only=False)
-    except TypeError:
-        return torch.load(path, map_location=map_location)
+from models.checkpoint_utils import torch_load as _torch_load

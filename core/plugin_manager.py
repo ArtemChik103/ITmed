@@ -88,18 +88,11 @@ class PluginManager:
         self._plugins[metadata.name] = plugin
         logger.info("Plugin '%s' v%s registered.", metadata.name, metadata.version)
 
-    def unregister(self, name: str) -> None:
-        self._plugins.pop(name, None)
-        self._loaded_plugins.discard(name)
-
     def get(self, name: str) -> IPlugin:
         if name not in self._plugins:
             available = ", ".join(self.list_plugins()) or "нет"
             raise KeyError(f"Плагин '{name}' не найден. Доступные плагины: {available}.")
         return self._plugins[name]
-
-    def get_plugin(self, name: str) -> IPlugin:
-        return self.get(name)
 
     def list_plugins(self) -> list[str]:
         return sorted(self._plugins.keys())

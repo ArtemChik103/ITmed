@@ -5,14 +5,7 @@ from collections.abc import Sequence
 
 from PIL import Image, ImageDraw, ImageFont
 
-
-def _load_font(size: int):
-    for font_name in ("arial.ttf", "segoeui.ttf", "DejaVuSans.ttf"):
-        try:
-            return ImageFont.truetype(font_name, size=size)
-        except OSError:
-            continue
-    return ImageFont.load_default()
+from frontend.utils.font_loader import load_font as _load_font
 
 
 def render_keypoint_overlay(
