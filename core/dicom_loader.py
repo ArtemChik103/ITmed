@@ -86,6 +86,10 @@ def _extract_imager_pixel_spacing(ds: Dataset) -> list[float] | None:
     return _extract_float_pair(getattr(ds, "ImagerPixelSpacing", None))
 
 
+def _extract_nominal_scanned_pixel_spacing(ds: Dataset) -> list[float] | None:
+    return _extract_float_pair(getattr(ds, "NominalScannedPixelSpacing", None))
+
+
 def _extract_pixel_spacing(ds: Dataset, file_path: str) -> tuple[list[float], str]:
     direct_spacing = _extract_float_pair(getattr(ds, "PixelSpacing", None))
     if direct_spacing is not None:
@@ -98,6 +102,22 @@ def _extract_pixel_spacing(ds: Dataset, file_path: str) -> tuple[list[float], st
     per_frame_spacing = _extract_sequence_pixel_spacing(ds, "PerFrameFunctionalGroupsSequence")
     if per_frame_spacing is not None:
         return per_frame_spacing, "PerFrameFunctionalGroupsSequence.PixelMeasuresSequence"
+
+    imager_spacing = _extract_imager_pixel_spacing(ds)
+    if imager_spacing is not None:
+        logger.info(
+            "PixelSpacing not found directly, using ImagerPixelSpacing: %s",
+            imager_spacing,
+        )
+        return imager_spacing, "ImagerPixelSpacing"
+
+    nominal_scanned_spacing = _extract_nominal_scanned_pixel_spacing(ds)
+    if nominal_scanned_spacing is not None:
+        logger.info(
+            "PixelSpacing not found directly, using NominalScannedPixelSpacing: %s",
+            nominal_scanned_spacing,
+        )
+        return nominal_scanned_spacing, "NominalScannedPixelSpacing"
 
     logger.warning(
         "PixelSpacing not found in '%s'. Falling back to default [1.0, 1.0].",

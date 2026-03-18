@@ -85,6 +85,18 @@ def test_load_dicom_uses_per_frame_functional_groups_spacing(tmp_path: Path):
     assert metadata["pixel_spacing_source"] == "PerFrameFunctionalGroupsSequence.PixelMeasuresSequence"
 
 
+def test_load_dicom_uses_imager_pixel_spacing_before_default(tmp_path: Path, caplog: pytest.LogCaptureFixture):
+    from core.dicom_loader import load_dicom
+
+    dicom_path = build_test_dicom(tmp_path / "imager_spacing.dcm", imager_pixel_spacing=[0.199, 0.199])
+    with caplog.at_level("INFO"):
+        _, metadata = load_dicom(str(dicom_path))
+
+    assert metadata["pixel_spacing_mm"] == [0.199, 0.199]
+    assert metadata["pixel_spacing_source"] == "ImagerPixelSpacing"
+    assert "Falling back to default" not in caplog.text
+
+
 def test_load_dicom_defaults_spacing_and_logs_warning(tmp_path: Path, caplog: pytest.LogCaptureFixture):
     from core.dicom_loader import load_dicom
 
@@ -233,6 +245,20 @@ def test_preprocessor_inverts_monochrome1():
 
     processed = XRayPreprocessor().preprocess(image, metadata)
     assert processed[0, 0] > processed[-1, -1]
+
+
+def test_bone_window_profile_applies_contrast_enhancement():
+    from core.preprocessor import get_preprocessor
+
+    image = np.linspace(0.0, 1023.0, num=64 * 64, dtype=np.float32).reshape(64, 64)
+    metadata = {"photometric_interpretation": "MONOCHROME2"}
+
+    default_processed = get_preprocessor(profile="default", target_size=(64, 64)).preprocess(image, metadata)
+    bone_processed = get_preprocessor(profile="bone_window_v1", target_size=(64, 64)).preprocess(image, metadata)
+
+    assert bone_processed.shape == (64, 64)
+    assert bone_processed.dtype == np.float32
+    assert not np.allclose(default_processed, bone_processed)
 
 
 def test_plugin_manager_registers_lists_and_lazy_loads():

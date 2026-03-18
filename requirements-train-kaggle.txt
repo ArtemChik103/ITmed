@@ -1,0 +1,9 @@
+# Intentionally minimal.
+#
+# The Kaggle GPU runtime already ships the core stack used by this project
+# (PyTorch, torchvision, numpy, pandas, scipy, scikit-learn, OpenCV).
+# `data/augmentations.py` also has a torchvision fallback when
+# `albumentations` is not available.
+#
+# Keep this file as a no-op so offline Kaggle notebooks do not fail on
+# `pip install -r requirements-train-kaggle.txt`.

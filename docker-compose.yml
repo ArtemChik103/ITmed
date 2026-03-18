@@ -4,7 +4,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./data:/app/data
+      - ./:/app
       - ../train:/datasets/train:ro
       - ../test_done:/datasets/test:ro
     networks:
@@ -14,6 +14,9 @@ services:
       API_URL: http://api:8000
       TRAIN_DATA_DIR: /datasets/train
       TEST_DATA_DIR: /datasets/test
+      HIP_DYSPLASIA_MODEL_MANIFEST: /app/models/checkpoints/resnet50_bce_v1/model_manifest.json
+      HIP_DYSPLASIA_KEYPOINT_CHECKPOINT: /app/models/checkpoints/resnet50_mtddh_keypoints_v1/best.ckpt
+      HIP_DYSPLASIA_KEYPOINT_DEVICE: auto
       PYTHONUNBUFFERED: "1"
 
   frontend:
@@ -23,7 +26,7 @@ services:
     depends_on:
       - api
     volumes:
-      - ./data:/app/data
+      - ./:/app
       - ../train:/datasets/train:ro
       - ../test_done:/datasets/test:ro
     environment:

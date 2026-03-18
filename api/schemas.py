@@ -27,6 +27,8 @@ class DicomMetadata(BaseModel):
             "PixelSpacing",
             "SharedFunctionalGroupsSequence.PixelMeasuresSequence",
             "PerFrameFunctionalGroupsSequence.PixelMeasuresSequence",
+            "ImagerPixelSpacing",
+            "NominalScannedPixelSpacing",
             "default",
         ]
         | None

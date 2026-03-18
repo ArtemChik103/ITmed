@@ -1,0 +1,26 @@
+[
+  {
+    "object_id": "1OGQ64",
+    "source_path": "..\\test_done\\1OGQ64",
+    "num_images": 1,
+    "representative_files": [
+      "00000001.dcm"
+    ]
+  },
+  {
+    "object_id": "28v1xk",
+    "source_path": "..\\test_done\\28v1xk.dcm",
+    "num_images": 1,
+    "representative_files": [
+      "28v1xk.dcm"
+    ]
+  },
+  {
+    "object_id": "71dphp",
+    "source_path": "..\\test_done\\71dphp",
+    "num_images": 1,
+    "representative_files": [
+      "00000001.dcm"
+    ]
+  }
+]

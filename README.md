@@ -1,166 +1,139 @@
-# 🏥 ИТ+Мед 2026 — AI System for Medical Imaging
+# ИТ+Мед 2026
 
-Система анализа медицинских снимков (DICOM) с plugin-архитектурой, базовым X-ray pipeline и двумя режимами UI.
+Репозиторий для финальной сдачи системы анализа DICOM-снимков тазобедренных суставов. Текущая версия построена по принципу `classifier-first`: итоговый бинарный verdict дает classifier runtime, а keypoints используются только как explainability layer в режиме обучения.
 
-## Стек
+## Что делает система
 
-- **Backend:** Python 3.11, FastAPI, PyTorch, MONAI
-- **Frontend:** Streamlit
-- **Core:** plugin registry, DICOM loader, validator, preprocessor
-- **Инфраструктура:** Docker, Docker Compose, GitHub Actions
-- **Форматы данных:** DICOM (pydicom, SimpleITK)
+- принимает DICOM-снимок таза;
+- валидирует метаданные и запускает plugin `hip_dysplasia`;
+- выдает бинарный класс `0/1`, confidence, threshold и служебные флаги runtime;
+- в режиме `education` может показывать keypoint overlay и расширенный PDF;
+- для набора `test_done` формирует итоговый пакет результатов в текстовом и машинно-проверяемом виде.
 
-## Архитектура
+## Режимы работы
 
-```text
-Frontend (Streamlit :8501)
-    ↕ HTTP
-API Gateway (FastAPI :8000)
-    ↕
-Core (Plugin Manager + Validator + Preprocessor)
-    ↕
-Plugins (Phase 2 baseline: hip_dysplasia)
-```
+- `doctor`: короткая сводка для врача, без перегрузки интерфейса.
+- `education`: тот же classifier verdict плюс anatomy overlay и подробный JSON/PDF-слой.
 
-## Данные
+Важно:
 
-Проект использует внешние датасеты из соседних директорий workspace:
+- keypoints не меняют `class`, `disease_detected`, `confidence` и `threshold`;
+- quantitative geometry автоматически не рассчитывается;
+- причина в том, что семантика raw MTDDH keypoints пока не валидирована для клинических вычислений;
+- fallback-режим сохраняет работоспособность pipeline, но честно помечается как `non-diagnostic`.
 
-- `../train` — обучающая выборка
-- `../test_done` — тестовая выборка
+## Что смотреть эксперту
 
-В Docker эти директории монтируются только на чтение:
+Основные финальные артефакты:
 
-- `/datasets/train`
-- `/datasets/test`
+- репозиторий: `https://github.com/ArtemChik103/ITmed`
+- файл классов: [deliverables/predictions.csv](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/predictions.csv)
+- архив результатов: [deliverables/results_test_done.zip](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/results_test_done.zip)
+- PDF со слайдами: [deliverables/presentation.pdf](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.pdf)
+- реестр состава repo: [docs/final_repo_registry.md](/C:/Users/pvppv/Desktop/roo/it-med-2026/docs/final_repo_registry.md)
 
-Это каноническая схема для текущего репозитория: данные не копируются внутрь Git.
+Если нужно быстро проверить только содержимое результатов:
 
-## Быстрый старт
-
-```bash
-cd it-med-2026
-docker compose up --build
-```
-
-После запуска:
-
-- **API health:** `http://localhost:8000/health`
-- **API docs:** `http://localhost:8000/docs`
-- **Plugins:** `http://localhost:8000/api/v1/plugins`
-- **UI:** `http://localhost:8501`
-
-## API
-
-### `GET /health`
-
-Возвращает:
-
-```json
-{"status":"ok","version":"1.0.0"}
-```
-
-### `GET /api/v1/plugins`
-
-Возвращает список зарегистрированных плагинов.
-
-### `POST /api/v1/analyze`
-
-Параметры query:
-
-- `plugin_type=hip_dysplasia`
-- `mode=doctor|education`
-
-Файл:
-
-- `file`: `.dcm` или `.dicom`
-
-Phase 2 сейчас подключает baseline-plugin `hip_dysplasia`, который честно помечает ответ как pre-ML/heuristic и используется для проверки pipeline.
-
-Поддерживаемые проекционные модальности baseline pipeline: `DX`, `CR`, `XR`, `RG`, `RF`. Для `RF` текущий контракт ограничен single-frame grayscale DICOM.
-
-## Проверка Phase 1 / Phase 2
-
-### 1. Поднять контейнеры
-
-```bash
-docker compose up --build -d
-```
-
-### 2. Проверить health
-
-```bash
-python - <<'PY'
-import urllib.request
-print(urllib.request.urlopen("http://127.0.0.1:8000/health").read().decode())
-PY
-```
-
-### 3. Проверить frontend
-
-Откройте `http://localhost:8501`.
-
-### 4. Прогнать тесты в контейнере
-
-```bash
-docker compose exec -T api pytest -q
-```
-
-### 5. Проверить DICOM loader вручную
-
-```bash
-python -m core.dicom_loader path/to/file.dcm
-```
-
-### 6. Проверить mixed-layout ID из тестовой выборки
-
-```bash
-python scripts/verify_id_format.py --test-root ../test_done
-```
-
-### 7. Собрать data quality report
-
-```bash
-python scripts/data_quality_check.py --train-root ../train --test-root ../test_done --output docs/data_quality_report.md
-```
+- откройте `deliverables/results_test_done/summary.csv`;
+- затем при необходимости конкретный `reports/{id}.json` или `reports/{id}.txt`;
+- `predictions.csv` остается отдельным обязательным deliverable в формате `id,class`.
 
 ## Структура проекта
 
-```text
-it-med-2026/
-├── .github/workflows/         # CI
-├── api/                       # FastAPI backend
-├── core/                      # DICOM loader, validator, preprocessor, plugin manager
-├── docs/                      # Документация и отчеты
-├── frontend/                  # Streamlit UI
-├── models/                    # ML-модели и будущие архитектуры
-├── plugins/                   # Плагины анализа
-├── scripts/                   # CLI-утилиты и служебные скрипты
-├── submissions/               # Submission-артефакты
-├── tests/                     # Pytest тесты
-├── weights/                   # Веса моделей
-├── Dockerfile
-├── docker-compose.yml
-├── start.sh
-├── phase1.md
-├── phase2.md
-├── phase3.md
-├── phase4.md
-└── phase5.md
+- [api/main.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/api/main.py) и [api/schemas.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/api/schemas.py): FastAPI backend и typed schema.
+- [core/](/C:/Users/pvppv/Desktop/roo/it-med-2026/core): загрузка DICOM, валидация и preprocessing.
+- [plugins/hip_dysplasia/plugin.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/plugins/hip_dysplasia/plugin.py): classifier-first plugin runtime.
+- [plugins/hip_dysplasia/keypoint_runtime.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/plugins/hip_dysplasia/keypoint_runtime.py): optional keypoint runtime.
+- [frontend/app.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/app.py): Streamlit frontend.
+- [frontend/utils/pdf_export.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/utils/pdf_export.py): генерация PDF-отчета.
+- [scripts/export_test_done_reports.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/export_test_done_reports.py): единый batch pipeline по `test_done`.
+- [scripts/generate_presentation_pdf.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/generate_presentation_pdf.py): генерация `presentation.pdf`.
+
+## Быстрый запуск
+
+### Установка
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-## Этапы разработки
+### Локальный API
 
-- [x] **Phase 1:** Инфраструктура и фундамент
-- [x] **Phase 2:** Ядро системы, плагины и DICOM processing
-- [ ] **Phase 3:** ML pipeline, классификация и ключевые точки
-- [ ] **Phase 4:** UI для врача и режима обучения
-- [ ] **Phase 5:** Оптимизация, submission и финализация
+```bash
+set HIP_DYSPLASIA_MODEL_MANIFEST=models/checkpoints/resnet50_bce_v1/model_manifest.json
+set HIP_DYSPLASIA_KEYPOINT_CHECKPOINT=models/checkpoints/resnet50_mtddh_keypoints_v1/best.ckpt
+set HIP_DYSPLASIA_KEYPOINT_DEVICE=auto
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
 
-## Phase-документы
+### Frontend
 
-- [phase1.md](phase1.md) — полное описание Phase 1
-- [phase2.md](phase2.md) — полное описание Phase 2
-- [phase3.md](phase3.md) — полное описание Phase 3
-- [phase4.md](phase4.md) — полное описание Phase 4
-- [phase5.md](phase5.md) — полное описание Phase 5
+```bash
+set API_URL=http://127.0.0.1:8000
+streamlit run frontend/app.py
+```
+
+### Docker Compose
+
+```bash
+docker compose up -d --build api frontend
+```
+
+## Финальная выгрузка по `test_done`
+
+Один сценарий собирает все обязательные результаты:
+
+```bash
+python scripts/export_test_done_reports.py ^
+  --test-root ../test_done ^
+  --output-dir deliverables/results_test_done ^
+  --predictions-output deliverables/predictions.csv ^
+  --zip-output deliverables/results_test_done.zip ^
+  --manifest-path models/checkpoints/resnet50_bce_v1/model_manifest.json ^
+  --keypoint-checkpoint models/checkpoints/resnet50_mtddh_keypoints_v1/best.ckpt
+```
+
+Что создается:
+
+- `deliverables/predictions.csv`
+- `deliverables/results_test_done/summary.csv`
+- `deliverables/results_test_done/reports/{id}.json`
+- `deliverables/results_test_done/reports/{id}.txt`
+- `deliverables/results_test_done/README_results.txt`
+- `deliverables/results_test_done.zip`
+
+Проверка `id,class`:
+
+```bash
+python scripts/verify_id_format.py ^
+  --test-root ../test_done ^
+  --csv deliverables/predictions.csv ^
+  --check-sorted
+```
+
+## PDF со слайдами
+
+```bash
+python scripts/generate_presentation_pdf.py ^
+  --test-root ../test_done ^
+  --output deliverables/presentation.pdf
+```
+
+PDF сделан коротким под защиту на 5 минут: задача, архитектура, classifier runtime, explainability, ограничение по geometry, pipeline по `test_done` и итоговые deliverables.
+
+## Тесты
+
+```bash
+pytest -q
+pytest tests/test_scripts.py -q
+```
+
+## Ограничения
+
+- принимаются только `.dcm` и `.dicom`;
+- classifier runtime остается главным источником verdict;
+- keypoints не расширяют clinical claim;
+- quantitative geometry автоматически не публикуется, если она не валидирована;
+- если веса недоступны, система остается рабочей, но результат нужно трактовать как технический fallback.

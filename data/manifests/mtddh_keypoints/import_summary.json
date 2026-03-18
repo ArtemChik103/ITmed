@@ -1,0 +1,27 @@
+{
+  "artifacts": {
+    "train_manifest": "C:\\Users\\pvppv\\Desktop\\roo\\it-med-2026\\data\\manifests\\mtddh_keypoints\\mtddh_keypoints_train.csv",
+    "val_manifest": "C:\\Users\\pvppv\\Desktop\\roo\\it-med-2026\\data\\manifests\\mtddh_keypoints\\mtddh_keypoints_val.csv"
+  },
+  "dataset_root": "C:\\Users\\pvppv\\Desktop\\roo\\MTDDH",
+  "dropped_rows": {
+    "train": {
+      "insufficient_keypoints": 1
+    },
+    "validation": {}
+  },
+  "output_dir": "C:\\Users\\pvppv\\Desktop\\roo\\it-med-2026\\data\\manifests\\mtddh_keypoints",
+  "raw_keypoint_names": [
+    "re",
+    "ry",
+    "rc",
+    "rh",
+    "le",
+    "ly",
+    "lc",
+    "lh"
+  ],
+  "strict_keypoints": true,
+  "train_rows": 779,
+  "val_rows": 208
+}

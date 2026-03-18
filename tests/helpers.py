@@ -4,6 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
+from PIL import Image
 from pydicom.dataset import Dataset, FileDataset, FileMetaDataset
 from pydicom.sequence import Sequence
 from pydicom.uid import ExplicitVRLittleEndian, SecondaryCaptureImageStorage, generate_uid
@@ -89,4 +90,16 @@ def build_test_dicom(
         ds.PerFrameFunctionalGroupsSequence = Sequence([frame_group])
 
     ds.save_as(str(path), write_like_original=False)
+    return path
+
+
+def build_test_raster(
+    path: Path,
+    *,
+    pixel_array: np.ndarray | None = None,
+) -> Path:
+    array = pixel_array if pixel_array is not None else np.array([[16, 64], [128, 240]], dtype=np.uint8)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    image = Image.fromarray(array)
+    image.save(path)
     return path

@@ -1,0 +1,162 @@
+"""Build a DDH-binary training manifest from audit outputs."""
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+
+
+def _first_non_empty(*values: Any) -> str | None:
+    for value in values:
+        text = str(value).strip() if value is not None else ""
+        if text and text.lower() != "nan":
+            return text
+    return None
+
+
+def _build_group_token(row: pd.Series) -> str:
+    return _first_non_empty(
+        row.get("annotation_group_id"),
+        row.get("inferred_object_id"),
+        row.get("parent_folder"),
+        row.get("file_stem"),
+        row.get("original_id"),
+    ) or Path(str(row["relative_path"])).stem
+
+
+def build_ddh_binary_manifest(
+    *,
+    dataset_root: str | Path,
+    audit_dir: str | Path,
+    output_manifest: str | Path,
+    label_policy: str = "strict",
+) -> pd.DataFrame:
+    """Create a project-compatible DDH binary manifest from audit summaries."""
+    if label_policy != "strict":
+        raise ValueError("Only --label-policy strict is currently supported.")
+
+    dataset_root = Path(dataset_root).resolve()
+    audit_dir = Path(audit_dir).resolve()
+    output_manifest = Path(output_manifest).resolve()
+
+    verdict_path = audit_dir / "verdict.json"
+    if not verdict_path.exists():
+        raise ValueError(f"Audit verdict was not found in '{audit_dir}'.")
+    verdict = json.loads(verdict_path.read_text(encoding="utf-8"))
+    if verdict.get("training_decision") != "worth_continuing":
+        raise ValueError(
+            "The DDH binary audit verdict does not allow fine-tuning. "
+            f"Current verdict: {verdict.get('verdict', 'unknown')}."
+        )
+
+    file_index = pd.read_csv(audit_dir / "file_index.csv")
+    eligible = file_index[
+        (file_index["is_image"].fillna(0).astype(int) == 1)
+        & (file_index["eligible_for_training"].fillna(0).astype(int) == 1)
+        & file_index["label"].notna()
+    ].copy()
+    if eligible.empty:
+        raise ValueError(f"No training-eligible DDH binary rows were found in '{audit_dir}'.")
+
+    eligible["relative_path"] = eligible["relative_path"].astype(str)
+    eligible["path"] = eligible["absolute_path"].astype(str).map(lambda value: str(Path(value).resolve()))
+    eligible["label"] = eligible["label"].astype(int)
+    eligible["class_name"] = eligible["label"].map({0: "normal", 1: "pathology"})
+    eligible["group_token"] = eligible.apply(_build_group_token, axis=1)
+    eligible["sample_id"] = eligible["relative_path"].map(lambda value: f"ddh_binary_ext::{value}")
+    eligible["group_id"] = eligible["group_token"].map(lambda value: f"ddh_binary_ext::{value}")
+    eligible["group_name"] = eligible["group_token"].astype(str)
+    eligible["source"] = "DDH_binary_external"
+    eligible["source_code"] = "ddh_binary_ext"
+    eligible["dataset_name"] = eligible.get("dataset_name", "A dataset of DDH x-ray images").fillna(
+        "A dataset of DDH x-ray images"
+    )
+    eligible["is_external"] = 1
+    eligible["original_id"] = eligible.get("original_id", eligible["file_stem"]).fillna(eligible["file_stem"])
+
+    manifest_columns = [
+        "sample_id",
+        "group_id",
+        "group_name",
+        "label",
+        "class_name",
+        "source",
+        "source_code",
+        "relative_path",
+        "path",
+        "dataset_name",
+        "file_type",
+        "is_external",
+        "label_confidence",
+        "label_source",
+        "original_id",
+    ]
+    manifest = eligible[manifest_columns].sort_values(["group_id", "relative_path"]).reset_index(drop=True)
+    output_manifest.parent.mkdir(parents=True, exist_ok=True)
+    manifest.to_csv(output_manifest, index=False)
+
+    summary = {
+        "dataset_root": str(dataset_root),
+        "audit_dir": str(audit_dir),
+        "output_manifest": str(output_manifest),
+        "label_policy": label_policy,
+        "rows": int(len(manifest)),
+        "normal_rows": int((manifest["label"] == 0).sum()),
+        "pathology_rows": int((manifest["label"] == 1).sum()),
+        "group_count": int(manifest["group_id"].nunique()),
+    }
+    (output_manifest.with_suffix(".json")).write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return manifest
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Import DDH binary audit outputs into a training manifest.")
+    parser.add_argument("--dataset-root", required=True, help="Path to the unpacked DDH dataset root.")
+    parser.add_argument(
+        "--audit-dir",
+        default="analysis/ddh_binary_audit",
+        help="Directory produced by analysis/ddh_binary_audit.py",
+    )
+    parser.add_argument(
+        "--output-manifest",
+        required=True,
+        help="Where to write data/manifests/ddh_binary_manifest.csv",
+    )
+    parser.add_argument(
+        "--label-policy",
+        default="strict",
+        choices=["strict"],
+        help="Import policy for labels resolved by the audit pipeline.",
+    )
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    manifest = build_ddh_binary_manifest(
+        dataset_root=args.dataset_root,
+        audit_dir=args.audit_dir,
+        output_manifest=args.output_manifest,
+        label_policy=args.label_policy,
+    )
+    print(
+        json.dumps(
+            {
+                "status": "ok",
+                "rows": int(len(manifest)),
+                "output_manifest": str(Path(args.output_manifest).resolve()),
+            },
+            ensure_ascii=False,
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

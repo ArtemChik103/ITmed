@@ -35,6 +35,17 @@ htmlcov/
 .docker/
 
 # Local data and generated artifacts
+analysis/
+docs/colab_*.md
+docs/demo_runbook.md
+docs/external_ddh_datasets.md
+docs/keypoint_semantics.md
+docs/path_b_explainability.md
+docs/path_b_mtddh_keypoints.md
+docs/phase3*.md
+docs/phase4_ui.md
+docs/phase5_submission.md
+docs/qa_prep.md
 data/training/
 data/test/
 data/raw/

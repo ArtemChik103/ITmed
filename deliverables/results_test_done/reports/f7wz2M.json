@@ -1,0 +1,230 @@
+{
+  "id": "f7wz2M",
+  "class": 1,
+  "disease_detected": true,
+  "confidence": 0.570175,
+  "threshold": 0.402,
+  "runtime_model_loaded": 1,
+  "keypoint_model_loaded": 1,
+  "keypoint_count": 8,
+  "geometry_available": 0,
+  "message": "Classifier-first runtime выполнил итоговую агрегацию на уровне объекта методом 'max'. Количественная geometry автоматически не рассчитана, потому что семантика raw keypoints пока не валидирована для клинического использования.",
+  "metadata": {
+    "pixel_spacing_mm": [
+      0.099449,
+      0.099449
+    ],
+    "pixel_spacing_source": "PixelSpacing",
+    "imager_pixel_spacing_mm": [
+      0.104167,
+      0.104167
+    ],
+    "patient_id": null,
+    "study_instance_uid": "1.2.826.0.1.3680043.8.498.15318182591714798301230843965458869773",
+    "study_date": "20240405",
+    "study_date_source": "SeriesDate",
+    "modality": "RF",
+    "sop_class_uid": "1.2.840.10008.5.1.4.1.1.12.2",
+    "photometric_interpretation": "MONOCHROME2",
+    "samples_per_pixel": 1,
+    "number_of_frames": null,
+    "bits_allocated": 16,
+    "image_shape": [
+      1536,
+      1536
+    ]
+  },
+  "keypoints": [
+    [
+      392.0,
+      664.0
+    ],
+    [
+      520.0,
+      712.0
+    ],
+    [
+      440.0,
+      776.0
+    ],
+    [
+      440.0,
+      840.0
+    ],
+    [
+      1256.0,
+      600.0
+    ],
+    [
+      1128.0,
+      680.0
+    ],
+    [
+      1224.0,
+      728.0
+    ],
+    [
+      1240.0,
+      792.0
+    ]
+  ],
+  "processed_dicoms": [
+    "f7wz2M/26022616/00000001.dcm",
+    "f7wz2M/26022616/00000002.dcm"
+  ],
+  "validation_warnings": [
+    "PatientID отсутствует в DICOM."
+  ],
+  "aggregation_method": "max",
+  "representative_dicom": "f7wz2M/26022616/00000001.dcm",
+  "images": [
+    {
+      "dicom_file": "f7wz2M/26022616/00000001.dcm",
+      "disease_detected": true,
+      "confidence": 0.570175,
+      "threshold": 0.402,
+      "runtime_model_loaded": 1,
+      "keypoint_model_loaded": 1,
+      "keypoint_count": 8,
+      "geometry_available": 0,
+      "processing_time_ms": 157,
+      "validation_warnings": [
+        "PatientID отсутствует в DICOM."
+      ],
+      "message": "Phase 3 classifier ensemble executed successfully. Mode=education. Decision threshold=0.40. Quantitative geometry metrics were not auto-calculated because MTDDH raw keypoint semantics are not yet validated for clinical use.",
+      "metadata": {
+        "pixel_spacing_mm": [
+          0.099449,
+          0.099449
+        ],
+        "pixel_spacing_source": "PixelSpacing",
+        "imager_pixel_spacing_mm": [
+          0.104167,
+          0.104167
+        ],
+        "patient_id": null,
+        "study_instance_uid": "1.2.826.0.1.3680043.8.498.15318182591714798301230843965458869773",
+        "study_date": "20240405",
+        "study_date_source": "SeriesDate",
+        "modality": "RF",
+        "sop_class_uid": "1.2.840.10008.5.1.4.1.1.12.2",
+        "photometric_interpretation": "MONOCHROME2",
+        "samples_per_pixel": 1,
+        "number_of_frames": null,
+        "bits_allocated": 16,
+        "image_shape": [
+          1536,
+          1536
+        ]
+      },
+      "keypoints": [
+        [
+          392.0,
+          664.0
+        ],
+        [
+          520.0,
+          712.0
+        ],
+        [
+          440.0,
+          776.0
+        ],
+        [
+          440.0,
+          840.0
+        ],
+        [
+          1256.0,
+          600.0
+        ],
+        [
+          1128.0,
+          680.0
+        ],
+        [
+          1224.0,
+          728.0
+        ],
+        [
+          1240.0,
+          792.0
+        ]
+      ]
+    },
+    {
+      "dicom_file": "f7wz2M/26022616/00000002.dcm",
+      "disease_detected": true,
+      "confidence": 0.563235,
+      "threshold": 0.402,
+      "runtime_model_loaded": 1,
+      "keypoint_model_loaded": 1,
+      "keypoint_count": 8,
+      "geometry_available": 0,
+      "processing_time_ms": 161,
+      "validation_warnings": [
+        "PatientID отсутствует в DICOM."
+      ],
+      "message": "Phase 3 classifier ensemble executed successfully. Mode=education. Decision threshold=0.40. Quantitative geometry metrics were not auto-calculated because MTDDH raw keypoint semantics are not yet validated for clinical use.",
+      "metadata": {
+        "pixel_spacing_mm": [
+          0.111181,
+          0.111181
+        ],
+        "pixel_spacing_source": "PixelSpacing",
+        "imager_pixel_spacing_mm": [
+          0.115625,
+          0.115625
+        ],
+        "patient_id": null,
+        "study_instance_uid": "1.2.826.0.1.3680043.8.498.48196168756260370957959955111623620576",
+        "study_date": "20240609",
+        "study_date_source": "SeriesDate",
+        "modality": "RF",
+        "sop_class_uid": "1.2.840.10008.5.1.4.1.1.12.2",
+        "photometric_interpretation": "MONOCHROME2",
+        "samples_per_pixel": 1,
+        "number_of_frames": null,
+        "bits_allocated": 16,
+        "image_shape": [
+          1536,
+          1536
+        ]
+      },
+      "keypoints": [
+        [
+          280.0,
+          680.0
+        ],
+        [
+          456.0,
+          760.0
+        ],
+        [
+          344.0,
+          824.0
+        ],
+        [
+          328.0,
+          888.0
+        ],
+        [
+          1288.0,
+          712.0
+        ],
+        [
+          1128.0,
+          776.0
+        ],
+        [
+          1224.0,
+          840.0
+        ],
+        [
+          1240.0,
+          920.0
+        ]
+      ]
+    }
+  ]
+}
