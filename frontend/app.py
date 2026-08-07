@@ -29,7 +29,40 @@ from frontend.utils.session_state import (
     update_file_signature,
 )
 
-API_URL = os.getenv("API_URL", "http://localhost:8000")
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
+
+import threading
+import time
+import uvicorn
+import urllib.request
+
+def _ensure_backend_server():
+    api_url = os.getenv("API_URL", "http://127.0.0.1:8000")
+    try:
+        urllib.request.urlopen(f"{api_url}/health", timeout=1)
+        return
+    except Exception:
+        pass
+
+    def _run_server():
+        try:
+            from api.main import app as fastapi_app
+            uvicorn.run(fastapi_app, host="127.0.0.1", port=8000, log_level="error")
+        except Exception as e:
+            print("Embedded API server error:", e)
+
+    t = threading.Thread(target=_run_server, daemon=True)
+    t.start()
+
+    for _ in range(30):
+        try:
+            urllib.request.urlopen(f"{api_url}/health", timeout=1)
+            break
+        except Exception:
+            time.sleep(0.1)
+
+_ensure_backend_server()
+
 PLUGIN_TYPE = "hip_dysplasia"
 
 st.set_page_config(
