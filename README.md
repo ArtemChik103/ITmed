@@ -1,9 +1,6 @@
 # ИТ+Мед 2026
 
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pvjjwzapucy4re6bakgfza.streamlit.app/)
-
-**🚀 Live Streamlit Cloud Application:** [https://pvjjwzapucy4re6bakgfza.streamlit.app/](https://pvjjwzapucy4re6bakgfza.streamlit.app/)
+**🚀 Live Application (Streamlit Cloud):** [https://pvjjwzapucy4re6bakgfza.streamlit.app/](https://pvjjwzapucy4re6bakgfza.streamlit.app/)
 
 
 Репозиторий для финальной сдачи системы анализа DICOM-снимков тазобедренных суставов. Текущая версия построена по принципу `classifier-first`: итоговый бинарный verdict дает classifier runtime, а keypoints используются только как explainability layer в режиме обучения.
