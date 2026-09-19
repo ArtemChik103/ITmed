@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "plugin": "hip_dysplasia",
+  "experiment": "production_densenet121",
+  "architecture": "densenet121",
+  "preprocessing_profile": "bone_window_v1",
+  "input_size": 448,
+  "ensemble_threshold": 0.656,
+  "cv_threshold_mean": 0.656,
+  "selection_metric": "balanced_accuracy",
+  "folds": [
+    {
+      "fold": 0,
+      "architecture": "densenet121",
+      "checkpoint": "best.pt",
+      "threshold": 0.656
+    }
+  ]
+}

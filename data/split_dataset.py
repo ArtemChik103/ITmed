@@ -22,7 +22,14 @@ SOURCE_SPECS = {
         "class_name": "pathology",
         "source_code": "pathology_single",
     },
+    "патология_jpg": {
+        "label": 1,
+        "class_name": "pathology",
+        "source_code": "pathology_jpg",
+    },
 }
+
+VALID_IMAGE_EXTENSIONS = {".dcm", ".jpg", ".jpeg", ".png", ".bmp"}
 
 
 @dataclass(slots=True)
@@ -41,6 +48,9 @@ class ManifestRecord:
 def _derive_group_name(source: str, relative_to_source: Path, path: Path) -> str:
     if source in {"Норма", "Патология"}:
         return relative_to_source.parts[0] if relative_to_source.parts else path.stem
+    if source == "патология_jpg":
+        stem = path.stem
+        return stem.rsplit(".", 1)[0] if "." in stem else stem
     return path.stem
 
 
@@ -55,7 +65,7 @@ def build_manifest(train_root: str | Path) -> pd.DataFrame:
             continue
 
         for path in sorted(source_root.rglob("*")):
-            if not path.is_file() or path.suffix.lower() != ".dcm":
+            if not path.is_file() or path.suffix.lower() not in VALID_IMAGE_EXTENSIONS:
                 continue
 
             relative_to_source = path.relative_to(source_root)

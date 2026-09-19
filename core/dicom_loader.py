@@ -137,7 +137,7 @@ def _extract_study_date(ds: Dataset) -> tuple[str | None, str | None]:
 
 def load_dicom(file_path: str) -> tuple[np.ndarray, dict[str, Any]]:
     """Load a DICOM file and return the pixel array with extracted metadata."""
-    ds = pydicom.dcmread(file_path)
+    ds = pydicom.dcmread(file_path, force=True)
 
     pixel_spacing, pixel_spacing_source = _extract_pixel_spacing(ds, file_path)
     imager_pixel_spacing = _extract_imager_pixel_spacing(ds)

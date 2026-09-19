@@ -30,7 +30,13 @@ from core.preprocessor import PREPROCESSING_PROFILES
 LOCAL_PRETRAINED_WEIGHTS = {
     "resnet34": Path("models/pretrained/resnet34_imagenet1k_v1.pth"),
     "resnet50": Path("models/pretrained/resnet50_imagenet1k_v2.pth"),
+    "densenet121": Path("models/pretrained/densenet121_imagenet1k_v1.pth"),
+    "convnext_tiny": Path("models/pretrained/convnext_tiny_imagenet1k_v1.pth"),
+    "swin_t": Path("models/pretrained/swin_t_imagenet1k_v1.pth"),
+    "efficientnet_b4": Path("models/pretrained/efficientnet_b4_imagenet1k_v1.pth"),
+    "radimagenet_resnet50": Path("models/pretrained/radimagenet_resnet50.pth"),
 }
+
 
 
 @dataclass(slots=True)
@@ -56,6 +62,10 @@ class TrainingConfig:
     seed: int = 42
     amp: bool = True
     loss_name: str = "focal"
+    label_smoothing: float = 0.0
+    use_swa: bool = False
+    swa_start_epoch: int = 8
+    mixup_prob: float = 0.0
     threshold_policy: str = "max_sensitivity"
     sensitivity_floor: float = 0.90
     save_val_predictions: bool = False
@@ -213,6 +223,7 @@ def compute_binary_metrics(
 ) -> dict[str, Any]:
     """Compute the Phase 3 evaluation metrics for a binary classifier."""
     y_true = y_true.astype(int)
+    probabilities = np.nan_to_num(np.asarray(probabilities, dtype=np.float32), nan=0.5)
     predictions = (probabilities >= threshold).astype(int)
 
     tp = int(((predictions == 1) & (y_true == 1)).sum())
@@ -264,6 +275,96 @@ def build_threshold_sweep(
     ]
 
 
+def compute_roc_convex_hull(sweep: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Filter threshold sweep points to the upper Pareto ROC convex hull."""
+    if not sweep:
+        return []
+
+    # Map each point to (fpr, tpr)
+    points = []
+    for m in sweep:
+        tpr = float(m.get("sensitivity", 0.0))
+        fpr = round(1.0 - float(m.get("specificity", 1.0)), 6)
+        points.append((fpr, tpr, m))
+
+    # Sort primarily by fpr ascending, secondarily by tpr descending
+    points.sort(key=lambda item: (item[0], -item[1]))
+
+    # Filter Pareto non-dominated: cannot have higher FPR with lower or equal TPR
+    pareto_points = []
+    max_tpr_seen = -1.0
+    for fpr, tpr, m in points:
+        if tpr > max_tpr_seen:
+            pareto_points.append((fpr, tpr, m))
+            max_tpr_seen = tpr
+
+    # Compute upper convex hull using 2D cross product
+    hull: list[tuple[float, float, dict[str, Any]]] = []
+    for p in pareto_points:
+        while len(hull) >= 2:
+            x1, y1, _ = hull[-2]
+            x2, y2, _ = hull[-1]
+            x3, y3, _ = p
+            # Cross product (p2 - p1) x (p3 - p2)
+            cp = (x2 - x1) * (y3 - y2) - (y2 - y1) * (x3 - x2)
+            if cp >= 0:
+                hull.pop()
+            else:
+                break
+        hull.append(p)
+
+    return [item[2] for item in hull] if hull else sweep
+
+
+class MultiModelConvexHullOptimizer:
+    """Finds the Pareto-optimal mixture weights over multi-model ensembles on the ROC Convex Hull."""
+
+    def __init__(self, sensitivity_floor: float = 0.90) -> None:
+        self.sensitivity_floor = sensitivity_floor
+
+    def optimize_ensemble_weights(
+        self,
+        y_true: np.ndarray,
+        predictions_matrix: np.ndarray,
+    ) -> tuple[np.ndarray, float, dict[str, Any]]:
+        """
+        predictions_matrix: [N, M] probabilities from M models
+        Returns:
+            optimal_weights: [M]
+            optimal_threshold: float
+            best_metrics: dict
+        """
+        n_samples, n_models = predictions_matrix.shape
+        if n_models == 1:
+            best_t, best_m, _ = find_optimal_threshold(
+                y_true, predictions_matrix[:, 0], policy="pareto_convex_hull", sensitivity_floor=self.sensitivity_floor
+            )
+            return np.array([1.0]), best_t, best_m
+
+        from scipy.optimize import differential_evolution
+
+        def obj(raw_weights: np.ndarray) -> float:
+            w = np.clip(raw_weights, 1e-5, 1.0)
+            w = w / np.sum(w)
+            blended = predictions_matrix @ w
+            roc = float(roc_auc_score(y_true, blended)) if len(np.unique(y_true)) > 1 else 0.5
+            pr = float(average_precision_score(y_true, blended)) if len(np.unique(y_true)) > 1 else 0.5
+            return -(roc + pr)
+
+        bounds = [(0.0, 1.0) for _ in range(n_models)]
+        res = differential_evolution(obj, bounds, seed=42, maxiter=40, popsize=10)
+        optimal_weights = res.x / np.sum(res.x)
+
+        blended_prob = predictions_matrix @ optimal_weights
+        best_threshold, best_metrics, _ = find_optimal_threshold(
+            y_true,
+            blended_prob,
+            policy="pareto_convex_hull",
+            sensitivity_floor=self.sensitivity_floor,
+        )
+        return optimal_weights, best_threshold, best_metrics
+
+
 def _threshold_score(
     metrics: dict[str, Any],
     *,
@@ -271,6 +372,38 @@ def _threshold_score(
     sensitivity_floor: float,
 ) -> tuple[float, ...]:
     threshold = float(metrics["threshold"])
+    if policy in {"pareto_convex_hull", "roc_convex_hull"}:
+        meets_floor = 1.0 if float(metrics["sensitivity"]) >= sensitivity_floor else 0.0
+        youden = float(metrics["sensitivity"]) + float(metrics["specificity"]) - 1.0
+        return (
+            meets_floor,
+            youden,
+            float(metrics["specificity"]),
+            float(metrics.get("f1", 0.0)),
+            float(metrics["sensitivity"]),
+            -abs(threshold - 0.5),
+        )
+
+    if policy == "cost_sensitive":
+        cm = metrics.get("confusion_matrix", {})
+        fn = float(cm.get("fn", 0))
+        fp = float(cm.get("fp", 0))
+        tp = float(cm.get("tp", 0))
+        tn = float(cm.get("tn", 0))
+        total_pos = max(tp + fn, 1.0)
+        total_neg = max(tn + fp, 1.0)
+        max_cost = 5.0 * total_pos + 1.0 * total_neg
+        cost = 5.0 * fn + 1.0 * fp
+        clinical_utility = 1.0 - (cost / max_cost)
+        balanced_acc = (float(metrics["sensitivity"]) + float(metrics["specificity"])) / 2.0
+        return (
+            clinical_utility,
+            balanced_acc,
+            float(metrics["sensitivity"]),
+            float(metrics["f1"]),
+            -abs(threshold - 0.5),
+        )
+
     if policy == "max_specificity_under_sensitivity_floor":
         meets_floor = 1.0 if float(metrics["sensitivity"]) >= sensitivity_floor else 0.0
         return (
@@ -279,6 +412,26 @@ def _threshold_score(
             float(metrics["accuracy"]),
             float(metrics["f1"]),
             float(metrics["sensitivity"]),
+            -abs(threshold - 0.5),
+        )
+
+    if policy in {"balanced_accuracy", "youden"}:
+        balanced_acc = (float(metrics["sensitivity"]) + float(metrics["specificity"])) / 2.0
+        return (
+            balanced_acc,
+            float(metrics["f1"]),
+            float(metrics["accuracy"]),
+            float(metrics["sensitivity"]),
+            float(metrics["specificity"]),
+            -abs(threshold - 0.5),
+        )
+
+    if policy == "max_f1":
+        return (
+            float(metrics["f1"]),
+            float(metrics["accuracy"]),
+            float(metrics["sensitivity"]),
+            float(metrics["specificity"]),
             -abs(threshold - 0.5),
         )
 
@@ -300,6 +453,10 @@ def find_optimal_threshold(
 ) -> tuple[float, dict[str, Any], list[dict[str, Any]]]:
     """Select a threshold in [0.05, 0.95] under the requested policy."""
     sweep = build_threshold_sweep(y_true, probabilities)
+    candidate_pool = compute_roc_convex_hull(sweep) if policy in {"pareto_convex_hull", "roc_convex_hull"} else sweep
+    if not candidate_pool:
+        candidate_pool = sweep
+
     best_threshold = 0.5
     best_metrics = compute_binary_metrics(y_true, probabilities, threshold=best_threshold)
     best_score = _threshold_score(
@@ -308,7 +465,7 @@ def find_optimal_threshold(
         sensitivity_floor=sensitivity_floor,
     )
 
-    for metrics in sweep:
+    for metrics in candidate_pool:
         score = _threshold_score(
             metrics,
             policy=policy,
@@ -320,6 +477,7 @@ def find_optimal_threshold(
             best_metrics = metrics
 
     return best_threshold, best_metrics, sweep
+
 
 
 def load_hard_negative_groups(
@@ -415,6 +573,7 @@ def train_one_epoch(
     gradient_accumulation: int,
     input_size: int,
     batch_size: int,
+    mixup_prob: float = 0.0,
 ) -> float:
     """Run a single training epoch."""
     model.train()
@@ -426,6 +585,27 @@ def train_one_epoch(
         inputs = batch["image"].to(device, non_blocking=True)
         targets = batch["target"].to(device, non_blocking=True)
         sample_count += int(inputs.shape[0])
+
+        if mixup_prob > 0.0 and random.random() < mixup_prob and inputs.shape[0] > 1:
+            lam = float(np.random.beta(0.4, 0.4))
+            perm = torch.randperm(inputs.shape[0])
+            if random.random() < 0.5:
+                inputs = lam * inputs + (1.0 - lam) * inputs[perm]
+                targets = lam * targets + (1.0 - lam) * targets[perm]
+            else:
+                h, w = inputs.shape[-2], inputs.shape[-1]
+                cut_rat = np.sqrt(1.0 - lam)
+                cut_w = int(w * cut_rat)
+                cut_h = int(h * cut_rat)
+                cx = np.random.randint(w)
+                cy = np.random.randint(h)
+                bbx1 = np.clip(cx - cut_w // 2, 0, w)
+                bby1 = np.clip(cy - cut_h // 2, 0, h)
+                bbx2 = np.clip(cx + cut_w // 2, 0, w)
+                bby2 = np.clip(cy + cut_h // 2, 0, h)
+                inputs[:, :, bby1:bby2, bbx1:bbx2] = inputs[perm, :, bby1:bby2, bbx1:bbx2]
+                actual_lam = 1.0 - ((bbx2 - bbx1) * (bby2 - bby1) / (w * h))
+                targets = actual_lam * targets + (1.0 - actual_lam) * targets[perm]
 
         try:
             with autocast(device_type="cuda", enabled=amp_enabled):
@@ -440,6 +620,12 @@ def train_one_epoch(
             raise
 
         if (step + 1) % gradient_accumulation == 0 or (step + 1) == len(loader):
+            if scaler.is_enabled():
+                scaler.unscale_(optimizer)
+            torch.nn.utils.clip_grad_norm_(
+                [p for p in model.parameters() if p.requires_grad],
+                max_norm=1.0,
+            )
             scaler.step(optimizer)
             scaler.update()
             optimizer.zero_grad(set_to_none=True)
@@ -586,7 +772,7 @@ def train_fold(
     pos_weight = build_pos_weight(train_labels) if config.use_pos_weight else None
     if pos_weight is not None:
         pos_weight = pos_weight.to(device)
-    criterion = build_loss(config.loss_name, pos_weight=pos_weight)
+    criterion = build_loss(config.loss_name, pos_weight=pos_weight, label_smoothing=config.label_smoothing)
     optimizer = create_optimizer(
         model,
         learning_rate=config.learning_rate_head,
@@ -595,12 +781,16 @@ def train_fold(
     scaler = GradScaler("cuda", enabled=config.amp and device.type == "cuda")
     amp_enabled = bool(config.amp and device.type == "cuda")
 
-    best_score = (-1.0, -1.0, -1.0, -1.0)
+    scheduler = None
+    best_score: tuple[float, ...] | None = None
     best_metrics: dict[str, Any] | None = None
     best_predictions: dict[str, Any] | None = None
     best_threshold_sweep: list[dict[str, Any]] | None = None
     train_history: list[dict[str, Any]] = []
     checkpoint_path = fold_dir / "best.pt"
+    swa_model = torch.optim.swa_utils.AveragedModel(model) if config.use_swa else None
+    swa_start = max(config.freeze_epochs + 1, config.swa_start_epoch)
+    print(f"\n--- Training Fold {fold} (Train: {len(train_sample_ids)}, Val: {len(val_sample_ids)}) ---", flush=True)
 
     for epoch in range(config.epochs):
         if epoch == config.freeze_epochs and config.freeze_epochs > 0:
@@ -609,6 +799,11 @@ def train_fold(
                 model,
                 learning_rate=config.learning_rate_finetune,
                 weight_decay=config.weight_decay,
+            )
+            scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+                optimizer,
+                T_max=max(config.epochs - config.freeze_epochs, 1),
+                eta_min=1e-6,
             )
 
         train_loss = train_one_epoch(
@@ -622,7 +817,11 @@ def train_fold(
             gradient_accumulation=config.gradient_accumulation,
             input_size=config.input_size,
             batch_size=config.batch_size,
+            mixup_prob=config.mixup_prob,
         )
+        if scheduler is not None:
+            scheduler.step()
+
         predictions = predict_loader(
             model,
             val_loader,
@@ -640,14 +839,23 @@ def train_fold(
         metrics["loss"] = float(train_loss)
         metrics["epoch"] = int(epoch)
         train_history.append({"epoch": int(epoch), "train_loss": float(train_loss), "threshold": threshold})
-
-        score = (
-            metrics["sensitivity"],
-            metrics["f1"],
-            metrics["specificity"],
-            metrics["accuracy"],
+        print(
+            f"Fold {fold} | Epoch {epoch+1:02d}/{config.epochs:02d} | "
+            f"Loss: {train_loss:.4f} | Val Sens: {metrics['sensitivity']:.3f} | "
+            f"Spec: {metrics['specificity']:.3f} | Acc: {metrics['accuracy']:.3f} | "
+            f"F1: {metrics['f1']:.3f} | Thresh: {threshold:.3f}",
+            flush=True,
         )
-        if score > best_score:
+
+        score = _threshold_score(
+            metrics,
+            policy=config.threshold_policy,
+            sensitivity_floor=config.sensitivity_floor,
+        )
+        if swa_model is not None and epoch >= swa_start:
+            swa_model.update_parameters(model)
+
+        if best_score is None or score > best_score:
             best_score = score
             best_metrics = metrics
             best_predictions = predictions
@@ -662,6 +870,69 @@ def train_fold(
                     "metrics": metrics,
                     "training_config": config.to_dict(),
                     "hard_negative_group_ids": sorted(hard_negative_group_ids),
+                },
+                checkpoint_path,
+            )
+
+    if config.use_swa and swa_model is not None:
+        class _ImageOnlyLoader:
+            def __init__(self, loader: Any) -> None:
+                self.loader = loader
+
+            def __iter__(self) -> Any:
+                for batch in self.loader:
+                    yield batch["image"]
+
+            def __len__(self) -> int:
+                return len(self.loader)
+
+        torch.optim.swa_utils.update_bn(_ImageOnlyLoader(train_loader), swa_model, device=device)
+        swa_predictions = predict_loader(
+            swa_model,
+            val_loader,
+            device=device,
+            amp_enabled=amp_enabled,
+            input_size=config.input_size,
+            batch_size=config.batch_size,
+        )
+        swa_threshold, swa_metrics, swa_threshold_sweep = find_optimal_threshold(
+            swa_predictions["targets"].astype(int),
+            swa_predictions["probabilities"].astype(np.float32),
+            policy=config.threshold_policy,
+            sensitivity_floor=config.sensitivity_floor,
+        )
+        swa_score = _threshold_score(
+            swa_metrics,
+            policy=config.threshold_policy,
+            sensitivity_floor=config.sensitivity_floor,
+        )
+        print(
+            f"Fold {fold} | SWA Final Eval | "
+            f"Val Sens: {swa_metrics['sensitivity']:.3f} | Spec: {swa_metrics['specificity']:.3f} | "
+            f"Acc: {swa_metrics['accuracy']:.3f} | F1: {swa_metrics['f1']:.3f} | Thresh: {swa_threshold:.3f}",
+            flush=True,
+        )
+        if best_score is None or swa_score >= best_score:
+            print(f"Fold {fold} | SWA weights accepted as best checkpoint!", flush=True)
+            best_score = swa_score
+            best_metrics = swa_metrics
+            best_predictions = swa_predictions
+            best_threshold_sweep = swa_threshold_sweep
+            swa_state = {
+                k.removeprefix("module."): v
+                for k, v in swa_model.module.state_dict().items()
+            }
+            torch.save(
+                {
+                    "fold": fold,
+                    "epoch": config.epochs,
+                    "model_state": swa_state,
+                    "model_config": model.config.to_dict(),
+                    "best_threshold": float(swa_threshold),
+                    "metrics": swa_metrics,
+                    "training_config": config.to_dict(),
+                    "hard_negative_group_ids": sorted(hard_negative_group_ids),
+                    "is_swa": True,
                 },
                 checkpoint_path,
             )
@@ -722,6 +993,21 @@ def run_cross_validation(config: TrainingConfig) -> Path:
 
     device = resolve_device(config.device)
     hard_negative_groups_by_fold = load_hard_negative_groups(config.hard_negative_manifest_path)
+
+    print(f"Pre-caching dataset images into RAM ({config.preprocessing_profile}, {config.input_size}px)...", flush=True)
+    from data.dataset import build_preprocessor, _PREPROCESSED_IMAGE_CACHE
+    from core.image_loader import load_medical_image
+    preprocessor = build_preprocessor(config.input_size, profile=config.preprocessing_profile)
+    paths_to_cache = set(manifest["path"])
+    if extra_train_manifest is not None:
+        paths_to_cache.update(extra_train_manifest["path"])
+    for img_path in paths_to_cache:
+        cache_key = (str(Path(img_path)), config.input_size, config.preprocessing_profile)
+        if cache_key not in _PREPROCESSED_IMAGE_CACHE:
+            img, meta = load_medical_image(img_path)
+            _PREPROCESSED_IMAGE_CACHE[cache_key] = preprocessor.preprocess(img, meta)
+    print(f"RAM cache ready ({len(_PREPROCESSED_IMAGE_CACHE)} images loaded into memory).", flush=True)
+
     fold_results: list[dict[str, Any]] = []
     for fold_spec in split_payload["folds"]:
         fold_dir = output_dir / f"fold_{int(fold_spec['fold'])}"
@@ -797,8 +1083,40 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--threshold-policy",
         default="max_sensitivity",
-        choices=["max_sensitivity", "max_specificity_under_sensitivity_floor"],
+        choices=[
+            "max_sensitivity",
+            "max_specificity_under_sensitivity_floor",
+            "balanced_accuracy",
+            "max_f1",
+            "youden",
+            "cost_sensitive",
+            "pareto_convex_hull",
+            "roc_convex_hull",
+        ],
         help="Policy used to choose the validation threshold.",
+    )
+    parser.add_argument(
+        "--label-smoothing",
+        type=float,
+        default=0.0,
+        help="Label smoothing factor (e.g. 0.05 to 0.10).",
+    )
+    parser.add_argument(
+        "--use-swa",
+        action="store_true",
+        help="Enable Stochastic Weight Averaging on final epochs.",
+    )
+    parser.add_argument(
+        "--swa-start-epoch",
+        type=int,
+        default=8,
+        help="Epoch to begin SWA parameter accumulation.",
+    )
+    parser.add_argument(
+        "--mixup-prob",
+        type=float,
+        default=0.0,
+        help="Probability of applying Mixup / CutMix augmentation to a training batch.",
     )
     parser.add_argument(
         "--sensitivity-floor",
@@ -882,6 +1200,10 @@ def main() -> int:
         seed=args.seed,
         amp=not args.disable_amp,
         loss_name=args.loss,
+        label_smoothing=args.label_smoothing,
+        use_swa=args.use_swa,
+        swa_start_epoch=args.swa_start_epoch,
+        mixup_prob=args.mixup_prob,
         threshold_policy=args.threshold_policy,
         sensitivity_floor=args.sensitivity_floor,
         save_val_predictions=args.save_val_predictions,

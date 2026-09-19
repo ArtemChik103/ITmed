@@ -106,3 +106,41 @@ def test_aggregate_probability_logit_mean_stays_between_mean_and_max():
     probability = aggregate_probability([0.2, 0.8], method="logit_mean")
 
     assert np.isclose(probability, 0.5)
+
+
+def test_longitudinal_trajectory_slope_and_aggregation():
+    from train.aggregation import compute_longitudinal_slope
+
+    # Increasing trend across visits: 0.2 -> 0.4 -> 0.6
+    slope = compute_longitudinal_slope([0.2, 0.4, 0.6])
+    assert slope > 0.0
+    assert np.isclose(slope, 0.2)
+
+    # Flat trend
+    assert compute_longitudinal_slope([0.5, 0.5]) == 0.0
+
+    # Single value
+    assert compute_longitudinal_slope([0.5]) == 0.0
+
+    # Aggregation with longitudinal slope adjusts top value
+    agg = aggregate_probability([0.3, 0.6], method="longitudinal_slope")
+    assert agg >= 0.6
+
+
+def test_clinical_consensus_aggregation_and_calibrator():
+    from train.aggregation import ConsensusRankingCalibrator
+
+    # Multi-sample consensus
+    val = aggregate_probability([0.4, 0.8], method="clinical_consensus")
+    assert np.isclose(val, 0.60 * 0.8 + 0.40 * 0.6)
+
+    # Single sample consensus
+    assert np.isclose(aggregate_probability([0.75], method="clinical_consensus"), 0.75)
+
+    # Calibrator blending peak sample and deep representation consensus
+    calibrator = ConsensusRankingCalibrator(deep_weight=0.45, sample_weight=0.55)
+    patient_risk = calibrator.calibrate_patient_risk([0.42], [0.60])
+    assert 0.42 < patient_risk < 0.60
+    assert np.isclose(patient_risk, 0.55 * 0.42 + 0.45 * 0.60)
+
+

@@ -88,6 +88,27 @@ class _TorchvisionFallbackCompose:
         return {"image": tensor}
 
 
+def apply_thin_plate_spline_warp(image: np.ndarray, **kwargs: Any) -> np.ndarray:
+    """Thin-Plate Spline (TPS) non-linear elastic morphing of anatomical structures."""
+    try:
+        h, w = image.shape[:2]
+        grid_x, grid_y = np.meshgrid(
+            np.linspace(w * 0.1, w * 0.9, 4),
+            np.linspace(h * 0.1, h * 0.9, 4),
+        )
+        src = np.column_stack([grid_x.ravel(), grid_y.ravel()]).astype(np.float32)
+        noise = np.random.uniform(-6.0, 6.0, src.shape).astype(np.float32)
+        dst = src + noise
+
+        matches = [cv2.DMatch(i, i, 0) for i in range(len(src))]
+        tps = cv2.createThinPlateSplineShapeTransformer()
+        tps.estimateTransformation(dst.reshape(1, -1, 2), src.reshape(1, -1, 2), matches)
+        warped = tps.warpImage(image)
+        return warped if warped is not None else image
+    except Exception:
+        return image
+
+
 def _albumentations_base_pipeline(image_size: int) -> list[Any]:
     return [
         A.Resize(height=image_size, width=image_size, interpolation=cv2.INTER_AREA),
@@ -99,20 +120,40 @@ def _albumentations_base_pipeline(image_size: int) -> list[Any]:
 def get_train_augmentations(image_size: int = 384) -> Any:
     """Return the training augmentation pipeline."""
     if _HAS_ALBUMENTATIONS:
+        hole_size = max(8, int(image_size * 0.08))
         return A.Compose(
             [
                 A.HorizontalFlip(p=0.5),
                 A.ShiftScaleRotate(
-                    shift_limit=0.02,
+                    shift_limit=0.03,
                     scale_limit=0.08,
-                    rotate_limit=10,
-                    border_mode=cv2.BORDER_REPLICATE,
-                    p=0.4,
+                    rotate_limit=7,
+                    border_mode=cv2.BORDER_CONSTANT,
+                    value=0,
+                    p=0.45,
                 ),
                 A.RandomBrightnessContrast(
-                    brightness_limit=0.1,
-                    contrast_limit=0.1,
-                    p=0.25,
+                    brightness_limit=0.12,
+                    contrast_limit=0.12,
+                    p=0.35,
+                ),
+                A.CoarseDropout(
+                    max_holes=6,
+                    min_holes=1,
+                    max_height=hole_size,
+                    max_width=hole_size,
+                    min_height=max(4, int(hole_size * 0.25)),
+                    min_width=max(4, int(hole_size * 0.25)),
+                    fill_value=0,
+                    p=0.35,
+                ),
+                A.OneOf(
+                    [
+                        A.ElasticTransform(alpha=1.0, sigma=25, alpha_affine=15, border_mode=cv2.BORDER_CONSTANT, value=0, p=0.4),
+                        A.GridDistortion(num_steps=5, distort_limit=0.15, border_mode=cv2.BORDER_CONSTANT, value=0, p=0.4),
+                        A.Lambda(image=apply_thin_plate_spline_warp, p=0.4),
+                    ],
+                    p=0.35,
                 ),
                 *_albumentations_base_pipeline(image_size),
             ]
@@ -120,8 +161,112 @@ def get_train_augmentations(image_size: int = 384) -> Any:
     return _TorchvisionFallbackCompose(image_size=image_size, train=True)
 
 
+
 def get_eval_augmentations(image_size: int = 384) -> Any:
     """Return the deterministic validation/inference pipeline."""
     if _HAS_ALBUMENTATIONS:
         return A.Compose(_albumentations_base_pipeline(image_size))
     return _TorchvisionFallbackCompose(image_size=image_size, train=False)
+
+
+def apply_anatomical_hip_grafting(
+    image_base: np.ndarray,
+    image_donor: np.ndarray,
+    hip_side: str = "left",
+    blend_alpha: float = 0.5,
+) -> np.ndarray:
+    """Anatomical Hip Grafting / CutMix.
+
+    Physiologically grafts a donor acetabular joint region onto a base pelvic radiograph
+    with smooth cosine/Gaussian edge feathering to eliminate boundary artifacts.
+    """
+    if image_base.shape != image_donor.shape:
+        image_donor = cv2.resize(image_donor, (image_base.shape[1], image_base.shape[0]))
+
+    h, w = image_base.shape[:2]
+    y1, y2 = int(h * 0.20), int(h * 0.80)
+    if hip_side == "left":
+        x1, x2 = int(w * 0.05), int(w * 0.48)
+    else:
+        x1, x2 = int(w * 0.52), int(w * 0.95)
+
+    # Smooth feathered mask
+    mask = np.zeros((h, w), dtype=np.float32)
+    mask[y1:y2, x1:x2] = 1.0
+    ksize = max(11, int(min(h, w) * 0.05) | 1)
+    mask = cv2.GaussianBlur(mask, (ksize, ksize), 0)
+
+    if image_base.ndim == 3 and mask.ndim == 2:
+        mask = mask[..., None]
+
+    alpha_weight = blend_alpha * mask
+    grafted = (1.0 - alpha_weight) * image_base.astype(np.float32) + alpha_weight * image_donor.astype(np.float32)
+    return np.clip(grafted, 0, 255).astype(image_base.dtype)
+
+
+def apply_native_16bit_contrast_jitter(
+    image: np.ndarray,
+    window_center_jitter: float = 0.15,
+    window_width_jitter: float = 0.20,
+    gamma_range: tuple[float, float] = (0.8, 1.25),
+) -> np.ndarray:
+    """Simulate radiologist window leveling on native high dynamic range radiographs.
+
+    Jitters Window Center (WC) and Window Width (WW) to reveal trabecular bone
+    versus unossified soft-tissue/cartilaginous interfaces.
+    """
+    img = image.astype(np.float32)
+    min_val, max_val = float(img.min()), float(img.max())
+    if max_val <= min_val:
+        return image.copy()
+
+    # Normalize to [0, 1]
+    norm = (img - min_val) / (max_val - min_val)
+
+    # Base center and width
+    base_center = 0.5
+    base_width = 0.8
+
+    c_offset = float(np.random.uniform(-window_center_jitter, window_center_jitter))
+    w_scale = float(np.random.uniform(1.0 - window_width_jitter, 1.0 + window_width_jitter))
+
+    center = np.clip(base_center + c_offset, 0.15, 0.85)
+    width = np.clip(base_width * w_scale, 0.2, 1.2)
+
+    low = center - width / 2.0
+    high = center + width / 2.0
+
+    windowed = np.clip((norm - low) / (high - low), 0.0, 1.0)
+
+    # Non-linear tissue gamma jitter
+    gamma = float(np.random.uniform(gamma_range[0], gamma_range[1]))
+    windowed = np.power(windowed, gamma)
+
+    if np.issubdtype(image.dtype, np.integer):
+        return (windowed * max_val).astype(image.dtype)
+    return windowed.astype(image.dtype)
+
+
+class Native16BitWindowJitter:
+    """Albumentations-compatible augmentation for native DICOM high dynamic range jittering."""
+
+    def __init__(
+        self,
+        p: float = 0.5,
+        window_center_jitter: float = 0.15,
+        window_width_jitter: float = 0.20,
+    ) -> None:
+        self.p = float(p)
+        self.window_center_jitter = window_center_jitter
+        self.window_width_jitter = window_width_jitter
+
+    def __call__(self, image: np.ndarray, **kwargs: Any) -> dict[str, np.ndarray]:
+        if np.random.rand() < self.p:
+            image = apply_native_16bit_contrast_jitter(
+                image,
+                window_center_jitter=self.window_center_jitter,
+                window_width_jitter=self.window_width_jitter,
+            )
+        return {"image": image}
+
+

@@ -57,6 +57,14 @@ def grayscale_to_rgb(image: np.ndarray) -> np.ndarray:
     return np.repeat(image[..., None], 3, axis=2).astype(np.float32, copy=False)
 
 
+_PREPROCESSED_IMAGE_CACHE: dict[tuple[str, int, str], np.ndarray] = {}
+
+
+def clear_preprocessed_cache() -> None:
+    """Clear the in-memory preprocessed image cache."""
+    _PREPROCESSED_IMAGE_CACHE.clear()
+
+
 class HipDysplasiaDataset(Dataset[dict[str, Any]]):
     """Map manifest rows to normalized 3-channel tensors."""
 
@@ -70,6 +78,7 @@ class HipDysplasiaDataset(Dataset[dict[str, Any]]):
         train: bool = False,
         transform: Any | None = None,
         preprocessor: XRayPreprocessor | None = None,
+        use_cache: bool = True,
     ) -> None:
         if isinstance(manifest, (str, Path)):
             dataframe = load_manifest(manifest)
@@ -91,14 +100,24 @@ class HipDysplasiaDataset(Dataset[dict[str, Any]]):
         self._transform = transform or (
             get_train_augmentations(image_size) if train else get_eval_augmentations(image_size)
         )
+        self._use_cache = use_cache
 
     def __len__(self) -> int:
         return len(self._dataframe)
 
     def __getitem__(self, index: int) -> dict[str, Any]:
         row = self._dataframe.iloc[index]
-        image, metadata = load_medical_image(str(Path(row["path"])))
-        processed = self._preprocessor.preprocess(image, metadata)
+        path_str = str(Path(row["path"]))
+        cache_key = (path_str, self._image_size, self._preprocessing_profile)
+
+        if self._use_cache and cache_key in _PREPROCESSED_IMAGE_CACHE:
+            processed = _PREPROCESSED_IMAGE_CACHE[cache_key]
+        else:
+            image, metadata = load_medical_image(path_str)
+            processed = self._preprocessor.preprocess(image, metadata)
+            if self._use_cache:
+                _PREPROCESSED_IMAGE_CACHE[cache_key] = processed
+
         rgb_image = grayscale_to_rgb(processed)
 
         if self._transform is not None:

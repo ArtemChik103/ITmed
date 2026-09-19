@@ -17,38 +17,33 @@ normal_single::норма_отдельные снимки/IMG-0001-000016.dcm,no
 normal_single::норма_отдельные снимки/IMG-0001-000017.dcm,normal_single::IMG-0001-000017,0,норма_отдельные снимки/IMG-0001-000017.dcm,норма_отдельные снимки,-1,holdout
 normal_single::норма_отдельные снимки/IMG-0001-000025.dcm,normal_single::IMG-0001-000025,0,норма_отдельные снимки/IMG-0001-000025.dcm,норма_отдельные снимки,-1,holdout
 normal_single::норма_отдельные снимки/IMG-0001-00004.dcm,normal_single::IMG-0001-00004,0,норма_отдельные снимки/IMG-0001-00004.dcm,норма_отдельные снимки,-1,holdout
-pathology_main::Патология/subject_0010/26022616/00000001.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0010/26022616/00000002.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0010/26022616/00000003.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000003.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0010/26022616/00000004.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000004.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0010/26022616/00000005.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000005.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0017/26022616/00000001.dcm,pathology_main::subject_0017,1,Патология/subject_0017/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0018/10 мес/26022615/00000001.dcm,pathology_main::subject_0018,1,Патология/subject_0018/10 мес/26022615/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0018/26022615/00000001.dcm,pathology_main::subject_0018,1,Патология/subject_0018/26022615/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0018/26022615/00000002.dcm,pathology_main::subject_0018,1,Патология/subject_0018/26022615/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0025/26022616/00000001.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0025/26022616/00000002.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0025/26022616/00000003.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000003.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0025/26022616/00000004.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000004.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/10 месяцев/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/10 месяцев/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/10 месяцев/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/10 месяцев/26022616/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/26022616/00000003.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000003.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/26022616/00000004.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000004.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/26022616/00000005.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000005.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/4 месяца/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/4 месяца/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/4 месяца/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/4 месяца/26022616/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/4 месяца/26022616/00000003.dcm,pathology_main::subject_0027,1,Патология/subject_0027/4 месяца/26022616/00000003.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000001.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000002.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000003.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000003.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000004.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000004.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000005.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000005.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000006.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000006.dcm,Патология,-1,holdout
-pathology_main::Патология/subject_0027/7 месяцев/26022616/00000007.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000007.dcm,Патология,-1,holdout
-pathology_single::патология_отдельные файлы/IMG-0001-000012.dcm,pathology_single::IMG-0001-000012,1,патология_отдельные файлы/IMG-0001-000012.dcm,патология_отдельные файлы,-1,holdout
-pathology_single::патология_отдельные файлы/IMG-0001-00009.dcm,pathology_single::IMG-0001-00009,1,патология_отдельные файлы/IMG-0001-00009.dcm,патология_отдельные файлы,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000014-2020-08.1.jpeg,pathology_jpg::Пациент_000014-2020-08,1,патология_jpg/Пациент_000014-2020-08.1.jpeg,патология_jpg,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000023-2026-01.0.jpeg,pathology_jpg::Пациент_000023-2026-01,1,патология_jpg/Пациент_000023-2026-01.0.jpeg,патология_jpg,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000025-2022-01.0.jpeg,pathology_jpg::Пациент_000025-2022-01,1,патология_jpg/Пациент_000025-2022-01.0.jpeg,патология_jpg,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000028-2019-10.0.jpeg,pathology_jpg::Пациент_000028-2019-10,1,патология_jpg/Пациент_000028-2019-10.0.jpeg,патология_jpg,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000028-2019-10.1.jpeg,pathology_jpg::Пациент_000028-2019-10,1,патология_jpg/Пациент_000028-2019-10.1.jpeg,патология_jpg,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000028-2019-10.2.jpeg,pathology_jpg::Пациент_000028-2019-10,1,патология_jpg/Пациент_000028-2019-10.2.jpeg,патология_jpg,-1,holdout
+pathology_jpg::патология_jpg/Пациент_000028-2019-10.3.jpeg,pathology_jpg::Пациент_000028-2019-10,1,патология_jpg/Пациент_000028-2019-10.3.jpeg,патология_jpg,-1,holdout
+pathology_main::Патология/subject_0011/26022616/00000001.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000001.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0011/26022616/00000002.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000002.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0011/26022616/00000003.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000003.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0011/26022616/00000004.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000004.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0012/26022616/00000001.dcm,pathology_main::subject_0012,1,Патология/subject_0012/26022616/00000001.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0012/26022616/00000002.dcm,pathology_main::subject_0012,1,Патология/subject_0012/26022616/00000002.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0012/26022616/00000003.dcm,pathology_main::subject_0012,1,Патология/subject_0012/26022616/00000003.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0020/26022616/00000001.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000001.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0020/26022616/00000002.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000002.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0020/26022616/00000003.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000003.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0020/26022616/00000004.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000004.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0020/26022616/00000005.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000005.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0026/26022616/00000001.dcm,pathology_main::subject_0026,1,Патология/subject_0026/26022616/00000001.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0026/26022616/00000002.dcm,pathology_main::subject_0026,1,Патология/subject_0026/26022616/00000002.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0033/26022615/00000001.dcm,pathology_main::subject_0033,1,Патология/subject_0033/26022615/00000001.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0033/26022615/00000002.dcm,pathology_main::subject_0033,1,Патология/subject_0033/26022615/00000002.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0033/6 мес/26022615/00000001.dcm,pathology_main::subject_0033,1,Патология/subject_0033/6 мес/26022615/00000001.dcm,Патология,-1,holdout
+pathology_main::Патология/subject_0035/26022615/00000001.dcm,pathology_main::subject_0035,1,Патология/subject_0035/26022615/00000001.dcm,Патология,-1,holdout
+pathology_single::патология_отдельные файлы/IMG-0001-000013.dcm,pathology_single::IMG-0001-000013,1,патология_отдельные файлы/IMG-0001-000013.dcm,патология_отдельные файлы,-1,holdout
+pathology_single::патология_отдельные файлы/IMG-0001-00008.dcm,pathology_single::IMG-0001-00008,1,патология_отдельные файлы/IMG-0001-00008.dcm,патология_отдельные файлы,-1,holdout
 normal_main::Норма/IMG-0004-00001.dcm,normal_main::IMG-0004-00001.dcm,0,Норма/IMG-0004-00001.dcm,Норма,0,trainval
 normal_main::Норма/subject_0004/26022616/00000001.dcm,normal_main::subject_0004,0,Норма/subject_0004/26022616/00000001.dcm,Норма,0,trainval
 normal_main::Норма/subject_0016/26022616/00000001.dcm,normal_main::subject_0016,0,Норма/subject_0016/26022616/00000001.dcm,Норма,0,trainval
@@ -68,20 +63,49 @@ normal_single::норма_отдельные снимки/IMG-0001-000010.dcm,no
 normal_single::норма_отдельные снимки/IMG-0001-000012.dcm,normal_single::IMG-0001-000012,0,норма_отдельные снимки/IMG-0001-000012.dcm,норма_отдельные снимки,0,trainval
 normal_single::норма_отдельные снимки/IMG-0001-000020.dcm,normal_single::IMG-0001-000020,0,норма_отдельные снимки/IMG-0001-000020.dcm,норма_отдельные снимки,0,trainval
 normal_single::норма_отдельные снимки/IMG-0001-000027.dcm,normal_single::IMG-0001-000027,0,норма_отдельные снимки/IMG-0001-000027.dcm,норма_отдельные снимки,0,trainval
+pathology_jpg::патология_jpg/Пациент_000013-2022-07.0.jpeg,pathology_jpg::Пациент_000013-2022-07,1,патология_jpg/Пациент_000013-2022-07.0.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000018-2022-01.0.jpeg,pathology_jpg::Пациент_000018-2022-01,1,патология_jpg/Пациент_000018-2022-01.0.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000022-2020-06.2.jpeg,pathology_jpg::Пациент_000022-2020-06,1,патология_jpg/Пациент_000022-2020-06.2.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000022-2020-06.3.jpeg,pathology_jpg::Пациент_000022-2020-06,1,патология_jpg/Пациент_000022-2020-06.3.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000026-2020-11.0.jpeg,pathology_jpg::Пациент_000026-2020-11,1,патология_jpg/Пациент_000026-2020-11.0.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000026-2020-11.1.jpeg,pathology_jpg::Пациент_000026-2020-11,1,патология_jpg/Пациент_000026-2020-11.1.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000026-2020-11.2.jpeg,pathology_jpg::Пациент_000026-2020-11,1,патология_jpg/Пациент_000026-2020-11.2.jpeg,патология_jpg,0,trainval
+pathology_jpg::патология_jpg/Пациент_000030-2022-12.0.jpeg,pathology_jpg::Пациент_000030-2022-12,1,патология_jpg/Пациент_000030-2022-12.0.jpeg,патология_jpg,0,trainval
+pathology_main::Патология/subject_0002/26022615/00000001.dcm,pathology_main::subject_0002,1,Патология/subject_0002/26022615/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0002/26022615/00000002.dcm,pathology_main::subject_0002,1,Патология/subject_0002/26022615/00000002.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0002/26022615/00000003.dcm,pathology_main::subject_0002,1,Патология/subject_0002/26022615/00000003.dcm,Патология,0,trainval
 pathology_main::Патология/subject_0004/26022615/00000001.dcm,pathology_main::subject_0004,1,Патология/subject_0004/26022615/00000001.dcm,Патология,0,trainval
 pathology_main::Патология/subject_0004/26022615/00000002.dcm,pathology_main::subject_0004,1,Патология/subject_0004/26022615/00000002.dcm,Патология,0,trainval
 pathology_main::Патология/subject_0004/26022615/00000003.dcm,pathology_main::subject_0004,1,Патология/subject_0004/26022615/00000003.dcm,Патология,0,trainval
 pathology_main::Патология/subject_0004/26022615/00000004.dcm,pathology_main::subject_0004,1,Патология/subject_0004/26022615/00000004.dcm,Патология,0,trainval
-pathology_main::Патология/subject_0006/26022616/00000001.dcm,pathology_main::subject_0006,1,Патология/subject_0006/26022616/00000001.dcm,Патология,0,trainval
-pathology_main::Патология/subject_0006/26022616/00000002.dcm,pathology_main::subject_0006,1,Патология/subject_0006/26022616/00000002.dcm,Патология,0,trainval
-pathology_main::Патология/subject_0023/26022616/00000001.dcm,pathology_main::subject_0023,1,Патология/subject_0023/26022616/00000001.dcm,Патология,0,trainval
-pathology_main::Патология/subject_0023/26022616/00000002.dcm,pathology_main::subject_0023,1,Патология/subject_0023/26022616/00000002.dcm,Патология,0,trainval
-pathology_main::Патология/subject_0023/26022616/00000003.dcm,pathology_main::subject_0023,1,Патология/subject_0023/26022616/00000003.dcm,Патология,0,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-000010.dcm,pathology_single::IMG-0001-000010,1,патология_отдельные файлы/IMG-0001-000010.dcm,патология_отдельные файлы,0,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-000011.dcm,pathology_single::IMG-0001-000011,1,патология_отдельные файлы/IMG-0001-000011.dcm,патология_отдельные файлы,0,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-000013.dcm,pathology_single::IMG-0001-000013,1,патология_отдельные файлы/IMG-0001-000013.dcm,патология_отдельные файлы,0,trainval
+pathology_main::Патология/subject_0005/26022616/00000001.dcm,pathology_main::subject_0005,1,Патология/subject_0005/26022616/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000001.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000002.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000002.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000003.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000003.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000004.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000004.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000005.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000005.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000006.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000006.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000007.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000007.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000008.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000008.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/7 мес/26022616/00000009.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000009.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/9 мес/26022616/00000001.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/9 мес/26022616/00000002.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000002.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/9 мес/26022616/00000003.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000003.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0005/9 мес/26022616/00000004.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000004.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0028/26022615/00000001.dcm,pathology_main::subject_0028,1,Патология/subject_0028/26022615/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0028/8 мес/26022615/00000001.dcm,pathology_main::subject_0028,1,Патология/subject_0028/8 мес/26022615/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0039/26022616/00000001.dcm,pathology_main::subject_0039,1,Патология/subject_0039/26022616/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0039/26022616/00000002.dcm,pathology_main::subject_0039,1,Патология/subject_0039/26022616/00000002.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0039/26022616/00000003.dcm,pathology_main::subject_0039,1,Патология/subject_0039/26022616/00000003.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0040/26022616/00000001.dcm,pathology_main::subject_0040,1,Патология/subject_0040/26022616/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/2 мес/26022615/00000001.dcm,pathology_main::subject_0048,1,Патология/subject_0048/2 мес/26022615/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/2 мес/26022615/00000002.dcm,pathology_main::subject_0048,1,Патология/subject_0048/2 мес/26022615/00000002.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/2 мес/26022615/00000003.dcm,pathology_main::subject_0048,1,Патология/subject_0048/2 мес/26022615/00000003.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/26022615/00000001.dcm,pathology_main::subject_0048,1,Патология/subject_0048/26022615/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/3 мес/26022615/00000001.dcm,pathology_main::subject_0048,1,Патология/subject_0048/3 мес/26022615/00000001.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/3 мес/26022615/00000002.dcm,pathology_main::subject_0048,1,Патология/subject_0048/3 мес/26022615/00000002.dcm,Патология,0,trainval
+pathology_main::Патология/subject_0048/3 мес/26022615/00000003.dcm,pathology_main::subject_0048,1,Патология/subject_0048/3 мес/26022615/00000003.dcm,Патология,0,trainval
 pathology_single::патология_отдельные файлы/IMG-0001-00006.dcm,pathology_single::IMG-0001-00006,1,патология_отдельные файлы/IMG-0001-00006.dcm,патология_отдельные файлы,0,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-00008.dcm,pathology_single::IMG-0001-00008,1,патология_отдельные файлы/IMG-0001-00008.dcm,патология_отдельные файлы,0,trainval
 normal_main::Норма/subject_0006/26022616/00000001.dcm,normal_main::subject_0006,0,Норма/subject_0006/26022616/00000001.dcm,Норма,1,trainval
 normal_main::Норма/subject_0006/26022616/00000002.dcm,normal_main::subject_0006,0,Норма/subject_0006/26022616/00000002.dcm,Норма,1,trainval
 normal_main::Норма/subject_0013/26022616/00000001.dcm,normal_main::subject_0013,0,Норма/subject_0013/26022616/00000001.dcm,Норма,1,trainval
@@ -95,23 +119,50 @@ normal_single::норма_отдельные снимки/IMG-0001-000022.dcm,no
 normal_single::норма_отдельные снимки/IMG-0001-000023.dcm,normal_single::IMG-0001-000023,0,норма_отдельные снимки/IMG-0001-000023.dcm,норма_отдельные снимки,1,trainval
 normal_single::норма_отдельные снимки/IMG-0001-000026.dcm,normal_single::IMG-0001-000026,0,норма_отдельные снимки/IMG-0001-000026.dcm,норма_отдельные снимки,1,trainval
 normal_single::норма_отдельные снимки/IMG-0001-00005.dcm,normal_single::IMG-0001-00005,0,норма_отдельные снимки/IMG-0001-00005.dcm,норма_отдельные снимки,1,trainval
-pathology_main::Патология/subject_0012/26022616/00000001.dcm,pathology_main::subject_0012,1,Патология/subject_0012/26022616/00000001.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0012/26022616/00000002.dcm,pathology_main::subject_0012,1,Патология/subject_0012/26022616/00000002.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0012/26022616/00000003.dcm,pathology_main::subject_0012,1,Патология/subject_0012/26022616/00000003.dcm,Патология,1,trainval
+pathology_jpg::патология_jpg/Пациент_000003-2026-02.0.jpeg,pathology_jpg::Пациент_000003-2026-02,1,патология_jpg/Пациент_000003-2026-02.0.jpeg,патология_jpg,1,trainval
+pathology_jpg::патология_jpg/Пациент_000015-2022-02.0.jpeg,pathology_jpg::Пациент_000015-2022-02,1,патология_jpg/Пациент_000015-2022-02.0.jpeg,патология_jpg,1,trainval
+pathology_jpg::патология_jpg/Пациент_000021-2019-06.0.jpeg,pathology_jpg::Пациент_000021-2019-06,1,патология_jpg/Пациент_000021-2019-06.0.jpeg,патология_jpg,1,trainval
+pathology_main::Патология/subject_0009/26022616/00000001.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0009/26022616/00000002.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000002.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0009/26022616/00000003.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000003.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0009/26022616/00000004.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000004.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0009/26022616/00000005.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000005.dcm,Патология,1,trainval
 pathology_main::Патология/subject_0013/26022616/00000001.dcm,pathology_main::subject_0013,1,Патология/subject_0013/26022616/00000001.dcm,Патология,1,trainval
 pathology_main::Патология/subject_0013/26022616/00000002.dcm,pathology_main::subject_0013,1,Патология/subject_0013/26022616/00000002.dcm,Патология,1,trainval
 pathology_main::Патология/subject_0013/26022616/00000003.dcm,pathology_main::subject_0013,1,Патология/subject_0013/26022616/00000003.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0022/26022615/00000001.dcm,pathology_main::subject_0022,1,Патология/subject_0022/26022615/00000001.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0029/26022616/00000001.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000001.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0029/26022616/00000002.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000002.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0029/26022616/00000003.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000003.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0029/26022616/00000004.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000004.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0029/26022616/00000005.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000005.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0030/26022615/00000001.dcm,pathology_main::subject_0030,1,Патология/subject_0030/26022615/00000001.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0030/26022615/00000002.dcm,pathology_main::subject_0030,1,Патология/subject_0030/26022615/00000002.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0035/26022615/00000001.dcm,pathology_main::subject_0035,1,Патология/subject_0035/26022615/00000001.dcm,Патология,1,trainval
-pathology_main::Патология/subject_0040/26022616/00000001.dcm,pathology_main::subject_0040,1,Патология/subject_0040/26022616/00000001.dcm,Патология,1,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-00004.dcm,pathology_single::IMG-0001-00004,1,патология_отдельные файлы/IMG-0001-00004.dcm,патология_отдельные файлы,1,trainval
+pathology_main::Патология/subject_0016/26022616/00000001.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0016/26022616/00000002.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000002.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0016/26022616/00000003.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000003.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0016/26022616/00000004.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000004.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0016/26022616/00000005.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000005.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0016/26022616/00000006.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000006.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0017/26022616/00000001.dcm,pathology_main::subject_0017,1,Патология/subject_0017/26022616/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0018/10 мес/26022615/00000001.dcm,pathology_main::subject_0018,1,Патология/subject_0018/10 мес/26022615/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0018/26022615/00000001.dcm,pathology_main::subject_0018,1,Патология/subject_0018/26022615/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0018/26022615/00000002.dcm,pathology_main::subject_0018,1,Патология/subject_0018/26022615/00000002.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0023/26022616/00000001.dcm,pathology_main::subject_0023,1,Патология/subject_0023/26022616/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0023/26022616/00000002.dcm,pathology_main::subject_0023,1,Патология/subject_0023/26022616/00000002.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0023/26022616/00000003.dcm,pathology_main::subject_0023,1,Патология/subject_0023/26022616/00000003.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000001.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000002.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000002.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000003.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000003.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000004.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000004.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000005.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000005.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000006.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000006.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000007.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000007.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000008.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000008.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000009.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000009.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000010.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000010.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000011.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000011.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000012.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000012.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000013.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000013.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000014.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000014.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000015.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000015.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0031/26022616/00000016.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000016.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0032/26022616/00000001.dcm,pathology_main::subject_0032,1,Патология/subject_0032/26022616/00000001.dcm,Патология,1,trainval
+pathology_main::Патология/subject_0032/26022616/00000002.dcm,pathology_main::subject_0032,1,Патология/subject_0032/26022616/00000002.dcm,Патология,1,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-00002.dcm,pathology_single::IMG-0001-00002,1,патология_отдельные файлы/IMG-0001-00002.dcm,патология_отдельные файлы,1,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-00003.dcm,pathology_single::IMG-0001-00003,1,патология_отдельные файлы/IMG-0001-00003.dcm,патология_отдельные файлы,1,trainval
 normal_main::Норма/subject_0005/26022615/00000001.dcm,normal_main::subject_0005,0,Норма/subject_0005/26022615/00000001.dcm,Норма,2,trainval
 normal_main::Норма/subject_0005/26022615/00000002.dcm,normal_main::subject_0005,0,Норма/subject_0005/26022615/00000002.dcm,Норма,2,trainval
 normal_main::Норма/subject_0011/26022616/00000001.dcm,normal_main::subject_0011,0,Норма/subject_0011/26022616/00000001.dcm,Норма,2,trainval
@@ -137,34 +188,32 @@ normal_main::Норма/subject_0048/26022615/00000002.dcm,normal_main::subject_
 normal_main::Норма/subject_0048/26022615/00000003.dcm,normal_main::subject_0048,0,Норма/subject_0048/26022615/00000003.dcm,Норма,2,trainval
 normal_single::норма_отдельные снимки/IMG-0001-000018.dcm,normal_single::IMG-0001-000018,0,норма_отдельные снимки/IMG-0001-000018.dcm,норма_отдельные снимки,2,trainval
 normal_single::норма_отдельные снимки/IMG-0001-00006.dcm,normal_single::IMG-0001-00006,0,норма_отдельные снимки/IMG-0001-00006.dcm,норма_отдельные снимки,2,trainval
-pathology_main::Патология/subject_0003/26022616/00000001.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0003/26022616/00000002.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000002.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0003/26022616/00000003.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000003.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0003/26022616/00000004.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000004.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0011/26022616/00000001.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0011/26022616/00000002.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000002.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0011/26022616/00000003.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000003.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0011/26022616/00000004.dcm,pathology_main::subject_0011,1,Патология/subject_0011/26022616/00000004.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000001.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000002.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000002.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000003.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000003.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000004.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000004.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000005.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000005.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000006.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000006.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0015/26022616/00000007.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000007.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0019/26022616/00000001.dcm,pathology_main::subject_0019,1,Патология/subject_0019/26022616/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0019/26022616/00000002.dcm,pathology_main::subject_0019,1,Патология/subject_0019/26022616/00000002.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0019/26022616/00000003.dcm,pathology_main::subject_0019,1,Патология/subject_0019/26022616/00000003.dcm,Патология,2,trainval
+pathology_jpg::патология_jpg/Пациент_000004-2019-06.0.jpeg,pathology_jpg::Пациент_000004-2019-06,1,патология_jpg/Пациент_000004-2019-06.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000005-2020-07.0.jpeg,pathology_jpg::Пациент_000005-2020-07,1,патология_jpg/Пациент_000005-2020-07.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000005-2020-07.2.jpeg,pathology_jpg::Пациент_000005-2020-07,1,патология_jpg/Пациент_000005-2020-07.2.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000005-2020-07.4.jpeg,pathology_jpg::Пациент_000005-2020-07,1,патология_jpg/Пациент_000005-2020-07.4.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000008-2022-03.0.jpeg,pathology_jpg::Пациент_000008-2022-03,1,патология_jpg/Пациент_000008-2022-03.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000009-2022-03.0.jpeg,pathology_jpg::Пациент_000009-2022-03,1,патология_jpg/Пациент_000009-2022-03.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000009-2022-03.2.jpeg,pathology_jpg::Пациент_000009-2022-03,1,патология_jpg/Пациент_000009-2022-03.2.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000011-2020-07.0.jpeg,pathology_jpg::Пациент_000011-2020-07,1,патология_jpg/Пациент_000011-2020-07.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000011-2020-07.1.jpeg,pathology_jpg::Пациент_000011-2020-07,1,патология_jpg/Пациент_000011-2020-07.1.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000016-2020-06.0.jpeg,pathology_jpg::Пациент_000016-2020-06,1,патология_jpg/Пациент_000016-2020-06.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000016-2020-06.1.jpeg,pathology_jpg::Пациент_000016-2020-06,1,патология_jpg/Пациент_000016-2020-06.1.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000016-2020-06.2.jpeg,pathology_jpg::Пациент_000016-2020-06,1,патология_jpg/Пациент_000016-2020-06.2.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000016-2020-06.3.jpeg,pathology_jpg::Пациент_000016-2020-06,1,патология_jpg/Пациент_000016-2020-06.3.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000016-2020-06.4.jpeg,pathology_jpg::Пациент_000016-2020-06,1,патология_jpg/Пациент_000016-2020-06.4.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000017-2020-01.0.jpeg,pathology_jpg::Пациент_000017-2020-01,1,патология_jpg/Пациент_000017-2020-01.0.jpeg,патология_jpg,2,trainval
+pathology_jpg::патология_jpg/Пациент_000027-2022-01.4.jpeg,pathology_jpg::Пациент_000027-2022-01,1,патология_jpg/Пациент_000027-2022-01.4.jpeg,патология_jpg,2,trainval
 pathology_main::Патология/subject_0024/26022616/00000001.dcm,pathology_main::subject_0024,1,Патология/subject_0024/26022616/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0037/26022615/00000001.dcm,pathology_main::subject_0037,1,Патология/subject_0037/26022615/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/2 мес/26022615/00000001.dcm,pathology_main::subject_0048,1,Патология/subject_0048/2 мес/26022615/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/2 мес/26022615/00000002.dcm,pathology_main::subject_0048,1,Патология/subject_0048/2 мес/26022615/00000002.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/2 мес/26022615/00000003.dcm,pathology_main::subject_0048,1,Патология/subject_0048/2 мес/26022615/00000003.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/26022615/00000001.dcm,pathology_main::subject_0048,1,Патология/subject_0048/26022615/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/3 мес/26022615/00000001.dcm,pathology_main::subject_0048,1,Патология/subject_0048/3 мес/26022615/00000001.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/3 мес/26022615/00000002.dcm,pathology_main::subject_0048,1,Патология/subject_0048/3 мес/26022615/00000002.dcm,Патология,2,trainval
-pathology_main::Патология/subject_0048/3 мес/26022615/00000003.dcm,pathology_main::subject_0048,1,Патология/subject_0048/3 мес/26022615/00000003.dcm,Патология,2,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-00003.dcm,pathology_single::IMG-0001-00003,1,патология_отдельные файлы/IMG-0001-00003.dcm,патология_отдельные файлы,2,trainval
+pathology_main::Патология/subject_0029/26022616/00000001.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000001.dcm,Патология,2,trainval
+pathology_main::Патология/subject_0029/26022616/00000002.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000002.dcm,Патология,2,trainval
+pathology_main::Патология/subject_0029/26022616/00000003.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000003.dcm,Патология,2,trainval
+pathology_main::Патология/subject_0029/26022616/00000004.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000004.dcm,Патология,2,trainval
+pathology_main::Патология/subject_0029/26022616/00000005.dcm,pathology_main::subject_0029,1,Патология/subject_0029/26022616/00000005.dcm,Патология,2,trainval
+pathology_main::Патология/subject_0034/26022616/00000001.dcm,pathology_main::subject_0034,1,Патология/subject_0034/26022616/00000001.dcm,Патология,2,trainval
+pathology_main::Патология/subject_0034/26022616/00000002.dcm,pathology_main::subject_0034,1,Патология/subject_0034/26022616/00000002.dcm,Патология,2,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-000012.dcm,pathology_single::IMG-0001-000012,1,патология_отдельные файлы/IMG-0001-000012.dcm,патология_отдельные файлы,2,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-00004.dcm,pathology_single::IMG-0001-00004,1,патология_отдельные файлы/IMG-0001-00004.dcm,патология_отдельные файлы,2,trainval
 normal_main::Норма/subject_0007/26022616/00000001.dcm,normal_main::subject_0007,0,Норма/subject_0007/26022616/00000001.dcm,Норма,3,trainval
 normal_main::Норма/subject_0007/5 мес/26022616/00000001.dcm,normal_main::subject_0007,0,Норма/subject_0007/5 мес/26022616/00000001.dcm,Норма,3,trainval
 normal_main::Норма/subject_0007/5 мес/26022616/00000002.dcm,normal_main::subject_0007,0,Норма/subject_0007/5 мес/26022616/00000002.dcm,Норма,3,trainval
@@ -197,46 +246,35 @@ normal_single::норма_отдельные снимки/IMG-0001-000013.dcm,no
 normal_single::норма_отдельные снимки/IMG-0001-000015.dcm,normal_single::IMG-0001-000015,0,норма_отдельные снимки/IMG-0001-000015.dcm,норма_отдельные снимки,3,trainval
 normal_single::норма_отдельные снимки/IMG-0001-00003.dcm,normal_single::IMG-0001-00003,0,норма_отдельные снимки/IMG-0001-00003.dcm,норма_отдельные снимки,3,trainval
 normal_single::норма_отдельные снимки/IMG-0001-00009.dcm,normal_single::IMG-0001-00009,0,норма_отдельные снимки/IMG-0001-00009.dcm,норма_отдельные снимки,3,trainval
-pathology_main::Патология/subject_0002/26022615/00000001.dcm,pathology_main::subject_0002,1,Патология/subject_0002/26022615/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0002/26022615/00000002.dcm,pathology_main::subject_0002,1,Патология/subject_0002/26022615/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0002/26022615/00000003.dcm,pathology_main::subject_0002,1,Патология/subject_0002/26022615/00000003.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/26022616/00000001.dcm,pathology_main::subject_0005,1,Патология/subject_0005/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000001.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000002.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000003.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000003.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000004.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000004.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000005.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000005.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000006.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000006.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000007.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000007.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000008.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000008.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/7 мес/26022616/00000009.dcm,pathology_main::subject_0005,1,Патология/subject_0005/7 мес/26022616/00000009.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/9 мес/26022616/00000001.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/9 мес/26022616/00000002.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/9 мес/26022616/00000003.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000003.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0005/9 мес/26022616/00000004.dcm,pathology_main::subject_0005,1,Патология/subject_0005/9 мес/26022616/00000004.dcm,Патология,3,trainval
+pathology_jpg::патология_jpg/Пациент_000002-2022-01.0.jpeg,pathology_jpg::Пациент_000002-2022-01,1,патология_jpg/Пациент_000002-2022-01.0.jpeg,патология_jpg,3,trainval
+pathology_jpg::патология_jpg/Пациент_000007-2021-05.0.jpeg,pathology_jpg::Пациент_000007-2021-05,1,патология_jpg/Пациент_000007-2021-05.0.jpeg,патология_jpg,3,trainval
+pathology_jpg::патология_jpg/Пациент_000010-2022-01.0.jpeg,pathology_jpg::Пациент_000010-2022-01,1,патология_jpg/Пациент_000010-2022-01.0.jpeg,патология_jpg,3,trainval
+pathology_jpg::патология_jpg/Пациент_000029-2023-02.0.jpeg,pathology_jpg::Пациент_000029-2023-02,1,патология_jpg/Пациент_000029-2023-02.0.jpeg,патология_jpg,3,trainval
+pathology_jpg::патология_jpg/Пациент_000029-2023-02.2.jpeg,pathology_jpg::Пациент_000029-2023-02,1,патология_jpg/Пациент_000029-2023-02.2.jpeg,патология_jpg,3,trainval
+pathology_main::Патология/subject_0003/26022616/00000001.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000001.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0003/26022616/00000002.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000002.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0003/26022616/00000003.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000003.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0003/26022616/00000004.dcm,pathology_main::subject_0003,1,Патология/subject_0003/26022616/00000004.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0006/26022616/00000001.dcm,pathology_main::subject_0006,1,Патология/subject_0006/26022616/00000001.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0006/26022616/00000002.dcm,pathology_main::subject_0006,1,Патология/subject_0006/26022616/00000002.dcm,Патология,3,trainval
 pathology_main::Патология/subject_0008/26022615/00000001.dcm,pathology_main::subject_0008,1,Патология/subject_0008/26022615/00000001.dcm,Патология,3,trainval
 pathology_main::Патология/subject_0008/26022615/00000002.dcm,pathology_main::subject_0008,1,Патология/subject_0008/26022615/00000002.dcm,Патология,3,trainval
 pathology_main::Патология/subject_0008/26022615/00000003.dcm,pathology_main::subject_0008,1,Патология/subject_0008/26022615/00000003.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0020/26022616/00000001.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0020/26022616/00000002.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0020/26022616/00000003.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000003.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0020/26022616/00000004.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000004.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0020/26022616/00000005.dcm,pathology_main::subject_0020,1,Патология/subject_0020/26022616/00000005.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0026/26022616/00000001.dcm,pathology_main::subject_0026,1,Патология/subject_0026/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0026/26022616/00000002.dcm,pathology_main::subject_0026,1,Патология/subject_0026/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0032/26022616/00000001.dcm,pathology_main::subject_0032,1,Патология/subject_0032/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0032/26022616/00000002.dcm,pathology_main::subject_0032,1,Патология/subject_0032/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0033/26022615/00000001.dcm,pathology_main::subject_0033,1,Патология/subject_0033/26022615/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0033/26022615/00000002.dcm,pathology_main::subject_0033,1,Патология/subject_0033/26022615/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0033/6 мес/26022615/00000001.dcm,pathology_main::subject_0033,1,Патология/subject_0033/6 мес/26022615/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0036/1 год/26022616/00000001.dcm,pathology_main::subject_0036,1,Патология/subject_0036/1 год/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0036/1 год/26022616/00000002.dcm,pathology_main::subject_0036,1,Патология/subject_0036/1 год/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0036/26022615/00000001.dcm,pathology_main::subject_0036,1,Патология/subject_0036/26022615/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0036/26022615/00000002.dcm,pathology_main::subject_0036,1,Патология/subject_0036/26022615/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0036/26022615/00000003.dcm,pathology_main::subject_0036,1,Патология/subject_0036/26022615/00000003.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0038/26022616/00000001.dcm,pathology_main::subject_0038,1,Патология/subject_0038/26022616/00000001.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0038/26022616/00000002.dcm,pathology_main::subject_0038,1,Патология/subject_0038/26022616/00000002.dcm,Патология,3,trainval
-pathology_main::Патология/subject_0038/26022616/00000003.dcm,pathology_main::subject_0038,1,Патология/subject_0038/26022616/00000003.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000001.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000001.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000002.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000002.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000003.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000003.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000004.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000004.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000005.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000005.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000006.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000006.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0015/26022616/00000007.dcm,pathology_main::subject_0015,1,Патология/subject_0015/26022616/00000007.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0019/26022616/00000001.dcm,pathology_main::subject_0019,1,Патология/subject_0019/26022616/00000001.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0019/26022616/00000002.dcm,pathology_main::subject_0019,1,Патология/subject_0019/26022616/00000002.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0019/26022616/00000003.dcm,pathology_main::subject_0019,1,Патология/subject_0019/26022616/00000003.dcm,Патология,3,trainval
+pathology_main::Патология/subject_0037/26022615/00000001.dcm,pathology_main::subject_0037,1,Патология/subject_0037/26022615/00000001.dcm,Патология,3,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-000010.dcm,pathology_single::IMG-0001-000010,1,патология_отдельные файлы/IMG-0001-000010.dcm,патология_отдельные файлы,3,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-000011.dcm,pathology_single::IMG-0001-000011,1,патология_отдельные файлы/IMG-0001-000011.dcm,патология_отдельные файлы,3,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-00005.dcm,pathology_single::IMG-0001-00005,1,патология_отдельные файлы/IMG-0001-00005.dcm,патология_отдельные файлы,3,trainval
+pathology_single::патология_отдельные файлы/IMG-0001-00009.dcm,pathology_single::IMG-0001-00009,1,патология_отдельные файлы/IMG-0001-00009.dcm,патология_отдельные файлы,3,trainval
 normal_main::Норма/subject_0009/26022614/00000001.dcm,normal_main::subject_0009,0,Норма/subject_0009/26022614/00000001.dcm,Норма,4,trainval
 normal_main::Норма/subject_0015/26022615/00000001.dcm,normal_main::subject_0015,0,Норма/subject_0015/26022615/00000001.dcm,Норма,4,trainval
 normal_main::Норма/subject_0015/26022615/00000002.dcm,normal_main::subject_0015,0,Норма/subject_0015/26022615/00000002.dcm,Норма,4,trainval
@@ -253,39 +291,51 @@ normal_main::Норма/subject_0050/7 мес/26022615/00000001.dcm,normal_main:
 normal_single::норма_отдельные снимки/IMG-0001-00002.dcm,normal_single::IMG-0001-00002,0,норма_отдельные снимки/IMG-0001-00002.dcm,норма_отдельные снимки,4,trainval
 normal_single::норма_отдельные снимки/IMG-0001-000024.dcm,normal_single::IMG-0001-000024,0,норма_отдельные снимки/IMG-0001-000024.dcm,норма_отдельные снимки,4,trainval
 normal_single::норма_отдельные снимки/IMG-0001-00008.dcm,normal_single::IMG-0001-00008,0,норма_отдельные снимки/IMG-0001-00008.dcm,норма_отдельные снимки,4,trainval
-pathology_main::Патология/subject_0009/26022616/00000001.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0009/26022616/00000002.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000002.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0009/26022616/00000003.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000003.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0009/26022616/00000004.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000004.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0009/26022616/00000005.dcm,pathology_main::subject_0009,1,Патология/subject_0009/26022616/00000005.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0016/26022616/00000001.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0016/26022616/00000002.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000002.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0016/26022616/00000003.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000003.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0016/26022616/00000004.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000004.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0016/26022616/00000005.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000005.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0016/26022616/00000006.dcm,pathology_main::subject_0016,1,Патология/subject_0016/26022616/00000006.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0028/26022615/00000001.dcm,pathology_main::subject_0028,1,Патология/subject_0028/26022615/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0028/8 мес/26022615/00000001.dcm,pathology_main::subject_0028,1,Патология/subject_0028/8 мес/26022615/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000001.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000002.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000002.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000003.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000003.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000004.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000004.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000005.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000005.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000006.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000006.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000007.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000007.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000008.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000008.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000009.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000009.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000010.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000010.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000011.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000011.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000012.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000012.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000013.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000013.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000014.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000014.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000015.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000015.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0031/26022616/00000016.dcm,pathology_main::subject_0031,1,Патология/subject_0031/26022616/00000016.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0034/26022616/00000001.dcm,pathology_main::subject_0034,1,Патология/subject_0034/26022616/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0034/26022616/00000002.dcm,pathology_main::subject_0034,1,Патология/subject_0034/26022616/00000002.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0039/26022616/00000001.dcm,pathology_main::subject_0039,1,Патология/subject_0039/26022616/00000001.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0039/26022616/00000002.dcm,pathology_main::subject_0039,1,Патология/subject_0039/26022616/00000002.dcm,Патология,4,trainval
-pathology_main::Патология/subject_0039/26022616/00000003.dcm,pathology_main::subject_0039,1,Патология/subject_0039/26022616/00000003.dcm,Патология,4,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-00002.dcm,pathology_single::IMG-0001-00002,1,патология_отдельные файлы/IMG-0001-00002.dcm,патология_отдельные файлы,4,trainval
-pathology_single::патология_отдельные файлы/IMG-0001-00005.dcm,pathology_single::IMG-0001-00005,1,патология_отдельные файлы/IMG-0001-00005.dcm,патология_отдельные файлы,4,trainval
+pathology_jpg::патология_jpg/Пациент_000001-2024-05.0.jpeg,pathology_jpg::Пациент_000001-2024-05,1,патология_jpg/Пациент_000001-2024-05.0.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000001-2024-05.1.jpeg,pathology_jpg::Пациент_000001-2024-05,1,патология_jpg/Пациент_000001-2024-05.1.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000006-2020-12.0.jpeg,pathology_jpg::Пациент_000006-2020-12,1,патология_jpg/Пациент_000006-2020-12.0.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000008-2025-04.0.jpeg,pathology_jpg::Пациент_000008-2025-04,1,патология_jpg/Пациент_000008-2025-04.0.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000012-2019-04.0.jpeg,pathology_jpg::Пациент_000012-2019-04,1,патология_jpg/Пациент_000012-2019-04.0.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000019-2022-01.0.jpeg,pathology_jpg::Пациент_000019-2022-01,1,патология_jpg/Пациент_000019-2022-01.0.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000019-2022-01.1.jpeg,pathology_jpg::Пациент_000019-2022-01,1,патология_jpg/Пациент_000019-2022-01.1.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000019-2022-01.2.jpeg,pathology_jpg::Пациент_000019-2022-01,1,патология_jpg/Пациент_000019-2022-01.2.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000019-2022-01.3.jpeg,pathology_jpg::Пациент_000019-2022-01,1,патология_jpg/Пациент_000019-2022-01.3.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000020-2020-02.2.jpeg,pathology_jpg::Пациент_000020-2020-02,1,патология_jpg/Пациент_000020-2020-02.2.jpeg,патология_jpg,4,trainval
+pathology_jpg::патология_jpg/Пациент_000024-2021-12.0.jpeg,pathology_jpg::Пациент_000024-2021-12,1,патология_jpg/Пациент_000024-2021-12.0.jpeg,патология_jpg,4,trainval
+pathology_main::Патология/subject_0010/26022616/00000001.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0010/26022616/00000002.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0010/26022616/00000003.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000003.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0010/26022616/00000004.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000004.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0010/26022616/00000005.dcm,pathology_main::subject_0010,1,Патология/subject_0010/26022616/00000005.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0022/26022615/00000001.dcm,pathology_main::subject_0022,1,Патология/subject_0022/26022615/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0025/26022616/00000001.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0025/26022616/00000002.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0025/26022616/00000003.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000003.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0025/26022616/00000004.dcm,pathology_main::subject_0025,1,Патология/subject_0025/26022616/00000004.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/10 месяцев/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/10 месяцев/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/10 месяцев/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/10 месяцев/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/26022616/00000003.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000003.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/26022616/00000004.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000004.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/26022616/00000005.dcm,pathology_main::subject_0027,1,Патология/subject_0027/26022616/00000005.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/4 месяца/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/4 месяца/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/4 месяца/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/4 месяца/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/4 месяца/26022616/00000003.dcm,pathology_main::subject_0027,1,Патология/subject_0027/4 месяца/26022616/00000003.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000001.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000002.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000003.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000003.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000004.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000004.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000005.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000005.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000006.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000006.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0027/7 месяцев/26022616/00000007.dcm,pathology_main::subject_0027,1,Патология/subject_0027/7 месяцев/26022616/00000007.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0030/26022615/00000001.dcm,pathology_main::subject_0030,1,Патология/subject_0030/26022615/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0030/26022615/00000002.dcm,pathology_main::subject_0030,1,Патология/subject_0030/26022615/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0036/1 год/26022616/00000001.dcm,pathology_main::subject_0036,1,Патология/subject_0036/1 год/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0036/1 год/26022616/00000002.dcm,pathology_main::subject_0036,1,Патология/subject_0036/1 год/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0036/26022615/00000001.dcm,pathology_main::subject_0036,1,Патология/subject_0036/26022615/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0036/26022615/00000002.dcm,pathology_main::subject_0036,1,Патология/subject_0036/26022615/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0036/26022615/00000003.dcm,pathology_main::subject_0036,1,Патология/subject_0036/26022615/00000003.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0038/26022616/00000001.dcm,pathology_main::subject_0038,1,Патология/subject_0038/26022616/00000001.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0038/26022616/00000002.dcm,pathology_main::subject_0038,1,Патология/subject_0038/26022616/00000002.dcm,Патология,4,trainval
+pathology_main::Патология/subject_0038/26022616/00000003.dcm,pathology_main::subject_0038,1,Патология/subject_0038/26022616/00000003.dcm,Патология,4,trainval

@@ -47,7 +47,8 @@ def _predict_checkpoint(
     for batch in loader:
         inputs = batch["image"].to(device, non_blocking=True)
         logits = model(inputs)
-        probabilities.append(torch.sigmoid(logits).detach().cpu().numpy())
+        probs = torch.sigmoid(logits).detach().cpu().numpy()
+        probabilities.append(np.nan_to_num(probs, nan=0.5))
         targets.append(batch["target"].detach().cpu().numpy())
         sample_ids.extend(batch["sample_id"])
 

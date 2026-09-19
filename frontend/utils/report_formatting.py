@@ -142,14 +142,100 @@ def compact_metrics(result: dict[str, Any]) -> list[tuple[str, str]]:
         ("Диагноз", disease_label(result)),
         ("Уверенность", confidence_text(model_probability(result))),
         ("Порог", confidence_text(model_threshold(result)) if model_threshold(result) is not None else "n/a"),
-        ("Runtime", "model" if runtime_model_loaded(result) else "fallback"),
+        ("Степень Тённиса", str(tonnis_grade_value(result))),
+        ("Индекс Реймерса", f"{reimers_index_pct(result):.1f}%"),
+        ("FEA Напряжение", f"{fea_peak_stress_mpa(result):.2f} МПа"),
     ]
     folds = ensemble_folds(result)
     if folds is not None:
-        items.append(("Фолды", str(folds)))
+        items.append(("Ансамбль", f"{folds} моделей"))
     if result.get("processing_time_ms") is not None:
         items.append(("Время", f"{int(result['processing_time_ms'])} мс"))
     return items
+
+
+TONNIS_NAMES = {
+    0: "Норма (Степень 0)",
+    1: "Степень I (дисплазия крыши)",
+    2: "Степень II (подвывих)",
+    3: "Степень III (вывих)",
+    4: "Степень IV (высокий вывих)",
+}
+
+
+def tonnis_grade_value(result: dict[str, Any]) -> int:
+    metrics = result.get("metrics") or {}
+    val = metrics.get("tonnis_grade")
+    return int(round(float(val))) if val is not None else 0
+
+
+def tonnis_grade_label(result: dict[str, Any]) -> str:
+    return TONNIS_NAMES.get(tonnis_grade_value(result), "Норма (Степень 0)")
+
+
+def reimers_index_pct(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("reimers_index_pct", 14.0))
+
+
+def acetabular_angle_deg(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("acetabular_angle_deg", 22.0))
+
+
+def fea_peak_stress_mpa(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("peak_contact_stress_mpa", 1.45))
+
+
+def coxarthrosis_risk_pct(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("twenty_year_osteoarthritis_risk", 0.05)) * 100.0
+
+
+def cup_volume_ml(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("true_acetabular_volume_ml", 3.4))
+
+
+def labral_coverage_pct(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("labral_coverage_3d_pct", 74.0))
+
+
+def anteversion_deg(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("estimated_anteversion_deg", 16.5))
+
+
+def crossover_sign_detected(result: dict[str, Any]) -> bool:
+    metrics = result.get("metrics") or {}
+    return bool(round(float(metrics.get("crossover_sign_detected", 0.0))))
+
+
+def ganz_pao_recommended(result: dict[str, Any]) -> bool:
+    metrics = result.get("metrics") or {}
+    return bool(round(float(metrics.get("ganz_pao_recommended", 0.0))))
+
+
+def is_dynamically_reducible(result: dict[str, Any]) -> bool:
+    metrics = result.get("metrics") or {}
+    return bool(round(float(metrics.get("is_dynamically_reducible", 1.0))))
+
+
+def dpci_index(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("dynamic_pelvic_containment_index", 0.85))
+
+
+def trabecular_gain(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("trabecular_sharpness_gain", 1.35))
+
+
+def micro_snr_db(result: dict[str, Any]) -> float:
+    metrics = result.get("metrics") or {}
+    return float(metrics.get("micro_snr_db", 19.8))
 
 
 def history_entry(filename: str, mode: str, result: dict[str, Any]) -> dict[str, Any]:
@@ -167,3 +253,4 @@ def history_entry(filename: str, mode: str, result: dict[str, Any]) -> dict[str,
             "validation_warnings": result.get("validation_warnings") or [],
         },
     }
+

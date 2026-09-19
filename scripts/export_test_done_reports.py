@@ -22,7 +22,7 @@ from scripts.verify_id_format import collect_test_ids, verify_submission_format
 from train.aggregation import aggregate_probability
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = REPO_ROOT / "models" / "checkpoints" / "resnet50_bce_v1" / "model_manifest.json"
+DEFAULT_MANIFEST = REPO_ROOT / "models" / "checkpoints" / "ensemble_penta_resnet_densenet_convnext_swin_effnet" / "model_manifest.json"
 DEFAULT_KEYPOINT_CHECKPOINT = REPO_ROOT / "models" / "checkpoints" / "resnet50_mtddh_keypoints_v1" / "best.ckpt"
 
 

@@ -32,10 +32,15 @@ def _normalize_raster_shape(array: np.ndarray) -> tuple[np.ndarray, int, bool]:
 
 
 def _read_raster_array(path: Path) -> np.ndarray:
-    """Read a raster image with OpenCV first and PIL as a fallback."""
-    cv2_array = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
-    if cv2_array is not None:
-        return cv2_array
+    """Read a raster image with OpenCV first (via np.fromfile for Unicode paths) and PIL fallback."""
+    try:
+        buf = np.fromfile(str(path), dtype=np.uint8)
+        if len(buf) > 0:
+            cv2_array = cv2.imdecode(buf, cv2.IMREAD_UNCHANGED)
+            if cv2_array is not None:
+                return cv2_array
+    except Exception:
+        pass
 
     with Image.open(path) as image:
         return np.asarray(image)
@@ -74,7 +79,7 @@ def load_medical_image(path: str | Path) -> tuple[np.ndarray, dict[str, Any]]:
     resolved_path = Path(path)
     suffix = resolved_path.suffix.lower()
 
-    if suffix in DICOM_EXTENSIONS:
+    if suffix in DICOM_EXTENSIONS or suffix in {".dicom"}:
         image, metadata = load_dicom(str(resolved_path))
         payload = dict(metadata)
         payload.setdefault("source_format", "dcm")
@@ -82,6 +87,14 @@ def load_medical_image(path: str | Path) -> tuple[np.ndarray, dict[str, Any]]:
 
     if suffix in RASTER_EXTENSIONS:
         return _load_raster_image(resolved_path)
+
+    try:
+        image, metadata = load_dicom(str(resolved_path))
+        payload = dict(metadata)
+        payload.setdefault("source_format", "dcm")
+        return image.astype(np.float32, copy=False), payload
+    except Exception:
+        pass
 
     raise ValueError(
         f"Unsupported medical image format '{resolved_path.suffix}'. "

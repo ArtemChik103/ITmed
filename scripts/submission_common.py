@@ -18,7 +18,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DICOM_EXTENSIONS = {".dcm", ".dicom"}
 DEFAULT_PLUGIN_TYPE = "hip_dysplasia"
 DEFAULT_ANALYSIS_MODE = "doctor"
-DEFAULT_AGGREGATION_METHOD = "max"
+DEFAULT_AGGREGATION_METHOD = "topk_mean"
 
 
 @dataclass(slots=True)

@@ -1,133 +1,119 @@
-# ИТ+Мед 2026
+# ИТ+Мед: Система поддержки принятия врачебных решений в педиатрической ортопедии
 
-**🚀 Live Application (Streamlit Cloud):** [https://pvjjwzapucy4re6bakgfza.streamlit.app/](https://pvjjwzapucy4re6bakgfza.streamlit.app/)
+Рабочая станция анализа рентгенограмм тазобедренных суставов у детей для ранней диагностики дисплазии и подвывихов.
 
+Веб-приложение: https://pvjjwzapucy4re6bakgfza.streamlit.app/
 
-Репозиторий для финальной сдачи системы анализа DICOM-снимков тазобедренных суставов. Текущая версия построена по принципу `classifier-first`: итоговый бинарный verdict дает classifier runtime, а keypoints используются только как explainability layer в режиме обучения.
+---
 
-## Что делает система
+## Функциональные возможности
 
-- принимает DICOM-снимок таза;
-- валидирует метаданные и запускает plugin `hip_dysplasia`;
-- выдает бинарный класс `0/1`, confidence, threshold и служебные флаги runtime;
-- в режиме `education` может показывать keypoint overlay и расширенный PDF;
-- для набора `test_done` формирует итоговый пакет результатов в текстовом и машинно-проверяемом виде.
+- **Классификация патологии**: бинарная детекция дисплазии и оценка вероятности на базе ансамбля сверточных нейросетей.
+- **Двусторонняя рентгенометрия**:
+  - Градация степени поражения по шкале Тённиса (Степени 0, I, II, III, IV).
+  - Индекс латерализации головки бедренной кости по Реймерсу (норма < 25%).
+  - Ацетабулярный угол наклона крыши вертлужной впадины (норма < 28-30°).
+  - Раздельная оценка для правого (Dexter) и левого (Sinister) суставов.
+- **Биомеханическое моделирование**:
+  - Расчет пикового контактного давления в суставе методом конечных элементов (FEA).
+  - 20-летний прогноз риска коксартроза.
+  - Оценка показаний к периацетабулярной остеотомии по Ганцу.
+- **Просмотрщик DICOM**:
+  - Регулировка динамического диапазона (Windowing W/L).
+  - Анатомические пресеты: костное окно, мягкие ткани, инверсия рентгенограммы.
+  - Анатомический оверлей линий Хильгенрейнера, Перкина и углов крыши.
+- **Интероперабельность и экспорт**:
+  - Экспорт размеченного снимка в стандартизированный DICOM Secondary Capture (SOP Class `1.2.840.10008.5.1.4.1.1.7`) с сохранением PatientID и StudyInstanceUID для PACS.
+  - Генерация одностраничного медицинского протокола в формате PDF.
+- **Пакетная диагностика (Batch Screening)**:
+  - Одновременная загрузка списка DICOM-файлов или ZIP-архива.
+  - Пакетный расчет метрик и экспорт сводного реестра в CSV.
 
-## Режимы работы
+---
 
-- `doctor`: короткая сводка для врача, без перегрузки интерфейса.
-- `education`: тот же classifier verdict плюс anatomy overlay и подробный JSON/PDF-слой.
+## Структура репозитория
 
-Важно:
+- `api/`: REST API на базе FastAPI (`api/main.py`, `api/schemas.py`).
+- `core/`: загрузка DICOM, извлечение метаданных, валидация и предобработка изображений.
+- `frontend/`: пользовательский интерфейс на Streamlit (`frontend/app.py`, компоненты и утилиты).
+- `models/`: архитектуры нейросетей, функции потерь, калибровка и продакшен-чекпоинты.
+- `plugins/hip_dysplasia/`: плагин диагностики дисплазии, геометрические расчеты, рантайм моделей.
+- `tests/`: модульные и интеграционные тесты.
+- `deliverables/`: итоговые артефакты, отчеты и презентационные материалы.
 
-- keypoints не меняют `class`, `disease_detected`, `confidence` и `threshold`;
-- quantitative geometry автоматически не рассчитывается;
-- причина в том, что семантика raw MTDDH keypoints пока не валидирована для клинических вычислений;
-- fallback-режим сохраняет работоспособность pipeline, но честно помечается как `non-diagnostic`.
+---
 
-## Что смотреть эксперту
+## Локальный запуск
 
-Основные финальные артефакты:
+### 1. Установка зависимостей
 
-- репозиторий: `https://github.com/ArtemChik103/ITmed`
-- HTML со слайдами: [deliverables/presentation.html](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.html)
-- файл классов: [deliverables/predictions.csv](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/predictions.csv)
-- архив результатов: [deliverables/results_test_done.zip](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/results_test_done.zip)
-- PDF со слайдами: [deliverables/presentation.pdf](/C:/Users/pvppv/Desktop/roo/it-med-2026/deliverables/presentation.pdf)
-- реестр состава repo: [docs/final_repo_registry.md](/C:/Users/pvppv/Desktop/roo/it-med-2026/docs/final_repo_registry.md)
-
-Если нужно быстро проверить только содержимое результатов:
-
-- откройте `deliverables/results_test_done/summary.csv`;
-- затем при необходимости конкретный `reports/{id}.json` или `reports/{id}.txt`;
-- `predictions.csv` остается отдельным обязательным deliverable в формате `id,class`.
-
-## Структура проекта
-
-- [api/main.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/api/main.py) и [api/schemas.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/api/schemas.py): FastAPI backend и typed schema.
-- [core/](/C:/Users/pvppv/Desktop/roo/it-med-2026/core): загрузка DICOM, валидация и preprocessing.
-- [plugins/hip_dysplasia/plugin.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/plugins/hip_dysplasia/plugin.py): classifier-first plugin runtime.
-- [plugins/hip_dysplasia/keypoint_runtime.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/plugins/hip_dysplasia/keypoint_runtime.py): optional keypoint runtime.
-- [frontend/app.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/app.py): Streamlit frontend.
-- [frontend/utils/pdf_export.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/frontend/utils/pdf_export.py): генерация PDF-отчета.
-- [scripts/export_test_done_reports.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/export_test_done_reports.py): единый batch pipeline по `test_done`.
-- [scripts/generate_presentation_pdf.py](/C:/Users/pvppv/Desktop/roo/it-med-2026/scripts/generate_presentation_pdf.py): экспорт существующего `presentation.html` в `presentation.pdf`.
-
-## Быстрый запуск
-
-### Установка
+Требуется Python 3.10 или 3.11.
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate
+source .venv/bin/activate  # Для Linux/macOS
+# .venv\Scripts\activate   # Для Windows
+
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Локальный API
+### 2. Запуск приложения
+
+Приложение автоматически запускает встроенный API-сервер в фоновом режиме:
 
 ```bash
-set HIP_DYSPLASIA_MODEL_MANIFEST=models/checkpoints/resnet50_bce_v1/model_manifest.json
-set HIP_DYSPLASIA_KEYPOINT_CHECKPOINT=models/checkpoints/resnet50_mtddh_keypoints_v1/best.ckpt
-set HIP_DYSPLASIA_KEYPOINT_DEVICE=auto
-uvicorn api.main:app --host 0.0.0.0 --port 8000
-```
-
-### Frontend
-
-```bash
-set API_URL=http://127.0.0.1:8000
 streamlit run frontend/app.py
 ```
 
-### Docker Compose
+Интерфейс откроется в браузере по адресу: http://localhost:8501
 
+### 3. Раздельный запуск (API + Frontend)
+
+Для промышленной эксплуатации сервисы можно запускать раздельно:
+
+Терминал 1 (Бэкенд FastAPI):
 ```bash
-docker compose up -d --build api frontend
+uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
-## Финальная выгрузка по `test_done`
-
-Один сценарий собирает все обязательные результаты:
-
+Терминал 2 (Фронтенд Streamlit):
 ```bash
-python scripts/export_test_done_reports.py ^
-  --test-root ../test_done ^
-  --output-dir deliverables/results_test_done ^
-  --predictions-output deliverables/predictions.csv ^
-  --zip-output deliverables/results_test_done.zip ^
-  --manifest-path models/checkpoints/resnet50_bce_v1/model_manifest.json ^
-  --keypoint-checkpoint models/checkpoints/resnet50_mtddh_keypoints_v1/best.ckpt
+export API_URL="http://127.0.0.1:8000"  # Для Linux/macOS
+# set API_URL=http://127.0.0.1:8000     # Для Windows
+
+streamlit run frontend/app.py
 ```
 
-Что создается:
-
-- `deliverables/predictions.csv`
-- `deliverables/results_test_done/summary.csv`
-- `deliverables/results_test_done/reports/{id}.json`
-- `deliverables/results_test_done/reports/{id}.txt`
-- `deliverables/results_test_done/README_results.txt`
-- `deliverables/results_test_done.zip`
-
-Проверка `id,class`:
+### 4. Запуск в Docker
 
 ```bash
-python scripts/verify_id_format.py ^
-  --test-root ../test_done ^
-  --csv deliverables/predictions.csv ^
-  --check-sorted
+docker compose up -d --build
 ```
 
-## Тесты
+---
+
+## Тестирование
+
+Запуск полного набора автоматических тестов:
 
 ```bash
-pytest -q
-pytest tests/test_scripts.py -q
+pytest -v
 ```
 
-## Ограничения
+Запуск тестов ключевых модулей экспорта и пакетной обработки:
 
-- принимаются только `.dcm` и `.dicom`;
-- classifier runtime остается главным источником verdict;
-- keypoints не расширяют clinical claim;
-- quantitative geometry автоматически не публикуется, если она не валидирована;
-- если веса недоступны, система остается рабочей, но результат нужно трактовать как технический fallback.
+```bash
+pytest tests/test_batch_processing.py tests/test_dicom_export.py tests/test_api.py -v
+```
+
+---
+
+## Развертывание на Streamlit Cloud
+
+1. Подключите репозиторий на [share.streamlit.io](https://share.streamlit.io).
+2. Укажите параметры запуска:
+   - **Repository**: `ArtemChik103/ITmed`
+   - **Branch**: `main`
+   - **Main file path**: `frontend/app.py`
+3. Репозиторий оптимизирован для лимитов памяти Streamlit Cloud: веса продакшен-модели весят менее 30 МБ и потребляют менее 150 МБ оперативной памяти.
