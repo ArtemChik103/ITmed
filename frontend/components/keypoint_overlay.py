@@ -1,17 +1,45 @@
 """Overlay renderer for optional anatomy keypoints in education mode."""
 from __future__ import annotations
 
+import os
 from collections.abc import Sequence
 
 from PIL import Image, ImageDraw, ImageFont
 
 
 def _load_font(size: int):
-    for font_name in ("arial.ttf", "segoeui.ttf", "DejaVuSans.ttf"):
+    """Load a true TTF font with full Cyrillic support, preventing tiny bitmap fallback rectangles."""
+    # 1. Matplotlib bundled DejaVuSans (guaranteed across Windows, Linux and Streamlit Cloud)
+    try:
+        import matplotlib
+
+        font_dir = os.path.join(matplotlib.get_data_path(), "fonts", "ttf")
+        for fname in ("DejaVuSans-Bold.ttf", "DejaVuSans.ttf"):
+            fpath = os.path.join(font_dir, fname)
+            if os.path.exists(fpath):
+                return ImageFont.truetype(fpath, size=size)
+    except Exception:
+        pass
+
+    # 2. Linux system paths
+    for p in (
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+    ):
+        if os.path.exists(p):
+            try:
+                return ImageFont.truetype(p, size=size)
+            except Exception:
+                pass
+
+    # 3. Windows system fonts
+    for fname in ("arialbd.ttf", "arial.ttf", "segoeui.ttf"):
         try:
-            return ImageFont.truetype(font_name, size=size)
+            return ImageFont.truetype(fname, size=size)
         except OSError:
-            continue
+            pass
+
     return ImageFont.load_default()
 
 
@@ -30,7 +58,7 @@ def render_keypoint_overlay(
     base_size = max(canvas.width, canvas.height)
     radius = max(5, int(base_size * 0.009))
     halo_radius = radius + max(3, int(base_size * 0.004))
-    label_font = _load_font(max(12, int(base_size * 0.018)))
+    label_font = _load_font(max(16, int(base_size * 0.022)))
     label_padding_x = max(6, int(base_size * 0.007))
     label_padding_y = max(3, int(base_size * 0.003))
     offset_x = max(10, int(base_size * 0.012))
@@ -97,7 +125,7 @@ def render_anatomical_landmarks_overlay(
     w, h = canvas.size
     base_size = max(w, h)
 
-    font_main = _load_font(max(11, int(base_size * 0.016)))
+    font_main = _load_font(max(16, int(base_size * 0.022)))
 
     metrics = (result.get("metrics") or {}) if result else {}
     is_pathology = bool(result.get("disease_detected")) if result else False

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import io
+import os
 from typing import Any
 
 import numpy as np
@@ -27,11 +28,38 @@ from frontend.utils.report_formatting import (
 
 
 def _load_font(size: int):
-    for font_name in ("arial.ttf", "segoeui.ttf", "DejaVuSans.ttf"):
+    """Load a true TTF font with full Cyrillic support, preventing tiny bitmap fallback rectangles."""
+    # 1. Matplotlib bundled DejaVuSans (guaranteed across Windows, Linux and Streamlit Cloud)
+    try:
+        import matplotlib
+
+        font_dir = os.path.join(matplotlib.get_data_path(), "fonts", "ttf")
+        for fname in ("DejaVuSans-Bold.ttf", "DejaVuSans.ttf"):
+            fpath = os.path.join(font_dir, fname)
+            if os.path.exists(fpath):
+                return ImageFont.truetype(fpath, size=size)
+    except Exception:
+        pass
+
+    # 2. Linux system paths
+    for p in (
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+    ):
+        if os.path.exists(p):
+            try:
+                return ImageFont.truetype(p, size=size)
+            except Exception:
+                pass
+
+    # 3. Windows system fonts
+    for fname in ("arialbd.ttf", "arial.ttf", "segoeui.ttf"):
         try:
-            return ImageFont.truetype(font_name, size=size)
+            return ImageFont.truetype(fname, size=size)
         except OSError:
-            continue
+            pass
+
     return ImageFont.load_default()
 
 

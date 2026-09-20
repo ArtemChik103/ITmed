@@ -111,8 +111,9 @@ def detect_xray_projection(
     s_mean = float((np.mean(side_band_left) + np.mean(side_band_right)) / 2.0)
     top_mean = float(np.mean(img_2d[: int(h * 0.35), :]))
 
-    ratio_side_center = s_mean / max(1.0, c_mean)
-    ratio_top_center = top_mean / max(1.0, c_mean)
+    eps = 1e-4 if float(np.max(img_2d)) <= 5.0 else 1.0
+    ratio_side_center = s_mean / max(eps, c_mean)
+    ratio_top_center = top_mean / max(eps, c_mean)
 
     # In Lauenstein, the bottom center is dark perineal air / empty space while sides contain abducted thighs
     is_frog_leg = (ratio_side_center >= 1.01 and ratio_top_center >= 1.45)

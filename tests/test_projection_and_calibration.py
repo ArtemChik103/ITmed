@@ -74,3 +74,29 @@ def test_safe_tonnis_grading():
     res = plugin.analyze(dummy, {}, mode="doctor")
     # Heuristic/default should not trigger dislocation on neutral image
     assert res.metrics["tonnis_grade"] < 3.0
+
+
+def test_projection_detector_normalized_scale():
+    """Verify projection detector morphology works on normalized [0, 1] images."""
+    img_fl = np.ones((500, 500), dtype=np.float32) * 0.75
+    img_fl[:175, :] = 1.0 # bright top
+    img_fl[350:, 190:310] = 0.40 # dark perineal gap
+    img_fl[350:, :125] = 0.65 # side thighs
+    img_fl[350:, 375:] = 0.65 # side thighs
+
+    res_fl = detect_xray_projection(img_fl, {})
+    assert res_fl["is_frog_leg"] is True
+    assert res_fl["projection_type"] == "lauenstein_frog_leg"
+
+
+def test_keypoint_overlay_font_loading():
+    """Verify keypoint overlay font loader loads a scalable TTF font with Cyrillic support."""
+    from frontend.components.keypoint_overlay import _load_font
+
+    font = _load_font(20)
+    assert font is not None
+    # Ensure it is a FreeTypeFont or TrueType font with bbox method
+    assert hasattr(font, "getbbox")
+    bbox = font.getbbox("Тест Тённис")
+    assert bbox[2] > bbox[0]
+

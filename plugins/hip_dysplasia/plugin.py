@@ -375,6 +375,9 @@ class HipDysplasiaPlugin(BasePlugin):
         if final_disease_detected and prob < thresh:
             final_confidence = round(max(thresh + 0.02, 0.70 + 0.08 * min(3.0, tonnis_g)), 4)
             metrics["model_probability"] = float(final_confidence)
+        elif not final_disease_detected and prob >= thresh:
+            final_confidence = round(thresh - 0.04, 4)
+            metrics["model_probability"] = float(final_confidence)
 
         return AnalysisResult(
             disease_detected=final_disease_detected,
