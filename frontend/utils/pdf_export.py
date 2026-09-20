@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import io
+import os
 from datetime import datetime
 from typing import Any
 
@@ -15,13 +16,45 @@ from reportlab.pdfbase.pdfmetrics import registerFontFamily
 
 
 def _register_fonts() -> tuple[str, str]:
+    """Register unicode fonts with Cyrillic support (DejaVuSans from matplotlib, or system fonts)."""
+    # 1. Matplotlib bundled DejaVuSans (guaranteed in any environment with matplotlib installed)
+    try:
+        import matplotlib
+        font_dir = os.path.join(matplotlib.get_data_path(), "fonts", "ttf")
+        reg_path = os.path.join(font_dir, "DejaVuSans.ttf")
+        bold_path = os.path.join(font_dir, "DejaVuSans-Bold.ttf")
+        if os.path.exists(reg_path) and os.path.exists(bold_path):
+            pdfmetrics.registerFont(TTFont("DejaVuSans", reg_path))
+            pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", bold_path))
+            registerFontFamily("DejaVuSans", normal="DejaVuSans", bold="DejaVuSans-Bold", italic="DejaVuSans", boldItalic="DejaVuSans-Bold")
+            return "DejaVuSans", "DejaVuSans-Bold"
+    except Exception:
+        pass
+
+    # 2. System Arial (Windows)
     try:
         pdfmetrics.registerFont(TTFont("Arial", "arial.ttf"))
         pdfmetrics.registerFont(TTFont("Arial-Bold", "arialbd.ttf"))
         registerFontFamily("Arial", normal="Arial", bold="Arial-Bold", italic="Arial", boldItalic="Arial-Bold")
         return "Arial", "Arial-Bold"
     except Exception:
-        return "Helvetica", "Helvetica-Bold"
+        pass
+
+    # 3. System Linux fonts
+    for reg, bold, name in [
+        ("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "SysDejaVu"),
+        ("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf", "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf", "SysLiberation"),
+    ]:
+        if os.path.exists(reg) and os.path.exists(bold):
+            try:
+                pdfmetrics.registerFont(TTFont(name, reg))
+                pdfmetrics.registerFont(TTFont(f"{name}-Bold", bold))
+                registerFontFamily(name, normal=name, bold=f"{name}-Bold")
+                return name, f"{name}-Bold"
+            except Exception:
+                pass
+
+    return "Helvetica", "Helvetica-Bold"
 
 
 def generate_pdf_report(result: dict[str, Any], filename: str) -> bytes:
@@ -61,6 +94,12 @@ def generate_pdf_report(result: dict[str, Any], filename: str) -> bytes:
     h_px = int(metrics.get("image_height", 1536))
     frames = meta.get("number_of_frames", 1)
 
+    n_models = int(metrics.get("ensemble_folds", 25))
+    model_stat_text = (
+        f"Продакшен-модель ИТ+Мед ({n_models} {'модель' if n_models == 1 else 'модели' if n_models < 5 else 'моделей'})"
+        if n_models < 25 else "Ансамбль 25 глубоких сетей (Penta-Stack)"
+    )
+
     meta_data = [
         [
             Paragraph("Файл исследования:", cell_bold),
@@ -78,7 +117,7 @@ def generate_pdf_report(result: dict[str, Any], filename: str) -> bytes:
             Paragraph("Разрешение кадра:", cell_bold),
             Paragraph(f"{w_px} × {h_px} px ({frames} кадр)", cell_style),
             Paragraph("Статус алгоритма:", cell_bold),
-            Paragraph("Ансамбль 25 глубоких сетей (Penta-Stack)", cell_style),
+            Paragraph(model_stat_text, cell_style),
         ],
     ]
     meta_table = Table(meta_data, colWidths=[115, 145, 115, 145])
@@ -154,6 +193,22 @@ def generate_pdf_report(result: dict[str, Any], filename: str) -> bytes:
     ]))
     elements.append(verdict_table)
     elements.append(Spacer(1, 4))
+
+    if metrics.get("is_frog_leg"):
+        fl_card = Table(
+            [[Paragraph("<b>⚠️ Внимание (Проекция Лауэнштейна / Frog-leg view):</b> Исследование выполнено в функциональной укладке с отведением бёдер. Физиологическое латеральное отведение учтено при рентгенометрии и не является признаком вывиха.", small_style)]],
+            colWidths=[520],
+        )
+        fl_card.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#fffbeb")),
+            ("BOX", (0, 0), (-1, -1), 0.5, colors.HexColor("#f59e0b")),
+            ("TOPPADDING", (0, 0), (-1, -1), 2),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+            ("LEFTPADDING", (0, 0), (-1, -1), 6),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+        ]))
+        elements.append(fl_card)
+        elements.append(Spacer(1, 3))
 
     # 4. Metrics Table (Bilateral Dexter vs Sinister)
     elements.append(Paragraph("<b>Количественные биомеханические и рентгенометрические показатели (D / S)</b>", h2_style))

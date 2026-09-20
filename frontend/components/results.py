@@ -67,6 +67,24 @@ def _render_result_header(result: dict[str, Any]) -> None:
             f"<strong style='color: #f1f5f9;'>Шкала Тённиса 0 (Норма)</strong>"
         )
 
+    frog_leg_html = ""
+    if (result.get("metrics") or {}).get("is_frog_leg") or (result.get("metadata") or {}).get("is_frog_leg"):
+        frog_leg_html = """
+        <div style="
+            background: rgba(245, 158, 11, 0.12);
+            border-left: 4px solid #f59e0b;
+            padding: 0.6rem 0.85rem;
+            margin-top: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #fbbf24;
+            line-height: 1.4;
+        ">
+            <strong>⚠️ Функциональная укладка Лауэнштейна (Frog-leg view):</strong><br/>
+            Снимок выполнен с отведением бёдер. Физиологическое латеральное положение бедренных костей учтено алгоритмом рентгенометрии и не является признаком вывиха.
+        </div>
+        """
+
     st.markdown(
         f"""
         <div style="
@@ -98,6 +116,7 @@ def _render_result_header(result: dict[str, Any]) -> None:
             <div style="color: #94a3b8; font-size: 0.95rem;">
                 {status_line}
             </div>
+            {frog_leg_html}
         </div>
         """,
         unsafe_allow_html=True,

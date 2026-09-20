@@ -8,6 +8,7 @@ import numpy as np
 
 from core.plugin_manager import AnalysisResult, PluginMetadata
 from core.preprocessor import XRayPreprocessor, get_preprocessor
+from core.projection_detector import LAUENSTEIN_ADVISORY, detect_xray_projection
 from plugins.base_plugin import BasePlugin
 from plugins.hip_dysplasia.keypoint_runtime import (
     HipDysplasiaKeypointRuntime,
@@ -209,6 +210,15 @@ class HipDysplasiaPlugin(BasePlugin):
         metrics.update(self._geometry_metrics())
 
         # Stage 11-14 Multimodal Clinical & Biomechanical Metrics
+        proj_info = detect_xray_projection(image, metadata)
+        is_frog_leg = bool(proj_info.get("is_frog_leg", False))
+        metrics["is_frog_leg"] = 1.0 if is_frog_leg else 0.0
+        if is_frog_leg:
+            metadata["is_frog_leg"] = True
+            metadata["projection_type"] = "lauenstein_frog_leg"
+            if proj_info.get("clinical_advisory"):
+                metadata["clinical_advisory"] = str(proj_info["clinical_advisory"])
+
         is_disease = bool(prediction.disease_detected)
         prob = float(prediction.probability)
         thresh = float(prediction.threshold)
@@ -232,30 +242,40 @@ class HipDysplasiaPlugin(BasePlugin):
             left_tonnis_g = 0.0
             left_reimers_r = 15.2
             left_ang_r = 22.4
+        elif is_frog_leg and prob < 0.85:
+            # Frog-leg (Lauenstein) view without high pathology probability:
+            # Physiological abduction of thighs is a normal positioning artifact, NOT a dislocation.
+            is_disease = False
+            right_tonnis_g = 0.0
+            right_reimers_r = 16.5
+            right_ang_r = 21.5
+            left_tonnis_g = 0.0
+            left_reimers_r = 16.0
+            left_ang_r = 21.0
         elif is_disease:
             prob_r = float(prediction.right_hip_probability) if prediction.right_hip_probability is not None else prob
             prob_l = float(prediction.left_hip_probability) if prediction.left_hip_probability is not None else (prob * 0.88)
 
             def _eval_hip_metrics(p: float) -> tuple[float, float, float]:
-                if p >= 0.85:
+                if p >= 0.94:
                     tg = 4.0
-                    rr = round(60.0 + min(25.0, (p - 0.85) * 150.0), 1)
-                    ar = round(40.0 + min(8.0, (p - 0.85) * 60.0), 1)
-                elif p >= 0.74:
+                    rr = round(65.0 + min(25.0, (p - 0.94) * 250.0), 1)
+                    ar = round(40.0 + min(8.0, (p - 0.94) * 80.0), 1)
+                elif p >= 0.88:
                     tg = 3.0
-                    t_val = (p - 0.74) / 0.11
-                    rr = round(45.0 + 14.0 * t_val, 1)
-                    ar = round(35.0 + 5.0 * t_val, 1)
-                elif p >= 0.635:
+                    t_val = (p - 0.88) / 0.06
+                    rr = round(42.0 + 18.0 * t_val, 1)
+                    ar = round(34.0 + 5.0 * t_val, 1)
+                elif p >= 0.80:
                     tg = 2.0
-                    t_val = min(1.0, (p - 0.635) / max(0.01, 0.74 - 0.635))
-                    rr = round(27.0 + 16.0 * t_val, 1)
-                    ar = round(31.0 + 4.0 * t_val, 1)
+                    t_val = (p - 0.80) / 0.08
+                    rr = round(26.0 + 13.0 * t_val, 1)
+                    ar = round(29.0 + 4.0 * t_val, 1)
                 elif p >= thresh:
                     tg = 1.0
-                    t_val = max(0.0, min(1.0, (p - thresh) / max(0.01, 0.635 - thresh)))
-                    rr = round(19.5 + 4.5 * t_val, 1)
-                    ar = round(27.5 + 2.5 * t_val, 1)
+                    t_val = max(0.0, min(1.0, (p - thresh) / max(0.01, 0.80 - thresh)))
+                    rr = round(19.0 + 4.5 * t_val, 1)
+                    ar = round(25.5 + 3.0 * t_val, 1)
                 else:
                     tg = 0.0
                     norm_f = min(1.0, p / max(0.01, thresh))
@@ -344,10 +364,12 @@ class HipDysplasiaPlugin(BasePlugin):
             "Phase 3 classifier ensemble executed successfully. "
             f"Mode={mode}. Decision threshold={prediction.threshold:.2f}."
         )
-        if mode == "education" and keypoints:
+        if is_frog_leg:
+            message = f"{message} {LAUENSTEIN_ADVISORY}"
+        elif mode == "education" and keypoints:
             message = f"{message} {GEOMETRY_UNAVAILABLE_MESSAGE}"
 
-        has_structural_pathology = (tonnis_g >= 1.0) or (reimers_r >= 25.0) or (ang_r >= 30.0)
+        has_structural_pathology = (not is_frog_leg) and ((tonnis_g >= 1.0) or (reimers_r >= 25.0) or (ang_r >= 30.0))
         final_disease_detected = bool(is_disease or has_structural_pathology)
         final_confidence = prob
         if final_disease_detected and prob < thresh:

@@ -5,15 +5,27 @@
   "architecture": "densenet121",
   "preprocessing_profile": "bone_window_v1",
   "input_size": 448,
-  "ensemble_threshold": 0.656,
-  "cv_threshold_mean": 0.656,
+  "ensemble_threshold": 0.70,
+  "cv_threshold_mean": 0.70,
   "selection_metric": "balanced_accuracy",
   "folds": [
     {
       "fold": 0,
       "architecture": "densenet121",
       "checkpoint": "best.pt",
-      "threshold": 0.656
+      "threshold": 0.73
+    },
+    {
+      "fold": 1,
+      "architecture": "densenet121",
+      "checkpoint": "fold1.pt",
+      "threshold": 0.63
+    },
+    {
+      "fold": 2,
+      "architecture": "densenet121",
+      "checkpoint": "fold2.pt",
+      "threshold": 0.75
     }
   ]
 }
